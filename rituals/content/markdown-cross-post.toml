@@ -1,0 +1,43 @@
+# markdown-cross-post — take a single markdown file and publish to dev.to + hashnode
+# + mirror into Obsidian vault. Skip any destination whose env var is unset.
+# Set POST_FILE, and any of: DEVTO_API_KEY, HASHNODE_API_KEY + HASHNODE_PUBLICATION_ID,
+# OBSIDIAN_VAULT_PATH (cross-post dir inside the vault).
+
+[[jobs]]
+id          = "markdown-cross-post"
+name        = "Cross-post — dev.to / Hashnode / Obsidian"
+description = "Publish a markdown file to dev.to + Hashnode + mirror to Obsidian (each conditional)."
+category    = "content"
+kind        = "shell"
+schedule    = "0 15 * * 2"
+timezone    = "UTC"
+enabled     = false
+timeout_sec = 300
+
+command = '''
+: "${POST_FILE:?required}"
+[ -s "$POST_FILE" ] || { echo "empty or missing: $POST_FILE"; exit 1; }
+TITLE="${POST_TITLE:-$(head -1 "$POST_FILE" | sed 's/^# *//')}"
+BODY=$(cat "$POST_FILE")
+
+if [ -n "$DEVTO_API_KEY" ]; then
+  curl -sS -f -X POST https://dev.to/api/articles \
+    -H "api-key: $DEVTO_API_KEY" -H 'Content-Type: application/json' \
+    -d "$(jq -n --arg t "$TITLE" --arg b "$BODY" '{article:{title:$t, body_markdown:$b, published:true}}')" \
+    | jq -r '.url // .error' | sed 's/^/devto: /'
+fi
+
+if [ -n "$HASHNODE_API_KEY" ] && [ -n "$HASHNODE_PUBLICATION_ID" ]; then
+  curl -sS -f -X POST https://gql.hashnode.com/ \
+    -H "Authorization: $HASHNODE_API_KEY" -H 'Content-Type: application/json' \
+    -d "$(jq -n --arg t "$TITLE" --arg b "$BODY" --arg p "$HASHNODE_PUBLICATION_ID" \
+      '{query:"mutation($i:PublishPostInput!){publishPost(input:$i){post{url}}}", variables:{i:{title:$t, contentMarkdown:$b, publicationId:$p}}}')" \
+    | jq -r '.data.publishPost.post.url // .errors' | sed 's/^/hashnode: /'
+fi
+
+if [ -n "$OBSIDIAN_VAULT_PATH" ]; then
+  DEST="$OBSIDIAN_VAULT_PATH/$(basename "$POST_FILE")"
+  mkdir -p "$OBSIDIAN_VAULT_PATH"
+  cp "$POST_FILE" "$DEST" && echo "obsidian: $DEST"
+fi
+'''

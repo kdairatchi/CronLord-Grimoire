@@ -1,0 +1,40 @@
+# ffmpeg-transcode-queue — pick up new videos in WATCH_DIR, transcode to H.264/AAC
+# MP4 in OUT_DIR. Moves sources to DONE_DIR on success. Requires ffmpeg.
+# Set WATCH_DIR, OUT_DIR, DONE_DIR. Optional: CRF (default 23), PRESET (default medium).
+
+[[jobs]]
+id          = "ffmpeg-transcode-queue"
+name        = "ffmpeg — transcode queue"
+description = "Transcode each new video in WATCH_DIR to H.264/AAC MP4 in OUT_DIR."
+category    = "media"
+kind        = "shell"
+schedule    = "*/15 * * * *"
+timezone    = "UTC"
+enabled     = false
+timeout_sec = 7200
+
+command = '''
+: "${WATCH_DIR:?required}"
+: "${OUT_DIR:?required}"
+DONE_DIR="${DONE_DIR:-$WATCH_DIR/.done}"
+mkdir -p "$OUT_DIR" "$DONE_DIR"
+find "$WATCH_DIR" -maxdepth 1 -type f \( -iname '*.mkv' -o -iname '*.mov' -o -iname '*.avi' -o -iname '*.mp4' -o -iname '*.webm' \) \
+  | while read -r src; do
+  base=$(basename "$src")
+  stem="${base%.*}"
+  dst="$OUT_DIR/${stem}.mp4"
+  [ -f "$dst" ] && { echo "skip (exists): $dst"; continue; }
+  tmp="${dst}.part"
+  if ffmpeg -nostdin -y -i "$src" \
+       -c:v libx264 -preset "${PRESET:-medium}" -crf "${CRF:-23}" \
+       -c:a aac -b:a 160k \
+       -movflags +faststart "$tmp" </dev/null; then
+    mv "$tmp" "$dst"
+    mv "$src" "$DONE_DIR/"
+    echo "transcoded: $dst"
+  else
+    rm -f "$tmp"
+    echo "FAIL: $src"
+  fi
+done
+'''

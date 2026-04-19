@@ -1,0 +1,30 @@
+# mysql-dump — mysqldump one DB to a timestamped .sql.gz on local disk.
+# Pair with rituals/sync/rclone-cloud-mirror.toml to push to offsite storage.
+# Use a dedicated read-only-ish user (SELECT, LOCK TABLES, SHOW VIEW, EVENT, TRIGGER).
+# Set MYSQL_HOST, MYSQL_USER, MYSQL_PASSWORD, MYSQL_DATABASE, DUMP_DIR.
+
+[[jobs]]
+id          = "mysql-dump"
+name        = "MySQL — logical dump"
+description = "mysqldump a database to a gzipped file in DUMP_DIR."
+category    = "database"
+kind        = "shell"
+schedule    = "0 3 * * *"
+timezone    = "UTC"
+enabled     = false
+timeout_sec = 7200
+
+command = '''
+: "${MYSQL_HOST:?required}"
+: "${MYSQL_USER:?required}"
+: "${MYSQL_DATABASE:?required}"
+DUMP_DIR="${DUMP_DIR:-/var/lib/cronlord/mysql-dumps}"
+mkdir -p "$DUMP_DIR"
+OUT="$DUMP_DIR/${MYSQL_DATABASE}-$(date -u +%Y%m%dT%H%M%SZ).sql.gz"
+MYSQL_PWD="${MYSQL_PASSWORD}" mysqldump \
+  --single-transaction --quick --routines --triggers --events \
+  --default-character-set=utf8mb4 \
+  -h "$MYSQL_HOST" -u "$MYSQL_USER" "$MYSQL_DATABASE" \
+  | gzip -9 > "$OUT"
+echo "wrote $OUT ($(du -h "$OUT" | cut -f1))"
+'''

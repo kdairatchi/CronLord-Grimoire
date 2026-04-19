@@ -1,0 +1,40 @@
+# crypto-price-alert — fire a webhook when a CoinGecko price crosses a threshold.
+# Pair with rituals/communication/{discord-webhook-post,telegram-bot-send,apprise-fanout}
+# by piping this script's output into one. Keeps last price in STATE to avoid spam.
+# Required: COIN (CoinGecko id e.g. bitcoin), VS (e.g. usd), THRESHOLD_ABOVE or _BELOW.
+
+[[jobs]]
+id          = "crypto-price-alert"
+name        = "Crypto — price threshold alert"
+description = "Alert (webhook) when CoinGecko COIN crosses THRESHOLD_ABOVE or _BELOW in VS."
+category    = "finance"
+kind        = "shell"
+schedule    = "*/10 * * * *"
+timezone    = "UTC"
+enabled     = false
+timeout_sec = 60
+
+command = '''
+: "${COIN:?required, CoinGecko id e.g. bitcoin}"
+VS="${VS:-usd}"
+STATE="${STATE_FILE:-/var/lib/cronlord/crypto-alert-${COIN}.last}"
+PRICE=$(curl -sS -f "https://api.coingecko.com/api/v3/simple/price?ids=${COIN}&vs_currencies=${VS}" \
+  | jq -r ".${COIN}.${VS}")
+[ -n "$PRICE" ] || { echo "price fetch failed"; exit 1; }
+LAST=$(cat "$STATE" 2>/dev/null || echo "0")
+echo "$PRICE" > "$STATE"
+ALERT=""
+if [ -n "$THRESHOLD_ABOVE" ] && awk "BEGIN{exit !($PRICE > $THRESHOLD_ABOVE && $LAST <= $THRESHOLD_ABOVE)}"; then
+  ALERT="$COIN crossed ABOVE $THRESHOLD_ABOVE $VS → $PRICE"
+fi
+if [ -n "$THRESHOLD_BELOW" ] && awk "BEGIN{exit !($PRICE < $THRESHOLD_BELOW && $LAST >= $THRESHOLD_BELOW)}"; then
+  ALERT="$COIN crossed BELOW $THRESHOLD_BELOW $VS → $PRICE"
+fi
+if [ -n "$ALERT" ] && [ -n "$WEBHOOK_URL" ]; then
+  curl -sS -f -H 'Content-Type: application/json' \
+    -d "$(printf '{"content":"%s"}' "$ALERT")" "$WEBHOOK_URL"
+  echo "$ALERT"
+else
+  echo "no alert ($COIN=$PRICE, last=$LAST)"
+fi
+'''

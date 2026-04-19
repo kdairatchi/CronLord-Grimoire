@@ -1,0 +1,27 @@
+# mqtt-publish — publish a message to an MQTT broker (Home Assistant, ioBroker, etc).
+# Install: `apt install mosquitto-clients`. Broker can be local (Mosquitto addon) or
+# cloud (HiveMQ, Flespi). Required: MQTT_HOST, MQTT_TOPIC. Optional: MQTT_USER,
+# MQTT_PASSWORD, MQTT_PORT (default 1883), MQTT_QOS (default 0), MQTT_RETAIN (0|1).
+
+[[jobs]]
+id          = "mqtt-publish"
+name        = "MQTT — publish"
+description = "Publish a payload to an MQTT topic via mosquitto_pub."
+category    = "home"
+kind        = "shell"
+schedule    = "0 */1 * * *"
+timezone    = "UTC"
+enabled     = false
+timeout_sec = 30
+
+command = '''
+: "${MQTT_HOST:?required}"
+: "${MQTT_TOPIC:?required}"
+PAYLOAD="${MQTT_PAYLOAD:-$(date -u +%FT%TZ)}"
+mosquitto_pub \
+  -h "$MQTT_HOST" -p "${MQTT_PORT:-1883}" \
+  ${MQTT_USER:+-u "$MQTT_USER"} ${MQTT_PASSWORD:+-P "$MQTT_PASSWORD"} \
+  -q "${MQTT_QOS:-0}" ${MQTT_RETAIN:+-r} \
+  -t "$MQTT_TOPIC" -m "$PAYLOAD"
+echo "published to $MQTT_TOPIC: $PAYLOAD"
+'''

@@ -1,0 +1,28 @@
+# email-smtp-send — send a plain-text email via `msmtp` (sendmail-compatible).
+# Install: `apt install msmtp-mta` or `brew install msmtp`.
+# Configure /etc/msmtprc or ~/.msmtprc with your SMTP host/creds (use an app password).
+# Required env: EMAIL_TO, EMAIL_FROM, EMAIL_SUBJECT. Optional: EMAIL_BODY_FILE.
+
+[[jobs]]
+id          = "email-smtp-send"
+name        = "SMTP — send email"
+description = "Send an email via msmtp (any SMTP provider: Gmail, Fastmail, SES, Postmark…)."
+category    = "communication"
+kind        = "shell"
+schedule    = "0 13 * * 1"
+timezone    = "UTC"
+enabled     = false
+timeout_sec = 120
+
+command = '''
+: "${EMAIL_TO:?required}"
+: "${EMAIL_FROM:?required}"
+: "${EMAIL_SUBJECT:?required}"
+BODY="${EMAIL_BODY_FILE:-/tmp/cronlord-mail-body.txt}"
+[ -s "$BODY" ] || echo "CronLord heartbeat at $(date -u +%FT%TZ)" > "$BODY"
+{
+  printf 'From: %s\nTo: %s\nSubject: %s\nContent-Type: text/plain; charset=utf-8\n\n' \
+    "$EMAIL_FROM" "$EMAIL_TO" "$EMAIL_SUBJECT"
+  cat "$BODY"
+} | msmtp --read-recipients
+'''

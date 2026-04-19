@@ -1,0 +1,30 @@
+# image-bulk-resize — resize every image in SRC_DIR that's bigger than MAX_WIDTH,
+# write results to DST_DIR preserving filenames. Skips already-processed files via
+# mtime check. Requires ImageMagick (`apt install imagemagick`).
+
+[[jobs]]
+id          = "image-bulk-resize"
+name        = "Images — bulk resize"
+description = "Resize images in SRC_DIR wider than MAX_WIDTH into DST_DIR."
+category    = "media"
+kind        = "shell"
+schedule    = "0 3 * * *"
+timezone    = "UTC"
+enabled     = false
+timeout_sec = 3600
+
+command = '''
+: "${SRC_DIR:?required}"
+: "${DST_DIR:?required}"
+MAX_WIDTH="${MAX_WIDTH:-2000}"
+QUALITY="${QUALITY:-85}"
+mkdir -p "$DST_DIR"
+find "$SRC_DIR" -type f \( -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.png' -o -iname '*.webp' \) \
+  | while read -r f; do
+  dst="$DST_DIR/${f#$SRC_DIR/}"
+  mkdir -p "$(dirname "$dst")"
+  [ -f "$dst" ] && [ "$dst" -nt "$f" ] && continue
+  magick "$f" -auto-orient -resize "${MAX_WIDTH}x${MAX_WIDTH}>" -strip -quality "$QUALITY" "$dst" \
+    && echo "resized: $dst" || echo "FAIL: $f"
+done
+'''

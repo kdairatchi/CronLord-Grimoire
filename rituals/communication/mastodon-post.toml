@@ -1,0 +1,26 @@
+# mastodon-post — publish a status (toot) to a Mastodon account.
+# Create app at `Settings → Development → New Application` on your instance, scope = write:statuses.
+# Required env: MASTODON_INSTANCE (e.g. https://mastodon.social), MASTODON_ACCESS_TOKEN, STATUS.
+# VISIBILITY can be public|unlisted|private|direct (default unlisted).
+
+[[jobs]]
+id          = "mastodon-post"
+name        = "Mastodon — post status"
+description = "Publish a status to a Mastodon instance via the account's API access token."
+category    = "communication"
+kind        = "shell"
+schedule    = "0 14 * * *"
+timezone    = "UTC"
+enabled     = false
+timeout_sec = 60
+
+command = '''
+: "${MASTODON_INSTANCE:?required}"
+: "${MASTODON_ACCESS_TOKEN:?required}"
+: "${STATUS:?required}"
+VIS="${VISIBILITY:-unlisted}"
+curl -sS -f "${MASTODON_INSTANCE%/}/api/v1/statuses" \
+  -H "Authorization: Bearer ${MASTODON_ACCESS_TOKEN}" \
+  --data-urlencode "status=${STATUS}" \
+  --data-urlencode "visibility=${VIS}"
+'''

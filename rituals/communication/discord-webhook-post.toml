@@ -1,0 +1,26 @@
+# discord-webhook-post — POST a message to a Discord channel via incoming webhook.
+# No bot, no OAuth — just a webhook URL. Requires DISCORD_WEBHOOK_URL.
+# MESSAGE can be a string or a JSON payload (embeds). CONTENT_FILE overrides MESSAGE.
+
+[[jobs]]
+id          = "discord-webhook-post"
+name        = "Discord — webhook post"
+description = "Post a message (or JSON payload) to a Discord channel via webhook."
+category    = "communication"
+kind        = "shell"
+schedule    = "0 17 * * 5"
+timezone    = "UTC"
+enabled     = false
+timeout_sec = 60
+
+command = '''
+[ -n "$DISCORD_WEBHOOK_URL" ] || { echo "DISCORD_WEBHOOK_URL required"; exit 1; }
+MESSAGE="${MESSAGE:-CronLord ping from $(hostname) at $(date -u +%FT%TZ)}"
+if [ -n "$CONTENT_FILE" ] && [ -s "$CONTENT_FILE" ]; then
+  curl -sS -f -H 'Content-Type: application/json' --data-binary "@$CONTENT_FILE" "$DISCORD_WEBHOOK_URL"
+else
+  curl -sS -f -H 'Content-Type: application/json' \
+    -d "$(printf '{"content":"%s"}' "$(printf '%s' "$MESSAGE" | sed 's/"/\\"/g')")" \
+    "$DISCORD_WEBHOOK_URL"
+fi
+'''

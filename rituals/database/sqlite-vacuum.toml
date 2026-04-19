@@ -1,0 +1,24 @@
+# sqlite-vacuum — rebuild a SQLite DB file to reclaim space and defragment.
+# Safe to run while the DB is idle; if another process holds a writer lock, it
+# will block until released. Keep a backup if the DB is large.
+# Set SQLITE_DB to the .db file path.
+
+[[jobs]]
+id          = "sqlite-vacuum"
+name        = "SQLite — VACUUM"
+description = "Reclaim space / defragment a SQLite database file."
+category    = "database"
+kind        = "shell"
+schedule    = "15 4 * * 0"
+timezone    = "UTC"
+enabled     = false
+timeout_sec = 1800
+
+command = '''
+: "${SQLITE_DB:?required}"
+[ -f "$SQLITE_DB" ] || { echo "not found: $SQLITE_DB"; exit 1; }
+BEFORE=$(stat -c %s "$SQLITE_DB" 2>/dev/null || stat -f %z "$SQLITE_DB")
+sqlite3 "$SQLITE_DB" "PRAGMA journal_mode=WAL; VACUUM;"
+AFTER=$(stat -c %s "$SQLITE_DB" 2>/dev/null || stat -f %z "$SQLITE_DB")
+echo "vacuumed $SQLITE_DB: $BEFORE -> $AFTER bytes"
+'''

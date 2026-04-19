@@ -6,7 +6,7 @@
 id          = "subdomain-monitor"
 name        = "Subdomain monitor"
 description = "Daily subfinder run, diff vs. last baseline, emit new hosts."
-category    = "hunting"
+category    = "security"
 kind        = "shell"
 schedule    = "0 5 * * *"
 timezone    = "UTC"

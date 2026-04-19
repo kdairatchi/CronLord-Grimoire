@@ -6,7 +6,7 @@
 id          = "daily-vault-summary"
 name        = "Weekly vault summary"
 description = "Claude reads 7 latest daily notes and writes a weekly digest."
-category    = "claude"
+category    = "ai"
 kind        = "claude"
 schedule    = "0 13 * * 1"
 timezone    = "UTC"

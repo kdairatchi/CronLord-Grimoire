@@ -5,7 +5,7 @@
 id          = "git-repo-sync"
 name        = "git fetch (one repo)"
 description = "Fetch + prune a local git repo to keep tracking branches fresh."
-category    = "maintenance"
+category    = "sync"
 kind        = "shell"
 schedule    = "0 */2 * * *"
 timezone    = "UTC"

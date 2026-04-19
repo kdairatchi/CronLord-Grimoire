@@ -1,0 +1,24 @@
+# apprise-fanout — one message, 80+ possible destinations via caronc/apprise.
+# Install: `pipx install apprise`. Targets come from APPRISE_URLS (comma- or
+# newline-separated), each in the form `slack://...`, `tgram://...`,
+# `discord://...`, `mailto://...`, `ntfy://...`, etc.
+# See https://github.com/caronc/apprise#supported-notifications
+
+[[jobs]]
+id          = "apprise-fanout"
+name        = "Apprise — multi-destination notify"
+description = "Send one message body to every service URL in APPRISE_URLS."
+category    = "communication"
+kind        = "shell"
+schedule    = "0 */6 * * *"
+timezone    = "UTC"
+enabled     = false
+timeout_sec = 120
+
+command = '''
+: "${APPRISE_URLS:?required (comma or newline separated)}"
+TITLE="${APPRISE_TITLE:-CronLord}"
+BODY="${APPRISE_BODY:-Scheduled message at $(date -u +%FT%TZ)}"
+printf '%s' "$APPRISE_URLS" | tr ',\n' '\n\n' | sed '/^$/d' \
+  | xargs -I{} apprise -t "$TITLE" -b "$BODY" "{}"
+'''

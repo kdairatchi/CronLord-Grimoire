@@ -1,0 +1,35 @@
+# exchange-rate-log — log fiat exchange rates to a CSV for later charting.
+# Uses frankfurter.app (free, no key, European Central Bank reference rates).
+# Set BASE (e.g. USD), QUOTES (comma list e.g. EUR,GBP,JPY), OUT_FILE.
+
+[[jobs]]
+id          = "exchange-rate-log"
+name        = "FX — daily rate log"
+description = "Append today's ECB reference rates (BASE → QUOTES) to a CSV."
+category    = "finance"
+kind        = "shell"
+schedule    = "30 16 * * 1-5"
+timezone    = "UTC"
+enabled     = false
+timeout_sec = 60
+
+command = '''
+BASE="${BASE:-USD}"
+QUOTES="${QUOTES:-EUR,GBP,JPY}"
+OUT="${OUT_FILE:-/home/anon/MyMac/Finance/fx-log.csv}"
+mkdir -p "$(dirname "$OUT")"
+if [ ! -s "$OUT" ]; then
+  printf 'date,base,%s\n' "$(printf '%s' "$QUOTES" | tr ',' ',')" > "$OUT"
+fi
+RESP=$(curl -sS -f "https://api.frankfurter.app/latest?from=${BASE}&to=${QUOTES}")
+DATE=$(printf '%s' "$RESP" | jq -r '.date')
+ROW="$DATE,$BASE"
+IFS=','
+for Q in $QUOTES; do
+  V=$(printf '%s' "$RESP" | jq -r ".rates.${Q} // \"\"")
+  ROW="$ROW,$V"
+done
+unset IFS
+echo "$ROW" >> "$OUT"
+echo "appended: $ROW"
+'''

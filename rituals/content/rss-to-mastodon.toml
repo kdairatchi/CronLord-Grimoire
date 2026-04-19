@@ -1,0 +1,37 @@
+# rss-to-mastodon — cross-post new RSS items to a Mastodon account.
+# Dedupes against state file. Each new item → one toot with title + link.
+# Requires: curl, xmlstarlet. Set RSS_URL, MASTODON_INSTANCE, MASTODON_ACCESS_TOKEN.
+# State at STATE_FILE (seen GUIDs, one per line).
+
+[[jobs]]
+id          = "rss-to-mastodon"
+name        = "RSS → Mastodon"
+description = "Cross-post new items from an RSS feed to a Mastodon account."
+category    = "content"
+kind        = "shell"
+schedule    = "*/30 * * * *"
+timezone    = "UTC"
+enabled     = false
+timeout_sec = 300
+
+command = '''
+: "${RSS_URL:?required}"
+: "${MASTODON_INSTANCE:?required}"
+: "${MASTODON_ACCESS_TOKEN:?required}"
+STATE="${STATE_FILE:-/var/lib/cronlord/rss2mastodon.seen}"
+mkdir -p "$(dirname "$STATE")"; touch "$STATE"
+FEED=$(curl -sS -L "$RSS_URL")
+printf '%s' "$FEED" | xmlstarlet sel -t -m '//item' \
+  -v 'concat(guid,"\t",title,"\t",link)' -n 2>/dev/null | while IFS=$'\t' read -r GUID TITLE LINK; do
+  [ -n "$GUID" ] || continue
+  grep -qxF "$GUID" "$STATE" && continue
+  STATUS=$(printf '%s\n\n%s' "$TITLE" "$LINK")
+  curl -sS -f "${MASTODON_INSTANCE%/}/api/v1/statuses" \
+    -H "Authorization: Bearer ${MASTODON_ACCESS_TOKEN}" \
+    --data-urlencode "status=${STATUS}" \
+    --data-urlencode "visibility=${VISIBILITY:-unlisted}" >/dev/null
+  echo "$GUID" >> "$STATE"
+  echo "posted: $TITLE"
+  sleep 2
+done
+'''

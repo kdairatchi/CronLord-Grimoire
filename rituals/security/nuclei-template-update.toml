@@ -5,7 +5,7 @@
 id          = "nuclei-template-update"
 name        = "nuclei templates — update"
 description = "Pull latest nuclei templates from projectdiscovery."
-category    = "hunting"
+category    = "security"
 kind        = "shell"
 schedule    = "15 5 * * *"
 timezone    = "UTC"

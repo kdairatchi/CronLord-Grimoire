@@ -1,0 +1,34 @@
+# arxiv-paper-alert — query arXiv API and append new papers (by arXiv ID) to a
+# local markdown inbox. Dedup via state file of seen IDs. No auth required.
+# Set ARXIV_QUERY (e.g. "cat:cs.CR AND all:bug+bounty"), OUT_FILE.
+
+[[jobs]]
+id          = "arxiv-paper-alert"
+name        = "arXiv — new paper alert"
+description = "Query arXiv and append new matching papers to a markdown file."
+category    = "content"
+kind        = "shell"
+schedule    = "0 12 * * *"
+timezone    = "UTC"
+enabled     = false
+timeout_sec = 180
+
+command = '''
+: "${ARXIV_QUERY:?required, e.g. cat:cs.CR+AND+all:LLM}"
+OUT="${OUT_FILE:-/home/anon/MyMac/Notes/arxiv-inbox.md}"
+STATE="${STATE_FILE:-/var/lib/cronlord/arxiv.seen}"
+MAX="${MAX_RESULTS:-20}"
+mkdir -p "$(dirname "$OUT")" "$(dirname "$STATE")"; touch "$STATE" "$OUT"
+URL="http://export.arxiv.org/api/query?search_query=${ARXIV_QUERY}&sortBy=submittedDate&sortOrder=descending&max_results=${MAX}"
+FEED=$(curl -sS -L "$URL")
+printf '%s' "$FEED" | xmlstarlet sel -N a=http://www.w3.org/2005/Atom -t -m '//a:entry' \
+  -v 'concat(a:id,"\t",a:title,"\t",a:published)' -n 2>/dev/null | while IFS=$'\t' read -r ID TITLE DATE; do
+  ID_SHORT=$(printf '%s' "$ID" | sed 's|.*/||; s|v[0-9]*$||')
+  [ -n "$ID_SHORT" ] || continue
+  grep -qxF "$ID_SHORT" "$STATE" && continue
+  T=$(printf '%s' "$TITLE" | tr '\n' ' ' | sed 's/  */ /g; s/^ //; s/ $//')
+  printf -- '- [%s](https://arxiv.org/abs/%s) — %s *(submitted %s)*\n' "$T" "$ID_SHORT" "$ID_SHORT" "${DATE%%T*}" >> "$OUT"
+  echo "$ID_SHORT" >> "$STATE"
+  echo "added: $ID_SHORT $T"
+done
+'''

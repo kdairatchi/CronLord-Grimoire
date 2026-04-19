@@ -1,0 +1,31 @@
+# ha-script-trigger — fire a Home Assistant script/automation/scene via REST API.
+# Create a long-lived access token in HA: Profile → Security → Create Token.
+# Required: HA_URL (e.g. http://homeassistant.local:8123), HA_TOKEN, HA_ENTITY
+# (e.g. script.morning_routine). Entity domain decides endpoint.
+
+[[jobs]]
+id          = "ha-script-trigger"
+name        = "Home Assistant — trigger entity"
+description = "Fire a HA script/scene/automation via REST API."
+category    = "home"
+kind        = "shell"
+schedule    = "0 7 * * *"
+timezone    = "UTC"
+enabled     = false
+timeout_sec = 60
+
+command = '''
+: "${HA_URL:?required}"
+: "${HA_TOKEN:?required}"
+: "${HA_ENTITY:?required, e.g. script.morning_routine}"
+DOMAIN="${HA_ENTITY%%.*}"
+case "$DOMAIN" in
+  script|scene|automation) SERVICE="turn_on" ;;
+  light|switch|input_boolean) SERVICE="${HA_SERVICE:-turn_on}" ;;
+  *) SERVICE="${HA_SERVICE:?required for domain $DOMAIN}" ;;
+esac
+curl -sS -f "${HA_URL%/}/api/services/${DOMAIN}/${SERVICE}" \
+  -H "Authorization: Bearer $HA_TOKEN" -H 'Content-Type: application/json' \
+  -d "$(printf '{"entity_id":"%s"}' "$HA_ENTITY")"
+echo "triggered $HA_ENTITY via $DOMAIN.$SERVICE"
+'''

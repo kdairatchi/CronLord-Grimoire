@@ -1,0 +1,23 @@
+# postgres-vacuum-analyze — weekly VACUUM ANALYZE for a Postgres DB.
+# Autovacuum handles day-to-day; this is a scheduled full sweep for stable planner
+# stats. Does NOT run VACUUM FULL (that rewrites the whole table and takes a lock).
+# Set PGHOST/PGUSER/PGDATABASE and PGPASSWORD (or use ~/.pgpass).
+
+[[jobs]]
+id          = "postgres-vacuum-analyze"
+name        = "Postgres — VACUUM ANALYZE"
+description = "Weekly VACUUM ANALYZE pass to keep planner stats fresh."
+category    = "database"
+kind        = "shell"
+schedule    = "30 3 * * 0"
+timezone    = "UTC"
+enabled     = false
+timeout_sec = 3600
+
+command = '''
+: "${PGDATABASE:?required}"
+: "${PGUSER:?required}"
+PGHOST="${PGHOST:-127.0.0.1}"
+psql -v ON_ERROR_STOP=1 -h "$PGHOST" -U "$PGUSER" -d "$PGDATABASE" \
+  -c "VACUUM (VERBOSE, ANALYZE);"
+'''

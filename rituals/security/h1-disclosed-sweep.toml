@@ -6,7 +6,7 @@
 id          = "h1-disclosed-sweep"
 name        = "H1 disclosed sweep"
 description = "Pull last 25 disclosed H1 reports to /var/lib/cronlord/grimoire/h1/."
-category    = "hunting"
+category    = "security"
 kind        = "http"
 schedule    = "30 */6 * * *"
 timezone    = "UTC"

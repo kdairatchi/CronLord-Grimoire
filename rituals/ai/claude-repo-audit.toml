@@ -5,7 +5,7 @@
 id          = "weekly-repo-audit"
 name        = "Weekly repo audit"
 description = "Claude reviews a repo and writes an audit note."
-category    = "claude"
+category    = "ai"
 kind        = "claude"
 schedule    = "0 14 * * 0"
 timezone    = "UTC"
