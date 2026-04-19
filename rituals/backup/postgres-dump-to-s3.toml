@@ -1,0 +1,23 @@
+# postgres-dump-to-s3 — nightly custom-format dump streamed to S3/R2/MinIO.
+# Requires: pg_dump, aws CLI. Credentials via env or ~/.aws/credentials.
+# Retention is handled by the bucket's lifecycle policy, not this job.
+
+[[jobs]]
+id          = "postgres-dump-to-s3"
+name        = "Postgres → S3 dump"
+description = "Nightly pg_dump -Fc streamed to S3-compatible storage."
+category    = "backup"
+kind        = "shell"
+schedule    = "0 3 * * *"
+timezone    = "UTC"
+enabled     = false
+timeout_sec = 3600
+
+command = '''
+[ -n "${DATABASE_URL:-}" ] || { echo "DATABASE_URL unset"; exit 2; }
+BUCKET="${S3_BUCKET:-my-backups}"
+NAME="${DB_NAME:-appdb}-$(date -u +%F-%H%M).dump"
+pg_dump -Fc "$DATABASE_URL" \
+  | aws s3 cp --storage-class STANDARD_IA - "s3://$BUCKET/postgres/$NAME"
+echo "uploaded $NAME"
+'''

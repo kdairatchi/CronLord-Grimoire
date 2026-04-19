@@ -1,0 +1,31 @@
+# weekly-run-stats — weekly success/fail breakdown across all CronLord jobs.
+# Writes a markdown report; can be ingested by a newsletter, Slack, or static site.
+
+[[jobs]]
+id          = "weekly-run-stats"
+name        = "Weekly run stats"
+description = "Markdown digest of last 7 days of CronLord runs per job."
+category    = "reporting"
+kind        = "shell"
+schedule    = "0 14 * * 1"
+timezone    = "UTC"
+enabled     = false
+timeout_sec = 120
+
+command = '''
+CL="${CRONLORD_URL:-http://127.0.0.1:7070}"
+SINCE=$(date -u -d '7 days ago' +%Y-%m-%d)
+OUT="${REPORT_FILE:-/tmp/cronlord-weekly-$(date -u +%F).md}"
+RUNS=$(curl -sS "$CL/api/runs?since=$SINCE" || echo "[]")
+{
+  echo "# CronLord — week of $SINCE"; echo
+  echo "$RUNS" | jq -r '
+    group_by(.job_id) | map({
+      job: .[0].job_id,
+      total: length,
+      ok: map(select(.status=="success")) | length,
+      fail: map(select(.status=="fail" or .status=="timeout")) | length
+    }) | .[] | "- **\(.job)** — \(.ok)/\(.total) ok · \(.fail) failed"'
+} > "$OUT"
+echo "wrote $OUT"
+'''

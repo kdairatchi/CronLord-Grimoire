@@ -1,0 +1,21 @@
+# restic-home-snapshot — encrypted incremental snapshot of $HOME to a restic repo.
+# Requires: restic, RESTIC_REPOSITORY + RESTIC_PASSWORD in env.
+
+[[jobs]]
+id          = "restic-home-snapshot"
+name        = "restic — $HOME snapshot"
+description = "Nightly restic backup with prune + integrity check."
+category    = "backup"
+kind        = "shell"
+schedule    = "0 2 * * *"
+timezone    = "UTC"
+enabled     = false
+timeout_sec = 7200
+
+command = '''
+: "${RESTIC_REPOSITORY:?unset}" "${RESTIC_PASSWORD:?unset}"
+EXCLUDES="${EXCLUDES:-$HOME/.cache,$HOME/Downloads,$HOME/node_modules,**/__pycache__,**/.venv}"
+restic backup "$HOME" --exclude="$EXCLUDES" --tag auto
+restic forget --prune --keep-daily 7 --keep-weekly 4 --keep-monthly 6
+restic check --read-data-subset=5%
+'''

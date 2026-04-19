@@ -1,0 +1,24 @@
+# ollama-local-summary — summarize a text file with a locally-run Ollama model.
+# Zero external API cost, fully offline. Requires: ollama, model pulled (e.g. `ollama pull llama3.2`).
+# Pipe output into any downstream path you like.
+
+[[jobs]]
+id          = "ollama-local-summary"
+name        = "Ollama — local summary"
+description = "Summarize INPUT_FILE with a local Ollama model; write to OUTPUT_FILE."
+category    = "ai"
+kind        = "shell"
+schedule    = "0 22 * * *"
+timezone    = "UTC"
+enabled     = false
+timeout_sec = 600
+
+command = '''
+MODEL="${OLLAMA_MODEL:-llama3.2}"
+IN="${INPUT_FILE:-/tmp/today.txt}"
+OUT="${OUTPUT_FILE:-/tmp/today.summary.md}"
+[ -s "$IN" ] || { echo "no input at $IN"; exit 1; }
+PROMPT="Summarize the following text in 5 bullet points. Plain prose, no hype.\n\n$(cat "$IN")"
+ollama run "$MODEL" "$PROMPT" > "$OUT"
+echo "wrote $OUT ($(wc -c < "$OUT") bytes)"
+'''

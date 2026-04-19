@@ -1,0 +1,36 @@
+# github-release-watch — poll a tracked list of GitHub repos for new releases.
+# Writes new release tags to a log file; wire slack_webhook_url for notifications.
+# Reads repos from REPOS_FILE (one "owner/repo" per line).
+
+[[jobs]]
+id          = "github-release-watch"
+name        = "GitHub — release watch"
+description = "Diff latest release tag per repo vs. cache; emit new tags only."
+category    = "devops"
+kind        = "shell"
+schedule    = "0 */3 * * *"
+timezone    = "UTC"
+enabled     = false
+timeout_sec = 300
+working_dir = "/var/lib/cronlord/grimoire/releases"
+
+command = '''
+mkdir -p "$PWD"
+LIST="${REPOS_FILE:-$PWD/repos.txt}"
+CACHE="$PWD/seen.tsv"
+: > /tmp/new-releases.txt
+touch "$CACHE"
+while IFS= read -r R; do
+  [ -z "$R" ] || [ "${R:0:1}" = "#" ] && continue
+  TAG=$(curl -sS "https://api.github.com/repos/$R/releases/latest" ${GITHUB_TOKEN:+-H "authorization: Bearer $GITHUB_TOKEN"} | jq -r '.tag_name // empty')
+  [ -z "$TAG" ] && continue
+  OLD=$(awk -F"\t" -v r="$R" '$1==r{print $2}' "$CACHE")
+  if [ "$TAG" != "$OLD" ]; then
+    echo "$R $OLD → $TAG" | tee -a /tmp/new-releases.txt
+    grep -v "^$R	" "$CACHE" > "$CACHE.tmp" || true
+    printf '%s\t%s\n' "$R" "$TAG" >> "$CACHE.tmp"
+    mv "$CACHE.tmp" "$CACHE"
+  fi
+done < "$LIST"
+[ -s /tmp/new-releases.txt ] && cat /tmp/new-releases.txt || echo "no new releases"
+'''

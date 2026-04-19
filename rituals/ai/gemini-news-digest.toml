@@ -1,0 +1,28 @@
+# gemini-news-digest — daily news digest via Google Gemini.
+# Uses the REST API directly. Set GEMINI_API_KEY (from aistudio.google.com).
+# Input can be any feed URL; output goes to DIGEST_FILE.
+
+[[jobs]]
+id          = "gemini-news-digest"
+name        = "Gemini — news digest"
+description = "Fetch a feed, summarize with Gemini, write dated digest."
+category    = "ai"
+kind        = "shell"
+schedule    = "30 13 * * *"
+timezone    = "UTC"
+enabled     = false
+timeout_sec = 300
+
+command = '''
+[ -n "${GEMINI_API_KEY:-}" ] || { echo "GEMINI_API_KEY unset"; exit 2; }
+FEED="${FEED_URL:-https://news.ycombinator.com/rss}"
+MODEL="${GEMINI_MODEL:-gemini-2.0-flash}"
+OUT="${DIGEST_FILE:-/tmp/digest-$(date -u +%F).md}"
+RAW=$(curl -sS --max-time 30 "$FEED" | head -c 12000)
+PROMPT="Summarize the top 10 stories from this RSS feed. Title + one-line why-it-matters + link. No hype.\n\n$RAW"
+curl -sS "https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent?key=${GEMINI_API_KEY}" \
+  -H "content-type: application/json" \
+  --data "$(jq -n --arg p "$PROMPT" '{contents:[{parts:[{text:$p}]}]}')" \
+  | jq -r '.candidates[0].content.parts[0].text' > "$OUT"
+echo "wrote $OUT"
+'''

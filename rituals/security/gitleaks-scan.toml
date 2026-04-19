@@ -1,0 +1,23 @@
+# gitleaks-scan — scan a directory tree for accidentally-committed secrets.
+# Requires: gitleaks (github.com/gitleaks/gitleaks). Fails on any finding.
+
+[[jobs]]
+id          = "gitleaks-scan"
+name        = "Gitleaks — secret scan"
+description = "Fail when gitleaks finds any committed secret in TARGET_DIR."
+category    = "security"
+kind        = "shell"
+schedule    = "0 3 * * *"
+timezone    = "UTC"
+enabled     = false
+timeout_sec = 900
+
+command = '''
+DIR="${TARGET_DIR:-$PWD}"
+REPORT="${REPORT_FILE:-/tmp/gitleaks-$(date -u +%F).json}"
+gitleaks detect --source "$DIR" --report-path "$REPORT" --report-format json --no-banner
+RC=$?
+COUNT=$(jq 'length' "$REPORT" 2>/dev/null || echo 0)
+echo "findings: $COUNT (report: $REPORT)"
+exit $RC
+'''

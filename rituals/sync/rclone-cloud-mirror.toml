@@ -1,0 +1,21 @@
+# rclone-cloud-mirror — one-way mirror a local dir to a cloud remote (S3/GDrive/Dropbox/B2/…).
+# Safe defaults: --size-only (no timestamp churn), no --delete without a second remote backup.
+
+[[jobs]]
+id          = "rclone-cloud-mirror"
+name        = "rclone — cloud mirror"
+description = "One-way copy from LOCAL_DIR to REMOTE:PATH using rclone."
+category    = "sync"
+kind        = "shell"
+schedule    = "0 1 * * *"
+timezone    = "UTC"
+enabled     = false
+timeout_sec = 3600
+
+command = '''
+LOCAL="${LOCAL_DIR:-$HOME/Documents}"
+REMOTE="${RCLONE_REMOTE:-gdrive:backup/documents}"
+rclone copy --size-only --transfers 4 --checkers 8 \
+  --log-level INFO --stats 5m \
+  "$LOCAL" "$REMOTE"
+'''

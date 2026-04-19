@@ -1,0 +1,25 @@
+# llm-cli-any — provider-agnostic LLM call via simonw/llm CLI.
+# Works with any provider you've configured (OpenAI, Anthropic, Gemini, Ollama,
+# Mistral, Groq, local llama.cpp — via llm plugins). Model picked via LLM_MODEL.
+# Install: pipx install llm && llm install llm-gemini llm-anthropic llm-ollama
+
+[[jobs]]
+id          = "llm-cli-any"
+name        = "llm CLI — any provider"
+description = "Run a prompt through simonw/llm with a configured provider/model."
+category    = "ai"
+kind        = "shell"
+schedule    = "0 */6 * * *"
+timezone    = "UTC"
+enabled     = false
+timeout_sec = 600
+
+command = '''
+MODEL="${LLM_MODEL:-gpt-4o-mini}"
+IN="${INPUT_FILE:-/tmp/input.txt}"
+OUT="${OUTPUT_FILE:-/tmp/output.md}"
+TASK="${LLM_TASK:-Summarize this document in 5 bullets and list any action items.}"
+[ -s "$IN" ] || { echo "no input at $IN"; exit 1; }
+printf '%s\n\n---\n' "$TASK" | cat - "$IN" | llm -m "$MODEL" > "$OUT"
+echo "wrote $OUT ($(wc -c < "$OUT") bytes)"
+'''

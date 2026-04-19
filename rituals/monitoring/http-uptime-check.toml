@@ -1,0 +1,21 @@
+# http-uptime-check — verify a URL returns 2xx within TIMEOUT seconds.
+# Fail the run if not; wire slack_webhook_url to get paged.
+
+[[jobs]]
+id          = "http-uptime-check"
+name        = "HTTP uptime check"
+description = "Fail when URL doesn't return 2xx within the deadline."
+category    = "monitoring"
+kind        = "shell"
+schedule    = "*/5 * * * *"
+timezone    = "UTC"
+enabled     = false
+timeout_sec = 15
+
+command = '''
+URL="${URL:-https://example.com}"
+DEADLINE="${DEADLINE:-8}"
+CODE=$(curl -sS -o /dev/null -w '%{http_code}' --max-time "$DEADLINE" "$URL" || echo "000")
+echo "$URL → $CODE"
+case "$CODE" in 2*) exit 0 ;; *) exit 1 ;; esac
+'''

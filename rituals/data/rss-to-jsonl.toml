@@ -1,0 +1,35 @@
+# rss-to-jsonl — fetch an RSS/Atom feed, emit one JSON object per item.
+# Append-only; dedupe by guid. Output file grows; rotate externally if needed.
+
+[[jobs]]
+id          = "rss-to-jsonl"
+name        = "RSS → JSONL"
+description = "Poll a feed and append new items to a JSONL file."
+category    = "data"
+kind        = "shell"
+schedule    = "0 * * * *"
+timezone    = "UTC"
+enabled     = false
+timeout_sec = 120
+
+command = '''
+FEED="${FEED_URL:-https://hnrss.org/frontpage}"
+OUT="${OUTPUT_FILE:-/var/lib/cronlord/grimoire/rss.jsonl}"
+mkdir -p "$(dirname "$OUT")"; touch "$OUT"
+RAW=$(curl -sS --max-time 30 "$FEED")
+NEW=0
+echo "$RAW" | xmllint --xpath '//item|//*[local-name()="entry"]' - 2>/dev/null \
+  | xmllint --html --xpath '//item|//*[local-name()="entry"]' - 2>/dev/null \
+  | awk 'BEGIN{RS="</item>|</entry>"} {print $0 "</item>"}' \
+  | while read -r ITEM; do
+      GUID=$(echo "$ITEM" | xmllint --xpath 'string(//guid|//id)' - 2>/dev/null)
+      [ -z "$GUID" ] && continue
+      grep -qF "\"guid\":\"$GUID\"" "$OUT" && continue
+      TITLE=$(echo "$ITEM" | xmllint --xpath 'string(//title)' - 2>/dev/null)
+      LINK=$(echo "$ITEM" | xmllint --xpath 'string(//link)' - 2>/dev/null)
+      jq -n --arg g "$GUID" --arg t "$TITLE" --arg l "$LINK" --arg f "$FEED" \
+        '{guid:$g,title:$t,link:$l,feed:$f,fetched_at:(now|tostring)}' >> "$OUT"
+      NEW=$((NEW+1))
+    done
+echo "new items added (dedup by guid)"
+'''

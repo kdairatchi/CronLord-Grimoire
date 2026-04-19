@@ -1,0 +1,33 @@
+# groq-fast-classify — use Groq's fast inference to label items in a JSONL file.
+# Set GROQ_API_KEY. INPUT should be JSONL with one "text" field per line.
+
+[[jobs]]
+id          = "groq-fast-classify"
+name        = "Groq — fast classify"
+description = "Label each line in a JSONL file via Groq; append labels in-place."
+category    = "ai"
+kind        = "shell"
+schedule    = "0 */4 * * *"
+timezone    = "UTC"
+enabled     = false
+timeout_sec = 600
+
+command = '''
+[ -n "${GROQ_API_KEY:-}" ] || { echo "GROQ_API_KEY unset"; exit 2; }
+INPUT="${INPUT_FILE:-/tmp/items.jsonl}"
+OUT="${OUTPUT_FILE:-/tmp/items.labeled.jsonl}"
+MODEL="${GROQ_MODEL:-llama-3.3-70b-versatile}"
+LABELS="${LABELS:-bug,question,feature,chore,security}"
+: > "$OUT"
+while IFS= read -r line; do
+  TEXT=$(echo "$line" | jq -r '.text // empty')
+  [ -z "$TEXT" ] && continue
+  LABEL=$(curl -sS https://api.groq.com/openai/v1/chat/completions \
+    -H "authorization: Bearer $GROQ_API_KEY" -H "content-type: application/json" \
+    --data "$(jq -n --arg p "Classify into exactly one label from: $LABELS. Reply with the label only. Text:\n$TEXT" \
+      --arg m "$MODEL" '{model:$m,messages:[{role:"user",content:$p}],max_tokens:20}')" \
+    | jq -r '.choices[0].message.content // "unknown"')
+  echo "$line" | jq --arg l "$LABEL" '. + {label:$l}' >> "$OUT"
+done < "$INPUT"
+echo "labeled $(wc -l < "$OUT") items → $OUT"
+'''

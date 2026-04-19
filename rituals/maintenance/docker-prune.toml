@@ -1,0 +1,15 @@
+# docker-prune — reclaim disk by pruning unused Docker state.
+# Conservative by default (only unused volumes/images/networks; no --all).
+
+[[jobs]]
+id          = "docker-prune"
+name        = "Docker prune"
+description = "Weekly docker system prune -f (volumes included)."
+category    = "maintenance"
+kind        = "shell"
+schedule    = "0 4 * * 0"
+timezone    = "UTC"
+enabled     = false
+timeout_sec = 600
+
+command = "docker system prune -f --volumes"
