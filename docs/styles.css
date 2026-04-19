@@ -252,21 +252,25 @@ main#gallery { padding: 40px 20px 80px; }
 .badge-kind[data-kind="http"] { background: color-mix(in oklab, var(--cyan) 18%, transparent); color: var(--cyan); border-color: color-mix(in oklab, var(--cyan) 40%, transparent); }
 
 .card-install {
-  display: flex; align-items: center; gap: 8px;
+  display: flex; align-items: flex-start; gap: 8px;
   background: var(--bg-sunk);
   border: 1px solid var(--border);
   border-radius: 8px;
   padding: 8px 10px;
 }
 .card-cmd {
-  flex: 1;
+  flex: 1 1 auto;
+  min-width: 0;
   color: var(--fg);
   font-size: 12.5px;
-  overflow-x: auto;
-  white-space: nowrap;
-  scrollbar-width: thin;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  line-height: 1.5;
 }
 .copy-btn {
+  flex: 0 0 auto;
+  align-self: flex-start;
   border: 1px solid var(--border-strong);
   background: transparent;
   color: var(--fg-dim);
