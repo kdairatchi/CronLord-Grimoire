@@ -1,0 +1,34 @@
+# aider-autocommit — run paul-gauthier/aider non-interactively against a scratch workspace.
+#
+# DANGER: this ritual uses an AI to modify and commit code. Point it at a
+# disposable scratch repo only — NEVER production. Keep the workspace on a
+# dedicated branch; review diffs before merging upstream.
+#
+# Install: `pipx install aider-chat`. Requires OPENAI_API_KEY or ANTHROPIC_API_KEY.
+
+[[jobs]]
+id          = "aider-autocommit"
+name        = "aider — scheduled auto-edit"
+description = "Run aider --message ... --yes --auto-commits in a scratch workspace."
+category    = "agents"
+kind        = "shell"
+schedule    = "0 7 * * *"
+timezone    = "UTC"
+enabled     = false
+timeout_sec = 1800
+
+# Point this at a disposable scratch clone, not your real repo.
+working_dir = "/var/lib/cronlord/agents/aider-scratch"
+
+command = '''
+TASK="${AIDER_TASK:-Run tests. If anything is failing, fix the smallest possible diff to make it pass. Do not refactor.}"
+MODEL="${AIDER_MODEL:-gpt-4o-mini}"
+# --yes auto-confirms prompts; --auto-commits writes a commit per edit.
+# --no-stream avoids colored output in logs. --no-pretty for plain diffs.
+aider \
+  --model "$MODEL" \
+  --message "$TASK" \
+  --yes --auto-commits \
+  --no-stream --no-pretty \
+  --test-cmd "${AIDER_TEST_CMD:-make test}"
+'''

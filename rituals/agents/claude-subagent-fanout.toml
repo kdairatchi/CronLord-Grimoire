@@ -1,0 +1,39 @@
+# claude-subagent-fanout — showcase: one Claude Code run fans out into N parallel subagents.
+# The prompt tells Claude to read a targets file and dispatch one `recon-agent` Task per target
+# in parallel, then aggregate findings into a single summary.
+# Requires: claude CLI; the `recon-agent` subagent installed (see /home/anon/.claude/agents/).
+
+[[jobs]]
+id          = "claude-subagent-fanout"
+name        = "Claude subagent fanout"
+description = "Read targets file, spawn one recon-agent subagent per target in parallel, aggregate."
+category    = "agents"
+kind        = "claude"
+schedule    = "0 5 * * *"
+timezone    = "UTC"
+enabled     = false
+timeout_sec = 7200
+working_dir = "/home/anon"
+
+command = '''
+Read /etc/cronlord/targets.txt — one root domain per line, lines starting with `#` are comments.
+
+For each target, spawn a `recon-agent` subagent in parallel using the Task tool. Give each subagent:
+- the domain
+- an explicit instruction to write its findings to /var/lib/cronlord/recon/<domain>/$(date -u +%F).md
+- a 20-minute budget
+
+After every subagent completes, read each findings file and write a single daily summary to
+/var/lib/cronlord/recon/summary-$(date -u +%F).md. Structure:
+- Target
+- New subdomains count
+- New hosts-of-interest (admin panels, staging, API gateways)
+- Top 3 priority items across all targets
+
+Do not fabricate results. If a subagent returned empty, mark it as empty. No hype.
+'''
+
+[jobs.args]
+model           = "claude-sonnet-4-6"
+permission_mode = "bypassPermissions"
+extra_args      = ["--dangerously-skip-permissions"]

@@ -1,0 +1,29 @@
+# llm-tools-call — run simonw/llm in tool-calling mode to drive a real agentic task.
+# llm 0.19+ supports function calling via plugins (llm-tools-*, MCP bridge, custom Python).
+# Install: `pipx install llm && llm install llm-tools-exec llm-tools-quickjs`.
+# Set LLM_MODEL and LLM_TOOLS (comma list of registered tools).
+
+[[jobs]]
+id          = "llm-tools-call"
+name        = "llm — tool-calling agent"
+description = "Run a tool-enabled llm session (simonw/llm) on a prompt + input file."
+category    = "agents"
+kind        = "shell"
+schedule    = "0 */4 * * *"
+timezone    = "UTC"
+enabled     = false
+timeout_sec = 900
+working_dir = "/home/anon"
+
+command = '''
+MODEL="${LLM_MODEL:-gpt-4o-mini}"
+TOOLS="${LLM_TOOLS:-Exec,QuickJS}"
+TASK="${LLM_TASK:-Read the input, run any tools you need, return a 5-line summary.}"
+IN="${INPUT_FILE:-/tmp/input.txt}"
+OUT="${OUTPUT_FILE:-/tmp/llm-tools-$(date -u +%F).md}"
+[ -s "$IN" ] || { echo "no input at $IN"; exit 1; }
+printf '%s\n\n---\n' "$TASK" | cat - "$IN" \
+  | llm -m "$MODEL" --tools "$TOOLS" --td \
+  > "$OUT"
+echo "wrote $OUT"
+'''

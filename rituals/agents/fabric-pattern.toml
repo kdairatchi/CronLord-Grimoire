@@ -1,0 +1,24 @@
+# fabric-pattern — pipe an input through a danielmiessler/fabric pattern on a schedule.
+# fabric is an AI-pattern framework with 200+ prompts, provider-agnostic via its config.
+# Install: `brew install fabric-ai` or `go install github.com/danielmiessler/fabric@latest`.
+
+[[jobs]]
+id          = "fabric-pattern"
+name        = "Fabric — pattern run"
+description = "Pipe INPUT_FILE through a fabric pattern; output to OUTPUT_FILE."
+category    = "agents"
+kind        = "shell"
+schedule    = "0 */6 * * *"
+timezone    = "UTC"
+enabled     = false
+timeout_sec = 600
+working_dir = "/home/anon"
+
+command = '''
+PATTERN="${FABRIC_PATTERN:-summarize}"
+IN="${INPUT_FILE:-/tmp/input.txt}"
+OUT="${OUTPUT_FILE:-/tmp/fabric-$(date -u +%F).md}"
+[ -s "$IN" ] || { echo "no input at $IN"; exit 1; }
+cat "$IN" | fabric --pattern "$PATTERN" > "$OUT"
+echo "wrote $OUT ($(wc -c < "$OUT") bytes)"
+'''

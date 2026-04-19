@@ -41,7 +41,7 @@ Scans, audits, and public-intel sweeps. Works for both defenders and bounty hunt
 - **gitleaks-scan** — fail on accidentally committed secrets
 
 ### `rituals/ai/`
-LLM-driven rituals. Vendor-neutral by design — one ritual per major provider plus `llm-cli-any` as the universal option.
+One-shot LLM calls. Vendor-neutral by design — one ritual per major provider plus `llm-cli-any` as the universal option.
 - **claude-vault-summary** — `kind: claude`, Haiku, summarizes Obsidian daily notes
 - **claude-repo-audit** — `kind: claude`, Sonnet, writes weekly audit note
 - **ollama-local-summary** — fully offline via locally-hosted Ollama
@@ -49,6 +49,15 @@ LLM-driven rituals. Vendor-neutral by design — one ritual per major provider p
 - **gemini-news-digest** — Google Gemini summarizing an RSS feed
 - **groq-fast-classify** — Groq's fast inference to label a JSONL file
 - **llm-cli-any** — provider-agnostic via [simonw/llm](https://llm.datasette.io/) (OpenAI, Anthropic, Gemini, Ollama, Mistral, Groq, local — all via plugins)
+
+### `rituals/agents/`
+Agentic rituals — tool-using, multi-step, sometimes subagent-spawning. Where `rituals/ai/` calls a model once, `rituals/agents/` hands a goal to an agent framework and lets it work.
+- **claude-skill-invoke** — generic wrapper to run any Claude Code `/<skill>` on schedule
+- **claude-subagent-fanout** — one Claude run spawns N parallel `Task`-tool subagents over a targets file
+- **goose-recipe** — Block's [Goose](https://block.github.io/goose/) agent running a prepared recipe
+- **fabric-pattern** — [danielmiessler/fabric](https://github.com/danielmiessler/fabric) pattern pipeline
+- **llm-tools-call** — simonw/llm with tool-calling plugins (Exec, QuickJS, MCP bridge, …)
+- **aider-autocommit** — [aider](https://aider.chat/) in scratch workspace (DANGER: writes code + commits)
 
 ### `rituals/data/`
 Pipelines, ETL, ingestion.

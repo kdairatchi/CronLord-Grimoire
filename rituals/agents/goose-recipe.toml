@@ -1,0 +1,23 @@
+# goose-recipe — run a Block Goose recipe non-interactively on a schedule.
+# Goose: https://block.github.io/goose/ — open-source agent with LLM-agnostic provider config.
+# Recipes: prepared sessions with a goal + activities + instructions in YAML.
+# Install: `brew install block-goose-cli` (or cargo install goose).
+
+[[jobs]]
+id          = "goose-recipe"
+name        = "Goose — recipe run"
+description = "Execute a Goose recipe (block/goose) non-interactively."
+category    = "agents"
+kind        = "shell"
+schedule    = "0 */12 * * *"
+timezone    = "UTC"
+enabled     = false
+timeout_sec = 3600
+working_dir = "/home/anon"
+
+command = '''
+RECIPE="${RECIPE_PATH:-$HOME/.config/goose/recipes/daily-report.yaml}"
+[ -f "$RECIPE" ] || { echo "recipe not found: $RECIPE"; exit 2; }
+# --quiet silences the interactive banner; --no-session avoids writing a session file.
+goose run --recipe "$RECIPE" --quiet --no-session
+'''

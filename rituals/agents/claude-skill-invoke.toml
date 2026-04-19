@@ -1,0 +1,23 @@
+# claude-skill-invoke — generic wrapper to run any Claude Code skill on a schedule.
+# Set SKILL_NAME (without the leading slash) and SKILL_ARGS (optional).
+# Requires: claude CLI logged in (`claude login` once on the box).
+
+[[jobs]]
+id          = "claude-skill-invoke"
+name        = "Claude skill — scheduled invoke"
+description = "Run `claude -p /<SKILL_NAME> <ARGS>` on schedule. Works for any installed skill."
+category    = "agents"
+kind        = "claude"
+schedule    = "0 13 * * *"
+timezone    = "UTC"
+enabled     = false
+timeout_sec = 1800
+working_dir = "/home/anon"
+
+# command is the prompt. For skills, use the slash form.
+command = "/refresh-latest"
+
+[jobs.args]
+model           = "claude-sonnet-4-6"
+permission_mode = "bypassPermissions"
+extra_args      = ["--dangerously-skip-permissions"]
