@@ -1,0 +1,15 @@
+# brew-outdated-report — list outdated brew packages (macOS/Linuxbrew).
+# Does not auto-upgrade; reads only. Pipe into Slack for weekly review.
+
+[[jobs]]
+id          = "brew-outdated-report"
+name        = "brew outdated report"
+description = "List outdated Homebrew packages. Read-only."
+category    = "maintenance"
+kind        = "shell"
+schedule    = "0 12 * * 1"
+timezone    = "UTC"
+enabled     = false
+timeout_sec = 120
+
+command = "brew update --quiet >/dev/null && brew outdated --verbose"

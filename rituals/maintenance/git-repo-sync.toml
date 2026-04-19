@@ -1,0 +1,16 @@
+# git-repo-sync — keep a repo up to date with origin (no merge, fetch only).
+# Safe default: fetches + prunes, never rewrites local work.
+
+[[jobs]]
+id          = "git-repo-sync"
+name        = "git fetch (one repo)"
+description = "Fetch + prune a local git repo to keep tracking branches fresh."
+category    = "maintenance"
+kind        = "shell"
+schedule    = "0 */2 * * *"
+timezone    = "UTC"
+enabled     = false
+timeout_sec = 60
+working_dir = "/home/anon/MyMac"
+
+command = "git fetch --all --prune --tags --quiet && git log --oneline -1 @{u} 2>/dev/null"

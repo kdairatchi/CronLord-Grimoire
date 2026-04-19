@@ -1,0 +1,20 @@
+# disk-space-alert — fail the run when / usage exceeds THRESHOLD%.
+# Wire slack_webhook_url in CronLord UI to get pinged on failure.
+
+[[jobs]]
+id          = "disk-space-alert"
+name        = "Disk space alert"
+description = "Fail when root filesystem usage exceeds THRESHOLD percent."
+category    = "monitoring"
+kind        = "shell"
+schedule    = "*/30 * * * *"
+timezone    = "UTC"
+enabled     = false
+timeout_sec = 10
+
+command = '''
+THRESHOLD="${THRESHOLD:-85}"
+USED=$(df -P / | awk 'NR==2 {gsub("%",""); print $5}')
+echo "root usage ${USED}% (threshold ${THRESHOLD}%)"
+[ "$USED" -gt "$THRESHOLD" ] && exit 1 || exit 0
+'''

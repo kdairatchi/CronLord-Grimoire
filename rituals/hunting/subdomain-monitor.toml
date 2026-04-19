@@ -1,0 +1,35 @@
+# subdomain-monitor — diff subdomain enumeration against yesterday.
+# New subdomains often = new attack surface inside a bug bounty scope.
+# Requires: subfinder. Set TARGET to a root domain (in-scope only).
+
+[[jobs]]
+id          = "subdomain-monitor"
+name        = "Subdomain monitor"
+description = "Daily subfinder run, diff vs. last baseline, emit new hosts."
+category    = "hunting"
+kind        = "shell"
+schedule    = "0 5 * * *"
+timezone    = "UTC"
+enabled     = false
+timeout_sec = 900
+working_dir = "/var/lib/cronlord/grimoire/subdomain-monitor"
+
+command = '''
+mkdir -p "$PWD"
+TARGET="${TARGET:-example.com}"
+OUT="$TARGET.new.txt"
+BASE="$TARGET.baseline.txt"
+subfinder -d "$TARGET" -silent -all | sort -u > "$OUT"
+if [ ! -s "$BASE" ]; then
+  cp "$OUT" "$BASE"
+  echo "baseline: $(wc -l < "$BASE") subs"
+  exit 0
+fi
+DIFF=$(comm -13 "$BASE" "$OUT")
+if [ -n "$DIFF" ]; then
+  echo "new subdomains for $TARGET:"; echo "$DIFF"
+  cat "$OUT" > "$BASE"
+  exit 0
+fi
+echo "no change"
+'''

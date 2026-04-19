@@ -1,0 +1,30 @@
+# weekly-repo-audit — point Claude at a repo and produce a security/quality audit note.
+# Outputs to a dated markdown file. Keep scope tight — one repo per job.
+
+[[jobs]]
+id          = "weekly-repo-audit"
+name        = "Weekly repo audit"
+description = "Claude reviews a repo and writes an audit note."
+category    = "claude"
+kind        = "claude"
+schedule    = "0 14 * * 0"
+timezone    = "UTC"
+enabled     = false
+timeout_sec = 1800
+working_dir = "/home/anon/MyRepo"
+
+command = '''
+Audit this repo for:
+- exposed secrets (grep .env, config.*, credentials)
+- unpinned dependencies with known CVEs
+- TODO/FIXME that reference security
+- recently added third-party deps in package.json / go.mod / Cargo.toml / requirements.txt
+
+Write findings to ./audits/$(date -u +%Y-%m-%d).md. Severity + one-line evidence per finding.
+Skip anything already listed in ./audits/ignored.txt.
+'''
+
+[jobs.args]
+model           = "claude-sonnet-4-6"
+permission_mode = "bypassPermissions"
+extra_args      = ["--dangerously-skip-permissions"]

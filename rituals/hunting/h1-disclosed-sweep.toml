@@ -1,0 +1,28 @@
+# h1-disclosed-sweep — pull HackerOne disclosed reports via GraphQL, save JSON.
+# Feed into your notes pipeline (refresh-latest / RAG index / alerting).
+# Unauthenticated; respects public-disclosure endpoint.
+
+[[jobs]]
+id          = "h1-disclosed-sweep"
+name        = "H1 disclosed sweep"
+description = "Pull last 25 disclosed H1 reports to /var/lib/cronlord/grimoire/h1/."
+category    = "hunting"
+kind        = "http"
+schedule    = "30 */6 * * *"
+timezone    = "UTC"
+enabled     = false
+timeout_sec = 30
+
+command = '''
+{
+  "method": "POST",
+  "url": "https://hackerone.com/graphql",
+  "headers": {
+    "content-type": "application/json",
+    "x-product-area": "hacktivity",
+    "x-product-feature": "overview",
+    "referer": "https://hackerone.com/hacktivity/overview?queryString=disclosed%3Atrue&sortField=latest_disclosable_activity_at&sortDirection=DESC&pageIndex=0"
+  },
+  "body": "{\"operationName\":\"HacktivitySearchQuery\",\"variables\":{\"queryString\":\"disclosed:true\",\"size\":25,\"sort\":{\"field\":\"latest_disclosable_activity_at\",\"direction\":\"DESC\"},\"from\":0},\"query\":\"query HacktivitySearchQuery($queryString:String!,$size:Int!,$sort:SortInput!,$from:Int!){search(index:CompleteHacktivityReportIndex,query_string:$queryString,size:$size,from:$from,sort:$sort){nodes{... on HacktivityDocument{databaseId url title total_awarded_amount latest_disclosable_activity_at team{handle} reporter{username} severity_rating}}total_count}}\"}"
+}
+'''

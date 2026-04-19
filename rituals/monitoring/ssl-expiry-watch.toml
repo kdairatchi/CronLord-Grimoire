@@ -1,0 +1,26 @@
+# ssl-expiry-watch — alert when a cert is within 14 days of expiry.
+# Requires: openssl. Set SLACK_WEBHOOK for alerts; without it, job just logs.
+# Override DOMAIN by editing this file or via /api/jobs/{id} before enable.
+
+[[jobs]]
+id          = "ssl-expiry-watch"
+name        = "SSL expiry watch"
+description = "Check TLS cert expiry for a domain, warn if <14 days left."
+category    = "monitoring"
+kind        = "shell"
+schedule    = "0 7 * * *"
+timezone    = "UTC"
+enabled     = false
+timeout_sec = 30
+
+command = '''
+DOMAIN="${DOMAIN:-example.com}"
+END=$(echo | openssl s_client -servername "$DOMAIN" -connect "$DOMAIN":443 2>/dev/null \
+      | openssl x509 -noout -enddate 2>/dev/null | cut -d= -f2)
+[ -z "$END" ] && { echo "probe failed for $DOMAIN"; exit 1; }
+EPOCH_END=$(date -d "$END" +%s)
+EPOCH_NOW=$(date +%s)
+DAYS=$(( (EPOCH_END - EPOCH_NOW) / 86400 ))
+echo "$DOMAIN expires in $DAYS day(s) ($END)"
+[ "$DAYS" -lt 14 ] && exit 2 || exit 0
+'''

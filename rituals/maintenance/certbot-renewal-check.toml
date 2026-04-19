@@ -1,0 +1,16 @@
+# certbot-renewal-check — dry-run renewal to catch problems before expiry.
+# Runs as a non-mutating check; actual renewal happens on certbot's own timer
+# (or flip `--dry-run` off if you want CronLord to drive renewals).
+
+[[jobs]]
+id          = "certbot-renewal-check"
+name        = "certbot renewal (dry run)"
+description = "Daily dry-run of certbot renew to detect config drift."
+category    = "maintenance"
+kind        = "shell"
+schedule    = "0 4 * * *"
+timezone    = "UTC"
+enabled     = false
+timeout_sec = 300
+
+command = "certbot renew --dry-run --non-interactive --quiet"

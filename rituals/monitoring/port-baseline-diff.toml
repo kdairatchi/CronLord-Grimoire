@@ -1,0 +1,36 @@
+# port-baseline-diff — keep a baseline of open ports, alert on drift.
+# First run writes the baseline. Subsequent runs diff against it and fail on change.
+# Requires: nmap. Set TARGET to an IP or CIDR you own.
+
+[[jobs]]
+id          = "port-baseline-diff"
+name        = "Port baseline diff"
+description = "Nmap scan vs. stored baseline; fail on added/removed ports."
+category    = "monitoring"
+kind        = "shell"
+schedule    = "17 6 * * *"
+timezone    = "UTC"
+enabled     = false
+timeout_sec = 600
+working_dir = "/var/lib/cronlord/grimoire/port-baseline"
+
+command = '''
+mkdir -p "$PWD"
+TARGET="${TARGET:-127.0.0.1}"
+CUR="current.txt"
+BASE="baseline.txt"
+nmap -Pn -T4 -p- --min-rate 1000 -oG - "$TARGET" \
+  | awk '/Ports:/ {for (i=5;i<=NF;i++) if ($i ~ /\/open\//) print $i}' \
+  | sort -u > "$CUR"
+if [ ! -s "$BASE" ]; then
+  cp "$CUR" "$BASE"
+  echo "baseline written: $(wc -l < "$BASE") open ports"
+  exit 0
+fi
+if ! diff -q "$BASE" "$CUR" >/dev/null; then
+  echo "port drift detected:"
+  diff -u "$BASE" "$CUR"
+  exit 1
+fi
+echo "no drift"
+'''

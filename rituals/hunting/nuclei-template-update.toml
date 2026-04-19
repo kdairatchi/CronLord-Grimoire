@@ -1,0 +1,15 @@
+# nuclei-template-update — keep nuclei templates fresh.
+# Runs before any hunting run that depends on latest templates.
+
+[[jobs]]
+id          = "nuclei-template-update"
+name        = "nuclei templates — update"
+description = "Pull latest nuclei templates from projectdiscovery."
+category    = "hunting"
+kind        = "shell"
+schedule    = "15 5 * * *"
+timezone    = "UTC"
+enabled     = false
+timeout_sec = 300
+
+command = "nuclei -update-templates -silent"
