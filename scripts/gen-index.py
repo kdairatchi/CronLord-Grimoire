@@ -1,12 +1,15 @@
 #!/usr/bin/env python3
-"""Regenerate rituals/INDEX.md from all TOML ritual files.
+"""Regenerate rituals/INDEX.md + docs/rituals.json from all TOML ritual files.
 
 Reads every .toml under rituals/, extracts id / name / description / schedule /
-timezone / category / kind / enabled, and writes a single INDEX.md grouped by
-category, sorted by id. Pure stdlib (tomllib from Python 3.11+).
+timezone / category / kind / enabled / command, and writes:
+  - rituals/INDEX.md  (human catalog, grouped by category)
+  - docs/rituals.json (machine-readable feed for the GitHub Pages gallery)
+Pure stdlib (tomllib from Python 3.11+).
 """
 from __future__ import annotations
 
+import json
 import sys
 import tomllib
 from pathlib import Path
@@ -14,6 +17,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 RITUALS = ROOT / "rituals"
 OUT = RITUALS / "INDEX.md"
+JSON_OUT = ROOT / "docs" / "rituals.json"
 
 
 def main() -> int:
@@ -69,6 +73,38 @@ def main() -> int:
 
     OUT.write_text("\n".join(lines))
     print(f"wrote {OUT.relative_to(ROOT)} — {total} rituals / {len(by_cat)} categories")
+
+    flat: list[dict] = []
+    for cat in sorted(by_cat):
+        for r in sorted(by_cat[cat], key=lambda r: r["id"]):
+            flat.append(
+                {
+                    "id": r["id"],
+                    "name": r["name"],
+                    "description": r["description"],
+                    "category": cat,
+                    "kind": r["kind"],
+                    "schedule": r["schedule"],
+                    "timezone": r["timezone"],
+                    "path": r["path"],
+                    "install_cmd": f"./install.sh {r['path']}",
+                    "github_url": f"https://github.com/kdairatchi/cronlord-grimoire/blob/main/{r['path']}",
+                }
+            )
+    JSON_OUT.parent.mkdir(parents=True, exist_ok=True)
+    JSON_OUT.write_text(
+        json.dumps(
+            {
+                "generated_at": None,
+                "total": total,
+                "categories": sorted(by_cat),
+                "rituals": flat,
+            },
+            indent=2,
+        )
+        + "\n"
+    )
+    print(f"wrote {JSON_OUT.relative_to(ROOT)} — {total} rituals (JSON feed)")
     return 0
 
 
