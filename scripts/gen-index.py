@@ -18,12 +18,18 @@ ROOT = Path(__file__).resolve().parent.parent
 RITUALS = ROOT / "rituals"
 OUT = RITUALS / "INDEX.md"
 JSON_OUT = ROOT / "docs" / "rituals.json"
+SCAN_IN = ROOT / "docs" / "scan.json"
 
 
 def main() -> int:
     if not RITUALS.is_dir():
         print(f"no rituals dir at {RITUALS}", file=sys.stderr)
         return 1
+    scan_by_path: dict[str, dict] = {}
+    if SCAN_IN.exists():
+        scan = json.loads(SCAN_IN.read_text())
+        scan_by_path = {r["path"]: r for r in scan.get("results", [])}
+
     by_cat: dict[str, list[dict]] = {}
     for toml_path in sorted(RITUALS.rglob("*.toml")):
         with toml_path.open("rb") as fh:
@@ -35,6 +41,7 @@ def main() -> int:
         job = jobs[0]
         cat = job.get("category") or toml_path.parent.name
         rel = toml_path.relative_to(ROOT).as_posix()
+        audit = scan_by_path.get(rel, {})
         by_cat.setdefault(cat, []).append(
             {
                 "id": job.get("id", toml_path.stem),
@@ -44,6 +51,13 @@ def main() -> int:
                 "timezone": job.get("timezone", "UTC"),
                 "kind": job.get("kind", "shell"),
                 "enabled": bool(job.get("enabled", False)),
+                "timeout_sec": job.get("timeout_sec"),
+                "author": audit.get("author", job.get("author", "kdairatchi")),
+                "trust": audit.get("trust", job.get("trust", "core")),
+                "permissions": audit.get("permissions", []),
+                "required_env": audit.get("required_env", []),
+                "scan_status": audit.get("status", "UNKNOWN"),
+                "warnings": audit.get("warnings", []),
                 "path": rel,
             }
         )
@@ -86,6 +100,13 @@ def main() -> int:
                     "kind": r["kind"],
                     "schedule": r["schedule"],
                     "timezone": r["timezone"],
+                    "timeout_sec": r.get("timeout_sec"),
+                    "author": r.get("author", "kdairatchi"),
+                    "trust": r.get("trust", "core"),
+                    "permissions": r.get("permissions", []),
+                    "required_env": r.get("required_env", []),
+                    "scan_status": r.get("scan_status", "UNKNOWN"),
+                    "warnings": r.get("warnings", []),
                     "path": r["path"],
                     "install_cmd": f"./install.sh {r['path']}",
                     "github_url": f"https://github.com/kdairatchi/cronlord-grimoire/blob/main/{r['path']}",

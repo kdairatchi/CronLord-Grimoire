@@ -192,7 +192,7 @@ Missing Mistral, Cohere, xAI Grok, DeepSeek, OpenRouter, Cloudflare Workers AI, 
 
 ## Stats
 
-- **51 rituals** across **17 categories**
+- **54 rituals** across **17 categories** — scanner: 54/54 pass
 - All ship `enabled = false` — nothing auto-runs on install
 - All shell bodies are `/bin/sh`-compatible unless declared otherwise in the header
 - All secrets pass via env vars — grep the repo for `:?required` to see which

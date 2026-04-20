@@ -1,0 +1,26 @@
+# caido-project-export — snapshot a Caido project to a timestamped archive.
+# For pentesters / bounty hunters who want daily backups of proxy history +
+# findings + workflows. DANGER: overwrites last day's export if OUT_DIR stale.
+# Install: caido + caido-cli (https://caido.io). Required env: CAIDO_PROJECT, OUT_DIR.
+
+[[jobs]]
+id          = "caido-project-export"
+name        = "Caido — project snapshot"
+description = "Export the active Caido project to a dated archive for backup."
+category    = "security"
+kind        = "shell"
+schedule    = "0 3 * * *"
+timezone    = "UTC"
+enabled     = false
+timeout_sec = 600
+
+command = '''
+: "${CAIDO_PROJECT:?required}"
+: "${OUT_DIR:?required}"
+mkdir -p "$OUT_DIR"
+stamp=$(date -u +%Y-%m-%d)
+out="$OUT_DIR/${CAIDO_PROJECT}-${stamp}.caido"
+caido-cli project export --project "$CAIDO_PROJECT" --output "$out"
+echo "exported: $out ($(du -h "$out" | cut -f1))"
+find "$OUT_DIR" -name "${CAIDO_PROJECT}-*.caido" -mtime +30 -delete
+'''

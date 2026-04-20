@@ -1,6 +1,6 @@
 {
   "generated_at": null,
-  "total": 51,
+  "total": 54,
   "categories": [
     "agents",
     "ai",
@@ -29,6 +29,13 @@
       "kind": "shell",
       "schedule": "0 7 * * *",
       "timezone": "UTC",
+      "timeout_sec": 1800,
+      "author": "kdairatchi",
+      "trust": "core",
+      "permissions": [],
+      "required_env": [],
+      "scan_status": "PASS",
+      "warnings": [],
       "path": "rituals/agents/aider-autocommit.toml",
       "install_cmd": "./install.sh rituals/agents/aider-autocommit.toml",
       "github_url": "https://github.com/kdairatchi/cronlord-grimoire/blob/main/rituals/agents/aider-autocommit.toml"
@@ -41,6 +48,13 @@
       "kind": "claude",
       "schedule": "0 13 * * *",
       "timezone": "UTC",
+      "timeout_sec": 1800,
+      "author": "kdairatchi",
+      "trust": "core",
+      "permissions": [],
+      "required_env": [],
+      "scan_status": "PASS",
+      "warnings": [],
       "path": "rituals/agents/claude-skill-invoke.toml",
       "install_cmd": "./install.sh rituals/agents/claude-skill-invoke.toml",
       "github_url": "https://github.com/kdairatchi/cronlord-grimoire/blob/main/rituals/agents/claude-skill-invoke.toml"
@@ -53,6 +67,15 @@
       "kind": "claude",
       "schedule": "0 5 * * *",
       "timezone": "UTC",
+      "timeout_sec": 7200,
+      "author": "kdairatchi",
+      "trust": "core",
+      "permissions": [
+        "filesystem"
+      ],
+      "required_env": [],
+      "scan_status": "PASS",
+      "warnings": [],
       "path": "rituals/agents/claude-subagent-fanout.toml",
       "install_cmd": "./install.sh rituals/agents/claude-subagent-fanout.toml",
       "github_url": "https://github.com/kdairatchi/cronlord-grimoire/blob/main/rituals/agents/claude-subagent-fanout.toml"
@@ -65,6 +88,15 @@
       "kind": "shell",
       "schedule": "0 */6 * * *",
       "timezone": "UTC",
+      "timeout_sec": 600,
+      "author": "kdairatchi",
+      "trust": "core",
+      "permissions": [
+        "filesystem"
+      ],
+      "required_env": [],
+      "scan_status": "PASS",
+      "warnings": [],
       "path": "rituals/agents/fabric-pattern.toml",
       "install_cmd": "./install.sh rituals/agents/fabric-pattern.toml",
       "github_url": "https://github.com/kdairatchi/cronlord-grimoire/blob/main/rituals/agents/fabric-pattern.toml"
@@ -77,6 +109,13 @@
       "kind": "shell",
       "schedule": "0 */12 * * *",
       "timezone": "UTC",
+      "timeout_sec": 3600,
+      "author": "kdairatchi",
+      "trust": "core",
+      "permissions": [],
+      "required_env": [],
+      "scan_status": "PASS",
+      "warnings": [],
       "path": "rituals/agents/goose-recipe.toml",
       "install_cmd": "./install.sh rituals/agents/goose-recipe.toml",
       "github_url": "https://github.com/kdairatchi/cronlord-grimoire/blob/main/rituals/agents/goose-recipe.toml"
@@ -89,18 +128,53 @@
       "kind": "shell",
       "schedule": "0 */4 * * *",
       "timezone": "UTC",
+      "timeout_sec": 900,
+      "author": "kdairatchi",
+      "trust": "core",
+      "permissions": [
+        "filesystem"
+      ],
+      "required_env": [],
+      "scan_status": "PASS",
+      "warnings": [],
       "path": "rituals/agents/llm-tools-call.toml",
       "install_cmd": "./install.sh rituals/agents/llm-tools-call.toml",
       "github_url": "https://github.com/kdairatchi/cronlord-grimoire/blob/main/rituals/agents/llm-tools-call.toml"
     },
     {
-      "id": "daily-vault-summary",
+      "id": "claude-repo-audit",
+      "name": "Weekly repo audit",
+      "description": "Claude reviews a repo and writes an audit note.",
+      "category": "ai",
+      "kind": "claude",
+      "schedule": "0 14 * * 0",
+      "timezone": "UTC",
+      "timeout_sec": 1800,
+      "author": "kdairatchi",
+      "trust": "core",
+      "permissions": [],
+      "required_env": [],
+      "scan_status": "PASS",
+      "warnings": [],
+      "path": "rituals/ai/claude-repo-audit.toml",
+      "install_cmd": "./install.sh rituals/ai/claude-repo-audit.toml",
+      "github_url": "https://github.com/kdairatchi/cronlord-grimoire/blob/main/rituals/ai/claude-repo-audit.toml"
+    },
+    {
+      "id": "claude-vault-summary",
       "name": "Weekly vault summary",
       "description": "Claude reads 7 latest daily notes and writes a weekly digest.",
       "category": "ai",
       "kind": "claude",
       "schedule": "0 13 * * 1",
       "timezone": "UTC",
+      "timeout_sec": 900,
+      "author": "kdairatchi",
+      "trust": "core",
+      "permissions": [],
+      "required_env": [],
+      "scan_status": "PASS",
+      "warnings": [],
       "path": "rituals/ai/claude-vault-summary.toml",
       "install_cmd": "./install.sh rituals/ai/claude-vault-summary.toml",
       "github_url": "https://github.com/kdairatchi/cronlord-grimoire/blob/main/rituals/ai/claude-vault-summary.toml"
@@ -113,6 +187,18 @@
       "kind": "shell",
       "schedule": "30 13 * * *",
       "timezone": "UTC",
+      "timeout_sec": 300,
+      "author": "kdairatchi",
+      "trust": "core",
+      "permissions": [
+        "network",
+        "filesystem",
+        "secrets",
+        "llm"
+      ],
+      "required_env": [],
+      "scan_status": "PASS",
+      "warnings": [],
       "path": "rituals/ai/gemini-news-digest.toml",
       "install_cmd": "./install.sh rituals/ai/gemini-news-digest.toml",
       "github_url": "https://github.com/kdairatchi/cronlord-grimoire/blob/main/rituals/ai/gemini-news-digest.toml"
@@ -125,6 +211,18 @@
       "kind": "shell",
       "schedule": "0 */4 * * *",
       "timezone": "UTC",
+      "timeout_sec": 600,
+      "author": "kdairatchi",
+      "trust": "core",
+      "permissions": [
+        "network",
+        "filesystem",
+        "secrets",
+        "llm"
+      ],
+      "required_env": [],
+      "scan_status": "PASS",
+      "warnings": [],
       "path": "rituals/ai/groq-fast-classify.toml",
       "install_cmd": "./install.sh rituals/ai/groq-fast-classify.toml",
       "github_url": "https://github.com/kdairatchi/cronlord-grimoire/blob/main/rituals/ai/groq-fast-classify.toml"
@@ -137,6 +235,15 @@
       "kind": "shell",
       "schedule": "0 */6 * * *",
       "timezone": "UTC",
+      "timeout_sec": 600,
+      "author": "kdairatchi",
+      "trust": "core",
+      "permissions": [
+        "filesystem"
+      ],
+      "required_env": [],
+      "scan_status": "PASS",
+      "warnings": [],
       "path": "rituals/ai/llm-cli-any.toml",
       "install_cmd": "./install.sh rituals/ai/llm-cli-any.toml",
       "github_url": "https://github.com/kdairatchi/cronlord-grimoire/blob/main/rituals/ai/llm-cli-any.toml"
@@ -149,6 +256,16 @@
       "kind": "shell",
       "schedule": "0 22 * * *",
       "timezone": "UTC",
+      "timeout_sec": 600,
+      "author": "kdairatchi",
+      "trust": "core",
+      "permissions": [
+        "filesystem",
+        "llm"
+      ],
+      "required_env": [],
+      "scan_status": "PASS",
+      "warnings": [],
       "path": "rituals/ai/ollama-local-summary.toml",
       "install_cmd": "./install.sh rituals/ai/ollama-local-summary.toml",
       "github_url": "https://github.com/kdairatchi/cronlord-grimoire/blob/main/rituals/ai/ollama-local-summary.toml"
@@ -161,21 +278,47 @@
       "kind": "shell",
       "schedule": "0 14 * * 1-5",
       "timezone": "UTC",
+      "timeout_sec": 300,
+      "author": "kdairatchi",
+      "trust": "core",
+      "permissions": [
+        "network",
+        "secrets",
+        "llm"
+      ],
+      "required_env": [],
+      "scan_status": "PASS",
+      "warnings": [],
       "path": "rituals/ai/openai-pr-triage.toml",
       "install_cmd": "./install.sh rituals/ai/openai-pr-triage.toml",
       "github_url": "https://github.com/kdairatchi/cronlord-grimoire/blob/main/rituals/ai/openai-pr-triage.toml"
     },
     {
-      "id": "weekly-repo-audit",
-      "name": "Weekly repo audit",
-      "description": "Claude reviews a repo and writes an audit note.",
+      "id": "openrouter-route",
+      "name": "OpenRouter \u2014 any model on a schedule",
+      "description": "Call any of 300+ models via OpenRouter; swap model with MODEL env.",
       "category": "ai",
-      "kind": "claude",
-      "schedule": "0 14 * * 0",
+      "kind": "shell",
+      "schedule": "0 9 * * *",
       "timezone": "UTC",
-      "path": "rituals/ai/claude-repo-audit.toml",
-      "install_cmd": "./install.sh rituals/ai/claude-repo-audit.toml",
-      "github_url": "https://github.com/kdairatchi/cronlord-grimoire/blob/main/rituals/ai/claude-repo-audit.toml"
+      "timeout_sec": 120,
+      "author": "kdairatchi",
+      "trust": "core",
+      "permissions": [
+        "network",
+        "filesystem",
+        "secrets",
+        "llm"
+      ],
+      "required_env": [
+        "OPENROUTER_API_KEY",
+        "PROMPT"
+      ],
+      "scan_status": "PASS",
+      "warnings": [],
+      "path": "rituals/ai/openrouter-route.toml",
+      "install_cmd": "./install.sh rituals/ai/openrouter-route.toml",
+      "github_url": "https://github.com/kdairatchi/cronlord-grimoire/blob/main/rituals/ai/openrouter-route.toml"
     },
     {
       "id": "postgres-dump-to-s3",
@@ -185,6 +328,15 @@
       "kind": "shell",
       "schedule": "0 3 * * *",
       "timezone": "UTC",
+      "timeout_sec": 3600,
+      "author": "kdairatchi",
+      "trust": "core",
+      "permissions": [
+        "database"
+      ],
+      "required_env": [],
+      "scan_status": "PASS",
+      "warnings": [],
       "path": "rituals/backup/postgres-dump-to-s3.toml",
       "install_cmd": "./install.sh rituals/backup/postgres-dump-to-s3.toml",
       "github_url": "https://github.com/kdairatchi/cronlord-grimoire/blob/main/rituals/backup/postgres-dump-to-s3.toml"
@@ -197,6 +349,15 @@
       "kind": "shell",
       "schedule": "0 2 * * *",
       "timezone": "UTC",
+      "timeout_sec": 7200,
+      "author": "kdairatchi",
+      "trust": "core",
+      "permissions": [
+        "secrets"
+      ],
+      "required_env": [],
+      "scan_status": "PASS",
+      "warnings": [],
       "path": "rituals/backup/restic-home-snapshot.toml",
       "install_cmd": "./install.sh rituals/backup/restic-home-snapshot.toml",
       "github_url": "https://github.com/kdairatchi/cronlord-grimoire/blob/main/rituals/backup/restic-home-snapshot.toml"
@@ -209,6 +370,13 @@
       "kind": "shell",
       "schedule": "0 */6 * * *",
       "timezone": "UTC",
+      "timeout_sec": 120,
+      "author": "kdairatchi",
+      "trust": "core",
+      "permissions": [],
+      "required_env": [],
+      "scan_status": "PASS",
+      "warnings": [],
       "path": "rituals/communication/apprise-fanout.toml",
       "install_cmd": "./install.sh rituals/communication/apprise-fanout.toml",
       "github_url": "https://github.com/kdairatchi/cronlord-grimoire/blob/main/rituals/communication/apprise-fanout.toml"
@@ -221,6 +389,15 @@
       "kind": "shell",
       "schedule": "0 17 * * 5",
       "timezone": "UTC",
+      "timeout_sec": 60,
+      "author": "kdairatchi",
+      "trust": "core",
+      "permissions": [
+        "network"
+      ],
+      "required_env": [],
+      "scan_status": "PASS",
+      "warnings": [],
       "path": "rituals/communication/discord-webhook-post.toml",
       "install_cmd": "./install.sh rituals/communication/discord-webhook-post.toml",
       "github_url": "https://github.com/kdairatchi/cronlord-grimoire/blob/main/rituals/communication/discord-webhook-post.toml"
@@ -233,6 +410,19 @@
       "kind": "shell",
       "schedule": "0 13 * * 1",
       "timezone": "UTC",
+      "timeout_sec": 120,
+      "author": "kdairatchi",
+      "trust": "core",
+      "permissions": [
+        "filesystem"
+      ],
+      "required_env": [
+        "EMAIL_TO",
+        "EMAIL_FROM",
+        "EMAIL_SUBJECT"
+      ],
+      "scan_status": "PASS",
+      "warnings": [],
       "path": "rituals/communication/email-smtp-send.toml",
       "install_cmd": "./install.sh rituals/communication/email-smtp-send.toml",
       "github_url": "https://github.com/kdairatchi/cronlord-grimoire/blob/main/rituals/communication/email-smtp-send.toml"
@@ -245,6 +435,20 @@
       "kind": "shell",
       "schedule": "0 14 * * *",
       "timezone": "UTC",
+      "timeout_sec": 60,
+      "author": "kdairatchi",
+      "trust": "core",
+      "permissions": [
+        "network",
+        "secrets"
+      ],
+      "required_env": [
+        "MASTODON_INSTANCE",
+        "MASTODON_ACCESS_TOKEN",
+        "STATUS"
+      ],
+      "scan_status": "PASS",
+      "warnings": [],
       "path": "rituals/communication/mastodon-post.toml",
       "install_cmd": "./install.sh rituals/communication/mastodon-post.toml",
       "github_url": "https://github.com/kdairatchi/cronlord-grimoire/blob/main/rituals/communication/mastodon-post.toml"
@@ -257,6 +461,19 @@
       "kind": "shell",
       "schedule": "0 13 * * *",
       "timezone": "UTC",
+      "timeout_sec": 60,
+      "author": "kdairatchi",
+      "trust": "core",
+      "permissions": [
+        "network",
+        "secrets"
+      ],
+      "required_env": [
+        "TELEGRAM_BOT_TOKEN",
+        "TELEGRAM_CHAT_ID"
+      ],
+      "scan_status": "PASS",
+      "warnings": [],
       "path": "rituals/communication/telegram-bot-send.toml",
       "install_cmd": "./install.sh rituals/communication/telegram-bot-send.toml",
       "github_url": "https://github.com/kdairatchi/cronlord-grimoire/blob/main/rituals/communication/telegram-bot-send.toml"
@@ -269,6 +486,16 @@
       "kind": "shell",
       "schedule": "0 12 * * *",
       "timezone": "UTC",
+      "timeout_sec": 180,
+      "author": "kdairatchi",
+      "trust": "core",
+      "permissions": [
+        "network",
+        "filesystem"
+      ],
+      "required_env": [],
+      "scan_status": "PASS",
+      "warnings": [],
       "path": "rituals/content/arxiv-paper-alert.toml",
       "install_cmd": "./install.sh rituals/content/arxiv-paper-alert.toml",
       "github_url": "https://github.com/kdairatchi/cronlord-grimoire/blob/main/rituals/content/arxiv-paper-alert.toml"
@@ -281,6 +508,18 @@
       "kind": "shell",
       "schedule": "0 15 * * 2",
       "timezone": "UTC",
+      "timeout_sec": 300,
+      "author": "kdairatchi",
+      "trust": "core",
+      "permissions": [
+        "network",
+        "filesystem"
+      ],
+      "required_env": [
+        "POST_FILE"
+      ],
+      "scan_status": "PASS",
+      "warnings": [],
       "path": "rituals/content/markdown-cross-post.toml",
       "install_cmd": "./install.sh rituals/content/markdown-cross-post.toml",
       "github_url": "https://github.com/kdairatchi/cronlord-grimoire/blob/main/rituals/content/markdown-cross-post.toml"
@@ -293,6 +532,21 @@
       "kind": "shell",
       "schedule": "*/30 * * * *",
       "timezone": "UTC",
+      "timeout_sec": 300,
+      "author": "kdairatchi",
+      "trust": "core",
+      "permissions": [
+        "network",
+        "filesystem",
+        "secrets"
+      ],
+      "required_env": [
+        "RSS_URL",
+        "MASTODON_INSTANCE",
+        "MASTODON_ACCESS_TOKEN"
+      ],
+      "scan_status": "PASS",
+      "warnings": [],
       "path": "rituals/content/rss-to-mastodon.toml",
       "install_cmd": "./install.sh rituals/content/rss-to-mastodon.toml",
       "github_url": "https://github.com/kdairatchi/cronlord-grimoire/blob/main/rituals/content/rss-to-mastodon.toml"
@@ -305,6 +559,16 @@
       "kind": "shell",
       "schedule": "0 * * * *",
       "timezone": "UTC",
+      "timeout_sec": 120,
+      "author": "kdairatchi",
+      "trust": "core",
+      "permissions": [
+        "network",
+        "filesystem"
+      ],
+      "required_env": [],
+      "scan_status": "PASS",
+      "warnings": [],
       "path": "rituals/data/rss-to-jsonl.toml",
       "install_cmd": "./install.sh rituals/data/rss-to-jsonl.toml",
       "github_url": "https://github.com/kdairatchi/cronlord-grimoire/blob/main/rituals/data/rss-to-jsonl.toml"
@@ -317,6 +581,21 @@
       "kind": "shell",
       "schedule": "0 3 * * *",
       "timezone": "UTC",
+      "timeout_sec": 7200,
+      "author": "kdairatchi",
+      "trust": "core",
+      "permissions": [
+        "filesystem",
+        "secrets",
+        "database"
+      ],
+      "required_env": [
+        "MYSQL_HOST",
+        "MYSQL_USER",
+        "MYSQL_DATABASE"
+      ],
+      "scan_status": "PASS",
+      "warnings": [],
       "path": "rituals/database/mysql-dump.toml",
       "install_cmd": "./install.sh rituals/database/mysql-dump.toml",
       "github_url": "https://github.com/kdairatchi/cronlord-grimoire/blob/main/rituals/database/mysql-dump.toml"
@@ -329,6 +608,18 @@
       "kind": "shell",
       "schedule": "30 3 * * 0",
       "timezone": "UTC",
+      "timeout_sec": 3600,
+      "author": "kdairatchi",
+      "trust": "core",
+      "permissions": [
+        "database"
+      ],
+      "required_env": [
+        "PGDATABASE",
+        "PGUSER"
+      ],
+      "scan_status": "PASS",
+      "warnings": [],
       "path": "rituals/database/postgres-vacuum-analyze.toml",
       "install_cmd": "./install.sh rituals/database/postgres-vacuum-analyze.toml",
       "github_url": "https://github.com/kdairatchi/cronlord-grimoire/blob/main/rituals/database/postgres-vacuum-analyze.toml"
@@ -341,6 +632,18 @@
       "kind": "shell",
       "schedule": "15 4 * * 0",
       "timezone": "UTC",
+      "timeout_sec": 1800,
+      "author": "kdairatchi",
+      "trust": "core",
+      "permissions": [
+        "filesystem",
+        "database"
+      ],
+      "required_env": [
+        "SQLITE_DB"
+      ],
+      "scan_status": "PASS",
+      "warnings": [],
       "path": "rituals/database/sqlite-vacuum.toml",
       "install_cmd": "./install.sh rituals/database/sqlite-vacuum.toml",
       "github_url": "https://github.com/kdairatchi/cronlord-grimoire/blob/main/rituals/database/sqlite-vacuum.toml"
@@ -353,9 +656,42 @@
       "kind": "shell",
       "schedule": "0 */3 * * *",
       "timezone": "UTC",
+      "timeout_sec": 300,
+      "author": "kdairatchi",
+      "trust": "core",
+      "permissions": [
+        "network",
+        "filesystem",
+        "secrets"
+      ],
+      "required_env": [],
+      "scan_status": "PASS",
+      "warnings": [],
       "path": "rituals/devops/github-release-watch.toml",
       "install_cmd": "./install.sh rituals/devops/github-release-watch.toml",
       "github_url": "https://github.com/kdairatchi/cronlord-grimoire/blob/main/rituals/devops/github-release-watch.toml"
+    },
+    {
+      "id": "k8s-rollout-restart",
+      "name": "Kubernetes \u2014 rolling restart",
+      "description": "kubectl rollout restart of a deployment (graceful, rolling).",
+      "category": "devops",
+      "kind": "shell",
+      "schedule": "0 4 * * 0",
+      "timezone": "UTC",
+      "timeout_sec": 600,
+      "author": "kdairatchi",
+      "trust": "core",
+      "permissions": [],
+      "required_env": [
+        "K8S_NAMESPACE",
+        "K8S_DEPLOYMENT"
+      ],
+      "scan_status": "PASS",
+      "warnings": [],
+      "path": "rituals/devops/k8s-rollout-restart.toml",
+      "install_cmd": "./install.sh rituals/devops/k8s-rollout-restart.toml",
+      "github_url": "https://github.com/kdairatchi/cronlord-grimoire/blob/main/rituals/devops/k8s-rollout-restart.toml"
     },
     {
       "id": "crypto-price-alert",
@@ -365,6 +701,16 @@
       "kind": "shell",
       "schedule": "*/10 * * * *",
       "timezone": "UTC",
+      "timeout_sec": 60,
+      "author": "kdairatchi",
+      "trust": "core",
+      "permissions": [
+        "network",
+        "filesystem"
+      ],
+      "required_env": [],
+      "scan_status": "PASS",
+      "warnings": [],
       "path": "rituals/finance/crypto-price-alert.toml",
       "install_cmd": "./install.sh rituals/finance/crypto-price-alert.toml",
       "github_url": "https://github.com/kdairatchi/cronlord-grimoire/blob/main/rituals/finance/crypto-price-alert.toml"
@@ -377,6 +723,16 @@
       "kind": "shell",
       "schedule": "30 16 * * 1-5",
       "timezone": "UTC",
+      "timeout_sec": 60,
+      "author": "kdairatchi",
+      "trust": "core",
+      "permissions": [
+        "network",
+        "filesystem"
+      ],
+      "required_env": [],
+      "scan_status": "PASS",
+      "warnings": [],
       "path": "rituals/finance/exchange-rate-log.toml",
       "install_cmd": "./install.sh rituals/finance/exchange-rate-log.toml",
       "github_url": "https://github.com/kdairatchi/cronlord-grimoire/blob/main/rituals/finance/exchange-rate-log.toml"
@@ -389,6 +745,19 @@
       "kind": "shell",
       "schedule": "0 7 * * *",
       "timezone": "UTC",
+      "timeout_sec": 60,
+      "author": "kdairatchi",
+      "trust": "core",
+      "permissions": [
+        "network",
+        "secrets"
+      ],
+      "required_env": [
+        "HA_URL",
+        "HA_TOKEN"
+      ],
+      "scan_status": "PASS",
+      "warnings": [],
       "path": "rituals/home/ha-script-trigger.toml",
       "install_cmd": "./install.sh rituals/home/ha-script-trigger.toml",
       "github_url": "https://github.com/kdairatchi/cronlord-grimoire/blob/main/rituals/home/ha-script-trigger.toml"
@@ -401,6 +770,18 @@
       "kind": "shell",
       "schedule": "0 */1 * * *",
       "timezone": "UTC",
+      "timeout_sec": 30,
+      "author": "kdairatchi",
+      "trust": "core",
+      "permissions": [
+        "secrets"
+      ],
+      "required_env": [
+        "MQTT_HOST",
+        "MQTT_TOPIC"
+      ],
+      "scan_status": "PASS",
+      "warnings": [],
       "path": "rituals/home/mqtt-publish.toml",
       "install_cmd": "./install.sh rituals/home/mqtt-publish.toml",
       "github_url": "https://github.com/kdairatchi/cronlord-grimoire/blob/main/rituals/home/mqtt-publish.toml"
@@ -413,6 +794,15 @@
       "kind": "shell",
       "schedule": "0 12 * * 1",
       "timezone": "UTC",
+      "timeout_sec": 120,
+      "author": "kdairatchi",
+      "trust": "core",
+      "permissions": [
+        "filesystem"
+      ],
+      "required_env": [],
+      "scan_status": "PASS",
+      "warnings": [],
       "path": "rituals/maintenance/brew-outdated-report.toml",
       "install_cmd": "./install.sh rituals/maintenance/brew-outdated-report.toml",
       "github_url": "https://github.com/kdairatchi/cronlord-grimoire/blob/main/rituals/maintenance/brew-outdated-report.toml"
@@ -425,6 +815,13 @@
       "kind": "shell",
       "schedule": "0 4 * * *",
       "timezone": "UTC",
+      "timeout_sec": 300,
+      "author": "kdairatchi",
+      "trust": "core",
+      "permissions": [],
+      "required_env": [],
+      "scan_status": "PASS",
+      "warnings": [],
       "path": "rituals/maintenance/certbot-renewal-check.toml",
       "install_cmd": "./install.sh rituals/maintenance/certbot-renewal-check.toml",
       "github_url": "https://github.com/kdairatchi/cronlord-grimoire/blob/main/rituals/maintenance/certbot-renewal-check.toml"
@@ -437,6 +834,15 @@
       "kind": "shell",
       "schedule": "0 4 * * 0",
       "timezone": "UTC",
+      "timeout_sec": 600,
+      "author": "kdairatchi",
+      "trust": "core",
+      "permissions": [
+        "destructive"
+      ],
+      "required_env": [],
+      "scan_status": "PASS",
+      "warnings": [],
       "path": "rituals/maintenance/docker-prune.toml",
       "install_cmd": "./install.sh rituals/maintenance/docker-prune.toml",
       "github_url": "https://github.com/kdairatchi/cronlord-grimoire/blob/main/rituals/maintenance/docker-prune.toml"
@@ -449,6 +855,19 @@
       "kind": "shell",
       "schedule": "*/15 * * * *",
       "timezone": "UTC",
+      "timeout_sec": 7200,
+      "author": "kdairatchi",
+      "trust": "core",
+      "permissions": [
+        "filesystem",
+        "destructive"
+      ],
+      "required_env": [
+        "WATCH_DIR",
+        "OUT_DIR"
+      ],
+      "scan_status": "PASS",
+      "warnings": [],
       "path": "rituals/media/ffmpeg-transcode-queue.toml",
       "install_cmd": "./install.sh rituals/media/ffmpeg-transcode-queue.toml",
       "github_url": "https://github.com/kdairatchi/cronlord-grimoire/blob/main/rituals/media/ffmpeg-transcode-queue.toml"
@@ -461,6 +880,18 @@
       "kind": "shell",
       "schedule": "0 3 * * *",
       "timezone": "UTC",
+      "timeout_sec": 3600,
+      "author": "kdairatchi",
+      "trust": "core",
+      "permissions": [
+        "filesystem"
+      ],
+      "required_env": [
+        "SRC_DIR",
+        "DST_DIR"
+      ],
+      "scan_status": "PASS",
+      "warnings": [],
       "path": "rituals/media/image-bulk-resize.toml",
       "install_cmd": "./install.sh rituals/media/image-bulk-resize.toml",
       "github_url": "https://github.com/kdairatchi/cronlord-grimoire/blob/main/rituals/media/image-bulk-resize.toml"
@@ -473,6 +904,15 @@
       "kind": "http",
       "schedule": "*/5 * * * *",
       "timezone": "UTC",
+      "timeout_sec": 10,
+      "author": "kdairatchi",
+      "trust": "core",
+      "permissions": [
+        "network"
+      ],
+      "required_env": [],
+      "scan_status": "PASS",
+      "warnings": [],
       "path": "rituals/monitoring/deadman-heartbeat.toml",
       "install_cmd": "./install.sh rituals/monitoring/deadman-heartbeat.toml",
       "github_url": "https://github.com/kdairatchi/cronlord-grimoire/blob/main/rituals/monitoring/deadman-heartbeat.toml"
@@ -485,6 +925,13 @@
       "kind": "shell",
       "schedule": "*/30 * * * *",
       "timezone": "UTC",
+      "timeout_sec": 10,
+      "author": "kdairatchi",
+      "trust": "core",
+      "permissions": [],
+      "required_env": [],
+      "scan_status": "PASS",
+      "warnings": [],
       "path": "rituals/monitoring/disk-space-alert.toml",
       "install_cmd": "./install.sh rituals/monitoring/disk-space-alert.toml",
       "github_url": "https://github.com/kdairatchi/cronlord-grimoire/blob/main/rituals/monitoring/disk-space-alert.toml"
@@ -497,6 +944,15 @@
       "kind": "shell",
       "schedule": "*/5 * * * *",
       "timezone": "UTC",
+      "timeout_sec": 15,
+      "author": "kdairatchi",
+      "trust": "core",
+      "permissions": [
+        "network"
+      ],
+      "required_env": [],
+      "scan_status": "PASS",
+      "warnings": [],
       "path": "rituals/monitoring/http-uptime-check.toml",
       "install_cmd": "./install.sh rituals/monitoring/http-uptime-check.toml",
       "github_url": "https://github.com/kdairatchi/cronlord-grimoire/blob/main/rituals/monitoring/http-uptime-check.toml"
@@ -509,6 +965,15 @@
       "kind": "shell",
       "schedule": "17 6 * * *",
       "timezone": "UTC",
+      "timeout_sec": 600,
+      "author": "kdairatchi",
+      "trust": "core",
+      "permissions": [
+        "filesystem"
+      ],
+      "required_env": [],
+      "scan_status": "PASS",
+      "warnings": [],
       "path": "rituals/monitoring/port-baseline-diff.toml",
       "install_cmd": "./install.sh rituals/monitoring/port-baseline-diff.toml",
       "github_url": "https://github.com/kdairatchi/cronlord-grimoire/blob/main/rituals/monitoring/port-baseline-diff.toml"
@@ -521,6 +986,15 @@
       "kind": "shell",
       "schedule": "0 7 * * *",
       "timezone": "UTC",
+      "timeout_sec": 30,
+      "author": "kdairatchi",
+      "trust": "core",
+      "permissions": [
+        "filesystem"
+      ],
+      "required_env": [],
+      "scan_status": "PASS",
+      "warnings": [],
       "path": "rituals/monitoring/ssl-expiry-watch.toml",
       "install_cmd": "./install.sh rituals/monitoring/ssl-expiry-watch.toml",
       "github_url": "https://github.com/kdairatchi/cronlord-grimoire/blob/main/rituals/monitoring/ssl-expiry-watch.toml"
@@ -533,6 +1007,15 @@
       "kind": "http",
       "schedule": "0 18 * * *",
       "timezone": "America/New_York",
+      "timeout_sec": 10,
+      "author": "kdairatchi",
+      "trust": "core",
+      "permissions": [
+        "network"
+      ],
+      "required_env": [],
+      "scan_status": "PASS",
+      "warnings": [],
       "path": "rituals/personal/ntfy-habit-reminder.toml",
       "install_cmd": "./install.sh rituals/personal/ntfy-habit-reminder.toml",
       "github_url": "https://github.com/kdairatchi/cronlord-grimoire/blob/main/rituals/personal/ntfy-habit-reminder.toml"
@@ -545,6 +1028,16 @@
       "kind": "shell",
       "schedule": "30 13 * * *",
       "timezone": "UTC",
+      "timeout_sec": 60,
+      "author": "kdairatchi",
+      "trust": "core",
+      "permissions": [
+        "network",
+        "filesystem"
+      ],
+      "required_env": [],
+      "scan_status": "PASS",
+      "warnings": [],
       "path": "rituals/reporting/daily-activity-digest.toml",
       "install_cmd": "./install.sh rituals/reporting/daily-activity-digest.toml",
       "github_url": "https://github.com/kdairatchi/cronlord-grimoire/blob/main/rituals/reporting/daily-activity-digest.toml"
@@ -557,9 +1050,44 @@
       "kind": "shell",
       "schedule": "0 14 * * 1",
       "timezone": "UTC",
+      "timeout_sec": 120,
+      "author": "kdairatchi",
+      "trust": "core",
+      "permissions": [
+        "network",
+        "filesystem"
+      ],
+      "required_env": [],
+      "scan_status": "PASS",
+      "warnings": [],
       "path": "rituals/reporting/weekly-run-stats.toml",
       "install_cmd": "./install.sh rituals/reporting/weekly-run-stats.toml",
       "github_url": "https://github.com/kdairatchi/cronlord-grimoire/blob/main/rituals/reporting/weekly-run-stats.toml"
+    },
+    {
+      "id": "caido-project-export",
+      "name": "Caido \u2014 project snapshot",
+      "description": "Export the active Caido project to a dated archive for backup.",
+      "category": "security",
+      "kind": "shell",
+      "schedule": "0 3 * * *",
+      "timezone": "UTC",
+      "timeout_sec": 600,
+      "author": "kdairatchi",
+      "trust": "core",
+      "permissions": [
+        "filesystem",
+        "destructive"
+      ],
+      "required_env": [
+        "CAIDO_PROJECT",
+        "OUT_DIR"
+      ],
+      "scan_status": "PASS",
+      "warnings": [],
+      "path": "rituals/security/caido-project-export.toml",
+      "install_cmd": "./install.sh rituals/security/caido-project-export.toml",
+      "github_url": "https://github.com/kdairatchi/cronlord-grimoire/blob/main/rituals/security/caido-project-export.toml"
     },
     {
       "id": "gitleaks-scan",
@@ -569,6 +1097,15 @@
       "kind": "shell",
       "schedule": "0 3 * * *",
       "timezone": "UTC",
+      "timeout_sec": 900,
+      "author": "kdairatchi",
+      "trust": "core",
+      "permissions": [
+        "filesystem"
+      ],
+      "required_env": [],
+      "scan_status": "PASS",
+      "warnings": [],
       "path": "rituals/security/gitleaks-scan.toml",
       "install_cmd": "./install.sh rituals/security/gitleaks-scan.toml",
       "github_url": "https://github.com/kdairatchi/cronlord-grimoire/blob/main/rituals/security/gitleaks-scan.toml"
@@ -581,6 +1118,15 @@
       "kind": "http",
       "schedule": "30 */6 * * *",
       "timezone": "UTC",
+      "timeout_sec": 30,
+      "author": "kdairatchi",
+      "trust": "core",
+      "permissions": [
+        "network"
+      ],
+      "required_env": [],
+      "scan_status": "PASS",
+      "warnings": [],
       "path": "rituals/security/h1-disclosed-sweep.toml",
       "install_cmd": "./install.sh rituals/security/h1-disclosed-sweep.toml",
       "github_url": "https://github.com/kdairatchi/cronlord-grimoire/blob/main/rituals/security/h1-disclosed-sweep.toml"
@@ -593,6 +1139,13 @@
       "kind": "shell",
       "schedule": "15 5 * * *",
       "timezone": "UTC",
+      "timeout_sec": 300,
+      "author": "kdairatchi",
+      "trust": "core",
+      "permissions": [],
+      "required_env": [],
+      "scan_status": "PASS",
+      "warnings": [],
       "path": "rituals/security/nuclei-template-update.toml",
       "install_cmd": "./install.sh rituals/security/nuclei-template-update.toml",
       "github_url": "https://github.com/kdairatchi/cronlord-grimoire/blob/main/rituals/security/nuclei-template-update.toml"
@@ -605,6 +1158,15 @@
       "kind": "shell",
       "schedule": "0 5 * * *",
       "timezone": "UTC",
+      "timeout_sec": 900,
+      "author": "kdairatchi",
+      "trust": "core",
+      "permissions": [
+        "filesystem"
+      ],
+      "required_env": [],
+      "scan_status": "PASS",
+      "warnings": [],
       "path": "rituals/security/subdomain-monitor.toml",
       "install_cmd": "./install.sh rituals/security/subdomain-monitor.toml",
       "github_url": "https://github.com/kdairatchi/cronlord-grimoire/blob/main/rituals/security/subdomain-monitor.toml"
@@ -617,6 +1179,15 @@
       "kind": "shell",
       "schedule": "0 */2 * * *",
       "timezone": "UTC",
+      "timeout_sec": 60,
+      "author": "kdairatchi",
+      "trust": "core",
+      "permissions": [
+        "filesystem"
+      ],
+      "required_env": [],
+      "scan_status": "PASS",
+      "warnings": [],
       "path": "rituals/sync/git-repo-sync.toml",
       "install_cmd": "./install.sh rituals/sync/git-repo-sync.toml",
       "github_url": "https://github.com/kdairatchi/cronlord-grimoire/blob/main/rituals/sync/git-repo-sync.toml"
@@ -629,6 +1200,13 @@
       "kind": "shell",
       "schedule": "0 1 * * *",
       "timezone": "UTC",
+      "timeout_sec": 3600,
+      "author": "kdairatchi",
+      "trust": "core",
+      "permissions": [],
+      "required_env": [],
+      "scan_status": "PASS",
+      "warnings": [],
       "path": "rituals/sync/rclone-cloud-mirror.toml",
       "install_cmd": "./install.sh rituals/sync/rclone-cloud-mirror.toml",
       "github_url": "https://github.com/kdairatchi/cronlord-grimoire/blob/main/rituals/sync/rclone-cloud-mirror.toml"

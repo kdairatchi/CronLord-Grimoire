@@ -1,0 +1,820 @@
+{
+  "total": 54,
+  "pass": 54,
+  "warn": 0,
+  "fail": 0,
+  "results": [
+    {
+      "path": "rituals/agents/aider-autocommit.toml",
+      "id": "aider-autocommit",
+      "category": "agents",
+      "trust": "core",
+      "author": "kdairatchi",
+      "required_env": [],
+      "permissions": [],
+      "errors": [],
+      "warnings": [],
+      "status": "PASS"
+    },
+    {
+      "path": "rituals/agents/claude-skill-invoke.toml",
+      "id": "claude-skill-invoke",
+      "category": "agents",
+      "trust": "core",
+      "author": "kdairatchi",
+      "required_env": [],
+      "permissions": [],
+      "errors": [],
+      "warnings": [],
+      "status": "PASS"
+    },
+    {
+      "path": "rituals/agents/claude-subagent-fanout.toml",
+      "id": "claude-subagent-fanout",
+      "category": "agents",
+      "trust": "core",
+      "author": "kdairatchi",
+      "required_env": [],
+      "permissions": [
+        "filesystem"
+      ],
+      "errors": [],
+      "warnings": [],
+      "status": "PASS"
+    },
+    {
+      "path": "rituals/agents/fabric-pattern.toml",
+      "id": "fabric-pattern",
+      "category": "agents",
+      "trust": "core",
+      "author": "kdairatchi",
+      "required_env": [],
+      "permissions": [
+        "filesystem"
+      ],
+      "errors": [],
+      "warnings": [],
+      "status": "PASS"
+    },
+    {
+      "path": "rituals/agents/goose-recipe.toml",
+      "id": "goose-recipe",
+      "category": "agents",
+      "trust": "core",
+      "author": "kdairatchi",
+      "required_env": [],
+      "permissions": [],
+      "errors": [],
+      "warnings": [],
+      "status": "PASS"
+    },
+    {
+      "path": "rituals/agents/llm-tools-call.toml",
+      "id": "llm-tools-call",
+      "category": "agents",
+      "trust": "core",
+      "author": "kdairatchi",
+      "required_env": [],
+      "permissions": [
+        "filesystem"
+      ],
+      "errors": [],
+      "warnings": [],
+      "status": "PASS"
+    },
+    {
+      "path": "rituals/ai/claude-repo-audit.toml",
+      "id": "claude-repo-audit",
+      "category": "ai",
+      "trust": "core",
+      "author": "kdairatchi",
+      "required_env": [],
+      "permissions": [],
+      "errors": [],
+      "warnings": [],
+      "status": "PASS"
+    },
+    {
+      "path": "rituals/ai/claude-vault-summary.toml",
+      "id": "claude-vault-summary",
+      "category": "ai",
+      "trust": "core",
+      "author": "kdairatchi",
+      "required_env": [],
+      "permissions": [],
+      "errors": [],
+      "warnings": [],
+      "status": "PASS"
+    },
+    {
+      "path": "rituals/ai/gemini-news-digest.toml",
+      "id": "gemini-news-digest",
+      "category": "ai",
+      "trust": "core",
+      "author": "kdairatchi",
+      "required_env": [],
+      "permissions": [
+        "network",
+        "filesystem",
+        "secrets",
+        "llm"
+      ],
+      "errors": [],
+      "warnings": [],
+      "status": "PASS"
+    },
+    {
+      "path": "rituals/ai/groq-fast-classify.toml",
+      "id": "groq-fast-classify",
+      "category": "ai",
+      "trust": "core",
+      "author": "kdairatchi",
+      "required_env": [],
+      "permissions": [
+        "network",
+        "filesystem",
+        "secrets",
+        "llm"
+      ],
+      "errors": [],
+      "warnings": [],
+      "status": "PASS"
+    },
+    {
+      "path": "rituals/ai/llm-cli-any.toml",
+      "id": "llm-cli-any",
+      "category": "ai",
+      "trust": "core",
+      "author": "kdairatchi",
+      "required_env": [],
+      "permissions": [
+        "filesystem"
+      ],
+      "errors": [],
+      "warnings": [],
+      "status": "PASS"
+    },
+    {
+      "path": "rituals/ai/ollama-local-summary.toml",
+      "id": "ollama-local-summary",
+      "category": "ai",
+      "trust": "core",
+      "author": "kdairatchi",
+      "required_env": [],
+      "permissions": [
+        "filesystem",
+        "llm"
+      ],
+      "errors": [],
+      "warnings": [],
+      "status": "PASS"
+    },
+    {
+      "path": "rituals/ai/openai-pr-triage.toml",
+      "id": "openai-pr-triage",
+      "category": "ai",
+      "trust": "core",
+      "author": "kdairatchi",
+      "required_env": [],
+      "permissions": [
+        "network",
+        "secrets",
+        "llm"
+      ],
+      "errors": [],
+      "warnings": [],
+      "status": "PASS"
+    },
+    {
+      "path": "rituals/ai/openrouter-route.toml",
+      "id": "openrouter-route",
+      "category": "ai",
+      "trust": "core",
+      "author": "kdairatchi",
+      "required_env": [
+        "OPENROUTER_API_KEY",
+        "PROMPT"
+      ],
+      "permissions": [
+        "network",
+        "filesystem",
+        "secrets",
+        "llm"
+      ],
+      "errors": [],
+      "warnings": [],
+      "status": "PASS"
+    },
+    {
+      "path": "rituals/backup/postgres-dump-to-s3.toml",
+      "id": "postgres-dump-to-s3",
+      "category": "backup",
+      "trust": "core",
+      "author": "kdairatchi",
+      "required_env": [],
+      "permissions": [
+        "database"
+      ],
+      "errors": [],
+      "warnings": [],
+      "status": "PASS"
+    },
+    {
+      "path": "rituals/backup/restic-home-snapshot.toml",
+      "id": "restic-home-snapshot",
+      "category": "backup",
+      "trust": "core",
+      "author": "kdairatchi",
+      "required_env": [],
+      "permissions": [
+        "secrets"
+      ],
+      "errors": [],
+      "warnings": [],
+      "status": "PASS"
+    },
+    {
+      "path": "rituals/communication/apprise-fanout.toml",
+      "id": "apprise-fanout",
+      "category": "communication",
+      "trust": "core",
+      "author": "kdairatchi",
+      "required_env": [],
+      "permissions": [],
+      "errors": [],
+      "warnings": [],
+      "status": "PASS"
+    },
+    {
+      "path": "rituals/communication/discord-webhook-post.toml",
+      "id": "discord-webhook-post",
+      "category": "communication",
+      "trust": "core",
+      "author": "kdairatchi",
+      "required_env": [],
+      "permissions": [
+        "network"
+      ],
+      "errors": [],
+      "warnings": [],
+      "status": "PASS"
+    },
+    {
+      "path": "rituals/communication/email-smtp-send.toml",
+      "id": "email-smtp-send",
+      "category": "communication",
+      "trust": "core",
+      "author": "kdairatchi",
+      "required_env": [
+        "EMAIL_TO",
+        "EMAIL_FROM",
+        "EMAIL_SUBJECT"
+      ],
+      "permissions": [
+        "filesystem"
+      ],
+      "errors": [],
+      "warnings": [],
+      "status": "PASS"
+    },
+    {
+      "path": "rituals/communication/mastodon-post.toml",
+      "id": "mastodon-post",
+      "category": "communication",
+      "trust": "core",
+      "author": "kdairatchi",
+      "required_env": [
+        "MASTODON_INSTANCE",
+        "MASTODON_ACCESS_TOKEN",
+        "STATUS"
+      ],
+      "permissions": [
+        "network",
+        "secrets"
+      ],
+      "errors": [],
+      "warnings": [],
+      "status": "PASS"
+    },
+    {
+      "path": "rituals/communication/telegram-bot-send.toml",
+      "id": "telegram-bot-send",
+      "category": "communication",
+      "trust": "core",
+      "author": "kdairatchi",
+      "required_env": [
+        "TELEGRAM_BOT_TOKEN",
+        "TELEGRAM_CHAT_ID"
+      ],
+      "permissions": [
+        "network",
+        "secrets"
+      ],
+      "errors": [],
+      "warnings": [],
+      "status": "PASS"
+    },
+    {
+      "path": "rituals/content/arxiv-paper-alert.toml",
+      "id": "arxiv-paper-alert",
+      "category": "content",
+      "trust": "core",
+      "author": "kdairatchi",
+      "required_env": [],
+      "permissions": [
+        "network",
+        "filesystem"
+      ],
+      "errors": [],
+      "warnings": [],
+      "status": "PASS"
+    },
+    {
+      "path": "rituals/content/markdown-cross-post.toml",
+      "id": "markdown-cross-post",
+      "category": "content",
+      "trust": "core",
+      "author": "kdairatchi",
+      "required_env": [
+        "POST_FILE"
+      ],
+      "permissions": [
+        "network",
+        "filesystem"
+      ],
+      "errors": [],
+      "warnings": [],
+      "status": "PASS"
+    },
+    {
+      "path": "rituals/content/rss-to-mastodon.toml",
+      "id": "rss-to-mastodon",
+      "category": "content",
+      "trust": "core",
+      "author": "kdairatchi",
+      "required_env": [
+        "RSS_URL",
+        "MASTODON_INSTANCE",
+        "MASTODON_ACCESS_TOKEN"
+      ],
+      "permissions": [
+        "network",
+        "filesystem",
+        "secrets"
+      ],
+      "errors": [],
+      "warnings": [],
+      "status": "PASS"
+    },
+    {
+      "path": "rituals/data/rss-to-jsonl.toml",
+      "id": "rss-to-jsonl",
+      "category": "data",
+      "trust": "core",
+      "author": "kdairatchi",
+      "required_env": [],
+      "permissions": [
+        "network",
+        "filesystem"
+      ],
+      "errors": [],
+      "warnings": [],
+      "status": "PASS"
+    },
+    {
+      "path": "rituals/database/mysql-dump.toml",
+      "id": "mysql-dump",
+      "category": "database",
+      "trust": "core",
+      "author": "kdairatchi",
+      "required_env": [
+        "MYSQL_HOST",
+        "MYSQL_USER",
+        "MYSQL_DATABASE"
+      ],
+      "permissions": [
+        "filesystem",
+        "secrets",
+        "database"
+      ],
+      "errors": [],
+      "warnings": [],
+      "status": "PASS"
+    },
+    {
+      "path": "rituals/database/postgres-vacuum-analyze.toml",
+      "id": "postgres-vacuum-analyze",
+      "category": "database",
+      "trust": "core",
+      "author": "kdairatchi",
+      "required_env": [
+        "PGDATABASE",
+        "PGUSER"
+      ],
+      "permissions": [
+        "database"
+      ],
+      "errors": [],
+      "warnings": [],
+      "status": "PASS"
+    },
+    {
+      "path": "rituals/database/sqlite-vacuum.toml",
+      "id": "sqlite-vacuum",
+      "category": "database",
+      "trust": "core",
+      "author": "kdairatchi",
+      "required_env": [
+        "SQLITE_DB"
+      ],
+      "permissions": [
+        "filesystem",
+        "database"
+      ],
+      "errors": [],
+      "warnings": [],
+      "status": "PASS"
+    },
+    {
+      "path": "rituals/devops/github-release-watch.toml",
+      "id": "github-release-watch",
+      "category": "devops",
+      "trust": "core",
+      "author": "kdairatchi",
+      "required_env": [],
+      "permissions": [
+        "network",
+        "filesystem",
+        "secrets"
+      ],
+      "errors": [],
+      "warnings": [],
+      "status": "PASS"
+    },
+    {
+      "path": "rituals/devops/k8s-rollout-restart.toml",
+      "id": "k8s-rollout-restart",
+      "category": "devops",
+      "trust": "core",
+      "author": "kdairatchi",
+      "required_env": [
+        "K8S_NAMESPACE",
+        "K8S_DEPLOYMENT"
+      ],
+      "permissions": [],
+      "errors": [],
+      "warnings": [],
+      "status": "PASS"
+    },
+    {
+      "path": "rituals/finance/crypto-price-alert.toml",
+      "id": "crypto-price-alert",
+      "category": "finance",
+      "trust": "core",
+      "author": "kdairatchi",
+      "required_env": [],
+      "permissions": [
+        "network",
+        "filesystem"
+      ],
+      "errors": [],
+      "warnings": [],
+      "status": "PASS"
+    },
+    {
+      "path": "rituals/finance/exchange-rate-log.toml",
+      "id": "exchange-rate-log",
+      "category": "finance",
+      "trust": "core",
+      "author": "kdairatchi",
+      "required_env": [],
+      "permissions": [
+        "network",
+        "filesystem"
+      ],
+      "errors": [],
+      "warnings": [],
+      "status": "PASS"
+    },
+    {
+      "path": "rituals/home/ha-script-trigger.toml",
+      "id": "ha-script-trigger",
+      "category": "home",
+      "trust": "core",
+      "author": "kdairatchi",
+      "required_env": [
+        "HA_URL",
+        "HA_TOKEN"
+      ],
+      "permissions": [
+        "network",
+        "secrets"
+      ],
+      "errors": [],
+      "warnings": [],
+      "status": "PASS"
+    },
+    {
+      "path": "rituals/home/mqtt-publish.toml",
+      "id": "mqtt-publish",
+      "category": "home",
+      "trust": "core",
+      "author": "kdairatchi",
+      "required_env": [
+        "MQTT_HOST",
+        "MQTT_TOPIC"
+      ],
+      "permissions": [
+        "secrets"
+      ],
+      "errors": [],
+      "warnings": [],
+      "status": "PASS"
+    },
+    {
+      "path": "rituals/maintenance/brew-outdated-report.toml",
+      "id": "brew-outdated-report",
+      "category": "maintenance",
+      "trust": "core",
+      "author": "kdairatchi",
+      "required_env": [],
+      "permissions": [
+        "filesystem"
+      ],
+      "errors": [],
+      "warnings": [],
+      "status": "PASS"
+    },
+    {
+      "path": "rituals/maintenance/certbot-renewal-check.toml",
+      "id": "certbot-renewal-check",
+      "category": "maintenance",
+      "trust": "core",
+      "author": "kdairatchi",
+      "required_env": [],
+      "permissions": [],
+      "errors": [],
+      "warnings": [],
+      "status": "PASS"
+    },
+    {
+      "path": "rituals/maintenance/docker-prune.toml",
+      "id": "docker-prune",
+      "category": "maintenance",
+      "trust": "core",
+      "author": "kdairatchi",
+      "required_env": [],
+      "permissions": [
+        "destructive"
+      ],
+      "errors": [],
+      "warnings": [],
+      "status": "PASS"
+    },
+    {
+      "path": "rituals/media/ffmpeg-transcode-queue.toml",
+      "id": "ffmpeg-transcode-queue",
+      "category": "media",
+      "trust": "core",
+      "author": "kdairatchi",
+      "required_env": [
+        "WATCH_DIR",
+        "OUT_DIR"
+      ],
+      "permissions": [
+        "filesystem",
+        "destructive"
+      ],
+      "errors": [],
+      "warnings": [],
+      "status": "PASS"
+    },
+    {
+      "path": "rituals/media/image-bulk-resize.toml",
+      "id": "image-bulk-resize",
+      "category": "media",
+      "trust": "core",
+      "author": "kdairatchi",
+      "required_env": [
+        "SRC_DIR",
+        "DST_DIR"
+      ],
+      "permissions": [
+        "filesystem"
+      ],
+      "errors": [],
+      "warnings": [],
+      "status": "PASS"
+    },
+    {
+      "path": "rituals/monitoring/deadman-heartbeat.toml",
+      "id": "deadman-heartbeat",
+      "category": "monitoring",
+      "trust": "core",
+      "author": "kdairatchi",
+      "required_env": [],
+      "permissions": [
+        "network"
+      ],
+      "errors": [],
+      "warnings": [],
+      "status": "PASS"
+    },
+    {
+      "path": "rituals/monitoring/disk-space-alert.toml",
+      "id": "disk-space-alert",
+      "category": "monitoring",
+      "trust": "core",
+      "author": "kdairatchi",
+      "required_env": [],
+      "permissions": [],
+      "errors": [],
+      "warnings": [],
+      "status": "PASS"
+    },
+    {
+      "path": "rituals/monitoring/http-uptime-check.toml",
+      "id": "http-uptime-check",
+      "category": "monitoring",
+      "trust": "core",
+      "author": "kdairatchi",
+      "required_env": [],
+      "permissions": [
+        "network"
+      ],
+      "errors": [],
+      "warnings": [],
+      "status": "PASS"
+    },
+    {
+      "path": "rituals/monitoring/port-baseline-diff.toml",
+      "id": "port-baseline-diff",
+      "category": "monitoring",
+      "trust": "core",
+      "author": "kdairatchi",
+      "required_env": [],
+      "permissions": [
+        "filesystem"
+      ],
+      "errors": [],
+      "warnings": [],
+      "status": "PASS"
+    },
+    {
+      "path": "rituals/monitoring/ssl-expiry-watch.toml",
+      "id": "ssl-expiry-watch",
+      "category": "monitoring",
+      "trust": "core",
+      "author": "kdairatchi",
+      "required_env": [],
+      "permissions": [
+        "filesystem"
+      ],
+      "errors": [],
+      "warnings": [],
+      "status": "PASS"
+    },
+    {
+      "path": "rituals/personal/ntfy-habit-reminder.toml",
+      "id": "ntfy-habit-reminder",
+      "category": "personal",
+      "trust": "core",
+      "author": "kdairatchi",
+      "required_env": [],
+      "permissions": [
+        "network"
+      ],
+      "errors": [],
+      "warnings": [],
+      "status": "PASS"
+    },
+    {
+      "path": "rituals/reporting/daily-activity-digest.toml",
+      "id": "daily-activity-digest",
+      "category": "reporting",
+      "trust": "core",
+      "author": "kdairatchi",
+      "required_env": [],
+      "permissions": [
+        "network",
+        "filesystem"
+      ],
+      "errors": [],
+      "warnings": [],
+      "status": "PASS"
+    },
+    {
+      "path": "rituals/reporting/weekly-run-stats.toml",
+      "id": "weekly-run-stats",
+      "category": "reporting",
+      "trust": "core",
+      "author": "kdairatchi",
+      "required_env": [],
+      "permissions": [
+        "network",
+        "filesystem"
+      ],
+      "errors": [],
+      "warnings": [],
+      "status": "PASS"
+    },
+    {
+      "path": "rituals/security/caido-project-export.toml",
+      "id": "caido-project-export",
+      "category": "security",
+      "trust": "core",
+      "author": "kdairatchi",
+      "required_env": [
+        "CAIDO_PROJECT",
+        "OUT_DIR"
+      ],
+      "permissions": [
+        "filesystem",
+        "destructive"
+      ],
+      "errors": [],
+      "warnings": [],
+      "status": "PASS"
+    },
+    {
+      "path": "rituals/security/gitleaks-scan.toml",
+      "id": "gitleaks-scan",
+      "category": "security",
+      "trust": "core",
+      "author": "kdairatchi",
+      "required_env": [],
+      "permissions": [
+        "filesystem"
+      ],
+      "errors": [],
+      "warnings": [],
+      "status": "PASS"
+    },
+    {
+      "path": "rituals/security/h1-disclosed-sweep.toml",
+      "id": "h1-disclosed-sweep",
+      "category": "security",
+      "trust": "core",
+      "author": "kdairatchi",
+      "required_env": [],
+      "permissions": [
+        "network"
+      ],
+      "errors": [],
+      "warnings": [],
+      "status": "PASS"
+    },
+    {
+      "path": "rituals/security/nuclei-template-update.toml",
+      "id": "nuclei-template-update",
+      "category": "security",
+      "trust": "core",
+      "author": "kdairatchi",
+      "required_env": [],
+      "permissions": [],
+      "errors": [],
+      "warnings": [],
+      "status": "PASS"
+    },
+    {
+      "path": "rituals/security/subdomain-monitor.toml",
+      "id": "subdomain-monitor",
+      "category": "security",
+      "trust": "core",
+      "author": "kdairatchi",
+      "required_env": [],
+      "permissions": [
+        "filesystem"
+      ],
+      "errors": [],
+      "warnings": [],
+      "status": "PASS"
+    },
+    {
+      "path": "rituals/sync/git-repo-sync.toml",
+      "id": "git-repo-sync",
+      "category": "sync",
+      "trust": "core",
+      "author": "kdairatchi",
+      "required_env": [],
+      "permissions": [
+        "filesystem"
+      ],
+      "errors": [],
+      "warnings": [],
+      "status": "PASS"
+    },
+    {
+      "path": "rituals/sync/rclone-cloud-mirror.toml",
+      "id": "rclone-cloud-mirror",
+      "category": "sync",
+      "trust": "core",
+      "author": "kdairatchi",
+      "required_env": [],
+      "permissions": [],
+      "errors": [],
+      "warnings": [],
+      "status": "PASS"
+    }
+  ]
+}

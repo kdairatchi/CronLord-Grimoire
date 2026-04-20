@@ -1,0 +1,27 @@
+# openrouter-route — one ritual, 300+ models. OpenRouter is a gateway that
+# proxies to Anthropic/OpenAI/Google/Meta/etc; flip the model env var to swap.
+# Install: curl, jq. Required env: OPENROUTER_API_KEY, PROMPT.
+# Optional: MODEL (default "anthropic/claude-sonnet-4.5"), OUT (default stdout).
+
+[[jobs]]
+id          = "openrouter-route"
+name        = "OpenRouter — any model on a schedule"
+description = "Call any of 300+ models via OpenRouter; swap model with MODEL env."
+category    = "ai"
+kind        = "shell"
+schedule    = "0 9 * * *"
+timezone    = "UTC"
+enabled     = false
+timeout_sec = 120
+
+command = '''
+: "${OPENROUTER_API_KEY:?required}"
+: "${PROMPT:?required}"
+MODEL="${MODEL:-anthropic/claude-sonnet-4.5}"
+curl -sS --fail https://openrouter.ai/api/v1/chat/completions \
+  -H "Authorization: Bearer $OPENROUTER_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d "$(jq -nc --arg m "$MODEL" --arg p "$PROMPT" '{model:$m,messages:[{role:"user",content:$p}]}')" \
+  | jq -r '.choices[0].message.content' \
+  | { if [ -n "$OUT" ]; then tee -a "$OUT"; else cat; fi; }
+'''

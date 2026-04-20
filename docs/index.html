@@ -43,7 +43,7 @@
           <div class="stat"><span class="stat-num" id="stat-total">—</span><span class="stat-label">rituals</span></div>
           <div class="stat"><span class="stat-num" id="stat-cats">—</span><span class="stat-label">categories</span></div>
           <div class="stat"><span class="stat-num" id="stat-kinds">—</span><span class="stat-label">kinds</span></div>
-          <div class="stat"><span class="stat-num">MIT</span><span class="stat-label">license</span></div>
+          <div class="stat"><span class="stat-num" id="stat-scan">—</span><span class="stat-label" id="stat-scan-label">scan</span></div>
         </div>
         <div class="hero-cta">
           <a class="btn primary" href="#gallery">Browse the grimoire</a>
@@ -68,6 +68,8 @@
       </label>
       <div class="filters">
         <div class="filter-group" id="filter-kind" data-key="kind" role="group" aria-label="Filter by kind"></div>
+        <div class="filter-group" id="filter-trust" data-key="trust" role="group" aria-label="Filter by trust"></div>
+        <div class="filter-group" id="filter-perm" data-key="permissions" role="group" aria-label="Filter by permission"></div>
         <div class="filter-group" id="filter-cat" data-key="category" role="group" aria-label="Filter by category"></div>
       </div>
       <div class="result-count" id="result-count" aria-live="polite"></div>
@@ -108,17 +110,34 @@
         <h3 class="card-title"></h3>
         <span class="badge badge-kind"></span>
       </header>
+      <div class="card-badges">
+        <span class="badge badge-trust" title="Trust level"></span>
+        <a class="badge badge-author" target="_blank" rel="noopener" title="Author"></a>
+        <span class="badge badge-scan" title="Scan status"></span>
+      </div>
       <p class="card-desc"></p>
       <dl class="card-meta">
         <div><dt>Schedule</dt><dd class="card-schedule"></dd></div>
         <div><dt>Category</dt><dd class="card-cat"></dd></div>
       </dl>
+      <div class="card-perms" hidden>
+        <span class="card-perms-label">permissions</span>
+        <ul class="perm-list"></ul>
+      </div>
+      <div class="card-env" hidden>
+        <span class="card-env-label">required env</span>
+        <ul class="env-list"></ul>
+      </div>
+      <details class="card-warnings" hidden>
+        <summary>⚠ warnings</summary>
+        <ul class="warning-list"></ul>
+      </details>
       <div class="card-install">
         <code class="card-cmd"></code>
         <button type="button" class="copy-btn" aria-label="Copy install command">copy</button>
       </div>
       <footer class="card-foot">
-        <a class="card-link" target="_blank" rel="noopener">View on GitHub →</a>
+        <a class="card-link" target="_blank" rel="noopener">View source →</a>
       </footer>
     </article>
   </template>

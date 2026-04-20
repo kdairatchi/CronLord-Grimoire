@@ -2,7 +2,7 @@
 # Outputs to a dated markdown file. Keep scope tight — one repo per job.
 
 [[jobs]]
-id          = "weekly-repo-audit"
+id          = "claude-repo-audit"
 name        = "Weekly repo audit"
 description = "Claude reviews a repo and writes an audit note."
 category    = "ai"

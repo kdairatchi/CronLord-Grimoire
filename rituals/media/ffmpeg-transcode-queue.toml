@@ -1,5 +1,6 @@
 # ffmpeg-transcode-queue — pick up new videos in WATCH_DIR, transcode to H.264/AAC
 # MP4 in OUT_DIR. Moves sources to DONE_DIR on success. Requires ffmpeg.
+# DANGER: moves source files off WATCH_DIR on success; verify DONE_DIR on first run.
 # Set WATCH_DIR, OUT_DIR, DONE_DIR. Optional: CRF (default 23), PRESET (default medium).
 
 [[jobs]]

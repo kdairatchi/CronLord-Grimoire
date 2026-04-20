@@ -5,14 +5,16 @@
     rituals: [],
     categories: [],
     kinds: [],
-    filters: { q: "", category: "", kind: "" },
+    trusts: [],
+    permissions: [],
+    scan: null,
+    filters: { q: "", category: "", kind: "", trust: "", permissions: "" },
     theme: localStorage.getItem("grimoire-theme") || "dark",
   };
 
   const $ = (sel, root = document) => root.querySelector(sel);
   const $$ = (sel, root = document) => [...root.querySelectorAll(sel)];
 
-  // ---- theme ----
   document.body.dataset.theme = state.theme;
   $("#theme-toggle").addEventListener("click", () => {
     state.theme = state.theme === "dark" ? "light" : "dark";
@@ -20,64 +22,69 @@
     localStorage.setItem("grimoire-theme", state.theme);
   });
 
-  // ---- load ----
-  fetch("rituals.json", { cache: "no-cache" })
-    .then((r) => {
-      if (!r.ok) throw new Error(`HTTP ${r.status}`);
-      return r.json();
-    })
-    .then((data) => {
-      state.rituals = data.rituals || [];
-      state.categories = data.categories || [];
+  Promise.all([
+    fetch("rituals.json", { cache: "no-cache" }).then((r) => r.json()),
+    fetch("scan.json", { cache: "no-cache" }).then((r) => (r.ok ? r.json() : null)).catch(() => null),
+  ])
+    .then(([rituals, scan]) => {
+      state.rituals = rituals.rituals || [];
+      state.categories = rituals.categories || [];
       state.kinds = uniq(state.rituals.map((r) => r.kind)).sort();
-      renderStats(data);
+      state.trusts = uniq(state.rituals.map((r) => r.trust || "core")).sort();
+      state.permissions = uniq(state.rituals.flatMap((r) => r.permissions || [])).sort();
+      state.scan = scan;
+      renderStats(rituals, scan);
       renderFilters();
       wireSearch();
       render();
     })
     .catch((err) => {
-      const cards = $("#cards");
-      cards.innerHTML = `<p class="empty">Failed to load rituals.json: ${escapeHtml(err.message)}</p>`;
+      $("#cards").innerHTML = `<p class="empty">Failed to load data: ${escapeHtml(err.message)}</p>`;
     });
 
-  function uniq(xs) {
-    return [...new Set(xs)];
-  }
+  function uniq(xs) { return [...new Set(xs)]; }
 
   function escapeHtml(s) {
-    return String(s).replace(/[&<>"']/g, (c) => ({
-      "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
-    })[c]);
+    return String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
   }
 
-  function renderStats(data) {
+  function renderStats(data, scan) {
     $("#stat-total").textContent = data.total ?? state.rituals.length;
     $("#stat-cats").textContent = (data.categories || []).length;
     $("#stat-kinds").textContent = state.kinds.length;
+    if (scan) {
+      const pct = Math.round((scan.pass / scan.total) * 100);
+      $("#stat-scan").textContent = `${pct}%`;
+      $("#stat-scan-label").textContent = scan.fail ? `${scan.pass}/${scan.total} pass · ${scan.fail} fail` : `${scan.pass}/${scan.total} pass`;
+      if (scan.fail > 0) $("#stat-scan").style.color = "var(--rose)";
+      else if (scan.warn > 0) $("#stat-scan").style.color = "var(--amber)";
+    } else {
+      $("#stat-scan").textContent = "—";
+    }
   }
 
   function renderFilters() {
-    const kindEl = $("#filter-kind");
-    const catEl = $("#filter-cat");
-    kindEl.innerHTML = "";
-    catEl.innerHTML = "";
-
-    const countBy = (key) => {
-      const m = new Map();
-      for (const r of state.rituals) m.set(r[key], (m.get(r[key]) || 0) + 1);
-      return m;
+    const mount = (id, key, values, counter, labelMap = null) => {
+      const el = $(id);
+      el.innerHTML = "";
+      el.appendChild(makeChip(key, "", `all ${labelText(key)}`, state.rituals.length));
+      for (const v of values) {
+        const label = labelMap ? labelMap(v) : v;
+        el.appendChild(makeChip(key, v, label, counter(v)));
+      }
     };
-    const kindCounts = countBy("kind");
-    const catCounts = countBy("category");
 
-    kindEl.appendChild(makeChip("kind", "", "all kinds", state.rituals.length));
-    for (const k of state.kinds) {
-      kindEl.appendChild(makeChip("kind", k, k, kindCounts.get(k) || 0));
-    }
-    catEl.appendChild(makeChip("category", "", "all categories", state.rituals.length));
-    for (const c of state.categories) {
-      catEl.appendChild(makeChip("category", c, c, catCounts.get(c) || 0));
-    }
+    const countBy = (key) => (v) => state.rituals.filter((r) => r[key] === v).length;
+    const countByPerm = (v) => state.rituals.filter((r) => (r.permissions || []).includes(v)).length;
+
+    mount("#filter-kind", "kind", state.kinds, countBy("kind"));
+    mount("#filter-trust", "trust", state.trusts, countBy("trust"));
+    mount("#filter-perm", "permissions", state.permissions, countByPerm);
+    mount("#filter-cat", "category", state.categories, countBy("category"));
+  }
+
+  function labelText(key) {
+    return { kind: "kinds", trust: "trust", permissions: "permissions", category: "categories" }[key] || key;
   }
 
   function makeChip(key, value, label, count) {
@@ -86,11 +93,12 @@
     btn.className = "chip";
     btn.dataset.key = key;
     btn.dataset.value = value;
+    if (key === "trust" && value) btn.dataset.trust = value;
+    if (key === "permissions" && value) btn.dataset.perm = value;
     btn.innerHTML = `${escapeHtml(label)} <span class="count">${count}</span>`;
     if (state.filters[key] === value) btn.classList.add("active");
     btn.addEventListener("click", () => {
       state.filters[key] = state.filters[key] === value ? "" : value;
-      // clear "all" siblings, mark active
       $$(`.chip[data-key="${key}"]`).forEach((c) => c.classList.remove("active"));
       $$(`.chip[data-key="${key}"][data-value="${state.filters[key]}"]`).forEach((c) => c.classList.add("active"));
       render();
@@ -116,12 +124,14 @@
   }
 
   function filtered() {
-    const { q, category, kind } = state.filters;
+    const { q, category, kind, trust, permissions } = state.filters;
     return state.rituals.filter((r) => {
       if (category && r.category !== category) return false;
       if (kind && r.kind !== kind) return false;
+      if (trust && r.trust !== trust) return false;
+      if (permissions && !(r.permissions || []).includes(permissions)) return false;
       if (!q) return true;
-      const hay = `${r.id} ${r.name} ${r.description} ${r.category} ${r.kind}`.toLowerCase();
+      const hay = `${r.id} ${r.name} ${r.description} ${r.category} ${r.kind} ${(r.permissions || []).join(" ")} ${(r.required_env || []).join(" ")}`.toLowerCase();
       return q.split(/\s+/).every((term) => hay.includes(term));
     });
   }
@@ -136,25 +146,81 @@
 
     cards.innerHTML = "";
     const frag = document.createDocumentFragment();
-    for (const r of list) {
-      const node = tmpl.content.firstElementChild.cloneNode(true);
-      $(".card-title", node).textContent = r.id;
-      const badge = $(".badge-kind", node);
-      badge.textContent = r.kind;
-      badge.dataset.kind = r.kind;
-      $(".card-desc", node).textContent = r.description || r.name || "";
-      $(".card-schedule", node).textContent = r.schedule ? `${r.schedule} (${r.timezone})` : "—";
-      $(".card-cat", node).textContent = r.category;
-      $(".card-cmd", node).textContent = r.install_cmd;
-      const link = $(".card-link", node);
-      link.href = r.github_url;
-      link.textContent = "View source →";
-
-      const copyBtn = $(".copy-btn", node);
-      copyBtn.addEventListener("click", () => copyToClipboard(r.install_cmd, copyBtn));
-      frag.appendChild(node);
-    }
+    for (const r of list) frag.appendChild(renderCard(tmpl, r));
     cards.appendChild(frag);
+  }
+
+  function renderCard(tmpl, r) {
+    const node = tmpl.content.firstElementChild.cloneNode(true);
+    $(".card-title", node).textContent = r.id;
+
+    const kindBadge = $(".badge-kind", node);
+    kindBadge.textContent = r.kind;
+    kindBadge.dataset.kind = r.kind;
+
+    const trustBadge = $(".badge-trust", node);
+    trustBadge.textContent = r.trust || "core";
+    trustBadge.dataset.trust = r.trust || "core";
+
+    const authorLink = $(".badge-author", node);
+    const author = r.author || "kdairatchi";
+    authorLink.textContent = `@${author}`;
+    authorLink.href = `https://github.com/${author}`;
+
+    const scanBadge = $(".badge-scan", node);
+    scanBadge.textContent = r.scan_status || "—";
+    scanBadge.dataset.status = r.scan_status || "UNKNOWN";
+
+    $(".card-desc", node).textContent = r.description || r.name || "";
+    $(".card-schedule", node).textContent = r.schedule ? `${r.schedule} (${r.timezone})` : "—";
+    $(".card-cat", node).textContent = r.category;
+
+    const perms = r.permissions || [];
+    if (perms.length) {
+      const permEl = $(".card-perms", node);
+      permEl.hidden = false;
+      const ul = $(".perm-list", permEl);
+      for (const p of perms) {
+        const li = document.createElement("li");
+        li.className = "perm-pill";
+        li.dataset.perm = p;
+        li.textContent = p;
+        ul.appendChild(li);
+      }
+    }
+
+    const envs = r.required_env || [];
+    if (envs.length) {
+      const envEl = $(".card-env", node);
+      envEl.hidden = false;
+      const ul = $(".env-list", envEl);
+      for (const e of envs) {
+        const li = document.createElement("li");
+        li.className = "env-pill";
+        li.textContent = e;
+        ul.appendChild(li);
+      }
+    }
+
+    const warnings = r.warnings || [];
+    if (warnings.length) {
+      const warnEl = $(".card-warnings", node);
+      warnEl.hidden = false;
+      const ul = $(".warning-list", warnEl);
+      for (const w of warnings) {
+        const li = document.createElement("li");
+        li.textContent = w;
+        ul.appendChild(li);
+      }
+    }
+
+    $(".card-cmd", node).textContent = r.install_cmd;
+    const link = $(".card-link", node);
+    link.href = r.github_url;
+
+    const copyBtn = $(".copy-btn", node);
+    copyBtn.addEventListener("click", () => copyToClipboard(r.install_cmd, copyBtn));
+    return node;
   }
 
   function copyToClipboard(text, btn) {

@@ -1,5 +1,6 @@
 # docker-prune — reclaim disk by pruning unused Docker state.
 # Conservative by default (only unused volumes/images/networks; no --all).
+# DANGER: removes stopped containers + dangling images. Review before enabling.
 
 [[jobs]]
 id          = "docker-prune"

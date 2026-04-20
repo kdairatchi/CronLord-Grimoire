@@ -2,7 +2,7 @@
 
 A curated, vendor-neutral collection of [CronLord](https://github.com/kdairatchi/CronLord) rituals (jobs). Ready-to-run TOML entries covering everything a small team or solo operator actually schedules: monitoring, backups, sync, security, AI pipelines, agents, data, devops, reporting, communication, databases, content, home automation, finance, media, and personal automation.
 
-**51 rituals across 17 categories.** Start at the **[gallery](GALLERY.md)** for use-case-driven browsing, or [`rituals/INDEX.md`](rituals/INDEX.md) for the full auto-generated table.
+**54 rituals across 17 categories.** All scanned — 54/54 pass. Start at the **[gallery](GALLERY.md)** for use-case-driven browsing, or [`rituals/INDEX.md`](rituals/INDEX.md) for the full auto-generated table.
 
 Every ritual ships `enabled = false`. You read the header, set the env vars it names, then enable.
 
@@ -146,6 +146,23 @@ Missing a provider (Mistral, Cohere, xAI Grok, DeepSeek, local llama.cpp, …)? 
 ## Contribute
 
 See [CONTRIBUTING.md](CONTRIBUTING.md). One ritual per PR, follow the header-comment pattern, prove it runs on your box.
+
+## Scanner
+
+Every ritual is validated by `scripts/scan.py` — enforces the grimoire invariants, extracts permissions (network/filesystem/secrets/git/database/destructive/llm), and flags:
+
+- Schema violations (missing required field, `enabled != false`, id/filename mismatch, category/dir mismatch, invalid cron)
+- Hardcoded secrets (OpenAI/Slack/GitHub/AWS/Google token patterns)
+- Destructive actions without a `DANGER:` header note
+- Non-UTC timezones outside `personal/` and `home/`
+- Missing `timeout_sec` on shell rituals
+
+```bash
+python3 scripts/scan.py              # print report + write docs/scan.json
+python3 scripts/gen-index.py         # regenerate INDEX.md + docs/rituals.json (merges scan data)
+```
+
+Scanner output flows into the [live gallery](https://kdairatchi.github.io/cronlord-grimoire/) — each card shows its scan status, trust tier, author, permissions, and required env.
 
 ## License
 

@@ -1,0 +1,22 @@
+# k8s-rollout-restart — rolling restart of a Kubernetes deployment on a cadence.
+# Useful for apps that leak memory or stale connections. Drains pods gracefully.
+# Install: kubectl configured against target cluster.
+# Required env: K8S_NAMESPACE, K8S_DEPLOYMENT. Optional: KUBECONFIG.
+
+[[jobs]]
+id          = "k8s-rollout-restart"
+name        = "Kubernetes — rolling restart"
+description = "kubectl rollout restart of a deployment (graceful, rolling)."
+category    = "devops"
+kind        = "shell"
+schedule    = "0 4 * * 0"
+timezone    = "UTC"
+enabled     = false
+timeout_sec = 600
+
+command = '''
+: "${K8S_NAMESPACE:?required}"
+: "${K8S_DEPLOYMENT:?required}"
+kubectl -n "$K8S_NAMESPACE" rollout restart "deployment/$K8S_DEPLOYMENT"
+kubectl -n "$K8S_NAMESPACE" rollout status "deployment/$K8S_DEPLOYMENT" --timeout=5m
+'''
