@@ -72,8 +72,18 @@ header.site .wrap {
 }
 .brand { display: inline-flex; align-items: center; gap: 10px; font-weight: 700; color: var(--fg); }
 .brand:hover { text-decoration: none; }
-.brand-mark { color: var(--accent); font-size: 18px; }
-.brand-text { letter-spacing: -0.015em; }
+.brand:hover .brand-mark { filter: drop-shadow(0 0 8px color-mix(in oklab, var(--accent) 70%, transparent)); }
+.brand-mark {
+  display: inline-block;
+  width: 22px; height: 22px;
+  filter: drop-shadow(0 0 4px color-mix(in oklab, var(--accent) 40%, transparent));
+  transition: filter .2s ease;
+}
+.brand-text {
+  letter-spacing: -0.01em;
+  font-family: var(--mono);
+  font-size: 15px;
+}
 nav { display: flex; align-items: center; gap: 18px; }
 nav a { color: var(--fg-dim); font-size: 14px; }
 nav a:hover { color: var(--fg); text-decoration: none; }
