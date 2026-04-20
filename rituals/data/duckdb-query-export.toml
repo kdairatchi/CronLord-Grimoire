@@ -1,0 +1,32 @@
+# duckdb-query-export
+# Run a scheduled DuckDB SQL query and write results to Parquet, CSV, or JSON.
+# Requires: duckdb
+# Env: DUCKDB_DB, DUCKDB_QUERY, DUCKDB_OUT
+# Docs: https://duckdb.org/docs/sql/statements/copy
+# Pattern: awesome-etl, patterns.md/data/
+# Notes: OUT format is inferred from extension (.parquet/.csv/.json). DB can be ':memory:'.
+# DANGER: rm -f on mktemp file; temp SQL only, OUT is overwritten on each run.
+
+[[jobs]]
+id          = "duckdb-query-export"
+name        = "DuckDB Query Export"
+description = "Run a DuckDB query on schedule and write results to Parquet, CSV, or JSON."
+category    = "data"
+kind        = "shell"
+schedule    = "0 2 * * *"
+timezone    = "UTC"
+enabled     = false
+timeout_sec = 300
+
+command = '''
+set -eu
+DB="${DUCKDB_DB:?required}"
+Q="${DUCKDB_QUERY:?required}"
+OUT="${DUCKDB_OUT:?required}"
+mkdir -p "$(dirname "$OUT")"
+SQL_FILE=$(mktemp /tmp/dq.XXXXXX)
+printf 'COPY (%s) TO '"'"'%s'"'"';\n' "$Q" "$OUT" > "$SQL_FILE"
+duckdb "$DB" < "$SQL_FILE"
+rm -f "$SQL_FILE"
+echo "exported to $OUT"
+'''

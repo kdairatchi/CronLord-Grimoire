@@ -1,6 +1,6 @@
 {
   "generated_at": null,
-  "total": 54,
+  "total": 55,
   "categories": [
     "agents",
     "ai",
@@ -550,6 +550,32 @@
       "path": "rituals/content/rss-to-mastodon.toml",
       "install_cmd": "./install.sh rituals/content/rss-to-mastodon.toml",
       "github_url": "https://github.com/kdairatchi/CronLord-Grimoire/blob/main/rituals/content/rss-to-mastodon.toml"
+    },
+    {
+      "id": "duckdb-query-export",
+      "name": "DuckDB Query Export",
+      "description": "Run a DuckDB query on schedule and write results to Parquet, CSV, or JSON.",
+      "category": "data",
+      "kind": "shell",
+      "schedule": "0 2 * * *",
+      "timezone": "UTC",
+      "timeout_sec": 300,
+      "author": "kdairatchi",
+      "trust": "core",
+      "permissions": [
+        "filesystem",
+        "destructive"
+      ],
+      "required_env": [
+        "DUCKDB_DB",
+        "DUCKDB_QUERY",
+        "DUCKDB_OUT"
+      ],
+      "scan_status": "PASS",
+      "warnings": [],
+      "path": "rituals/data/duckdb-query-export.toml",
+      "install_cmd": "./install.sh rituals/data/duckdb-query-export.toml",
+      "github_url": "https://github.com/kdairatchi/CronLord-Grimoire/blob/main/rituals/data/duckdb-query-export.toml"
     },
     {
       "id": "rss-to-jsonl",

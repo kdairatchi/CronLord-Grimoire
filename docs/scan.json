@@ -1,6 +1,6 @@
 {
-  "total": 54,
-  "pass": 54,
+  "total": 55,
+  "pass": 55,
   "warn": 0,
   "fail": 0,
   "results": [
@@ -361,6 +361,25 @@
         "network",
         "filesystem",
         "secrets"
+      ],
+      "errors": [],
+      "warnings": [],
+      "status": "PASS"
+    },
+    {
+      "path": "rituals/data/duckdb-query-export.toml",
+      "id": "duckdb-query-export",
+      "category": "data",
+      "trust": "core",
+      "author": "kdairatchi",
+      "required_env": [
+        "DUCKDB_DB",
+        "DUCKDB_QUERY",
+        "DUCKDB_OUT"
+      ],
+      "permissions": [
+        "filesystem",
+        "destructive"
       ],
       "errors": [],
       "warnings": [],
