@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="docs/assets/grimoire-hero-1200.jpg" alt="CronLord-Grimoire — scheduler rituals, one [[jobs]] block per file" width="100%">
+</p>
+
 # CronLord-Grimoire
 
 A curated, vendor-neutral collection of [CronLord](https://github.com/kdairatchi/CronLord) rituals (jobs). Ready-to-run TOML entries covering everything a small team or solo operator actually schedules: monitoring, backups, sync, security, AI pipelines, agents, data, devops, reporting, communication, databases, content, home automation, finance, media, and personal automation.
