@@ -162,7 +162,7 @@ python3 scripts/scan.py              # print report + write docs/scan.json
 python3 scripts/gen-index.py         # regenerate INDEX.md + docs/rituals.json (merges scan data)
 ```
 
-Scanner output flows into the [live gallery](https://kdairatchi.github.io/cronlord-grimoire/) — each card shows its scan status, trust tier, author, permissions, and required env.
+Scanner output flows into the [live gallery](https://kdairatchi.github.io/CronLord-Grimoire/) — each card shows its scan status, trust tier, author, permissions, and required env.
 
 ## License
 
