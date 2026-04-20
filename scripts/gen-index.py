@@ -109,7 +109,7 @@ def main() -> int:
                     "warnings": r.get("warnings", []),
                     "path": r["path"],
                     "install_cmd": f"./install.sh {r['path']}",
-                    "github_url": f"https://github.com/kdairatchi/cronlord-grimoire/blob/main/{r['path']}",
+                    "github_url": f"https://github.com/kdairatchi/CronLord-Grimoire/blob/main/{r['path']}",
                 }
             )
     JSON_OUT.parent.mkdir(parents=True, exist_ok=True)

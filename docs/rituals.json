@@ -38,7 +38,7 @@
       "warnings": [],
       "path": "rituals/agents/aider-autocommit.toml",
       "install_cmd": "./install.sh rituals/agents/aider-autocommit.toml",
-      "github_url": "https://github.com/kdairatchi/cronlord-grimoire/blob/main/rituals/agents/aider-autocommit.toml"
+      "github_url": "https://github.com/kdairatchi/CronLord-Grimoire/blob/main/rituals/agents/aider-autocommit.toml"
     },
     {
       "id": "claude-skill-invoke",
@@ -57,7 +57,7 @@
       "warnings": [],
       "path": "rituals/agents/claude-skill-invoke.toml",
       "install_cmd": "./install.sh rituals/agents/claude-skill-invoke.toml",
-      "github_url": "https://github.com/kdairatchi/cronlord-grimoire/blob/main/rituals/agents/claude-skill-invoke.toml"
+      "github_url": "https://github.com/kdairatchi/CronLord-Grimoire/blob/main/rituals/agents/claude-skill-invoke.toml"
     },
     {
       "id": "claude-subagent-fanout",
@@ -78,7 +78,7 @@
       "warnings": [],
       "path": "rituals/agents/claude-subagent-fanout.toml",
       "install_cmd": "./install.sh rituals/agents/claude-subagent-fanout.toml",
-      "github_url": "https://github.com/kdairatchi/cronlord-grimoire/blob/main/rituals/agents/claude-subagent-fanout.toml"
+      "github_url": "https://github.com/kdairatchi/CronLord-Grimoire/blob/main/rituals/agents/claude-subagent-fanout.toml"
     },
     {
       "id": "fabric-pattern",
@@ -99,7 +99,7 @@
       "warnings": [],
       "path": "rituals/agents/fabric-pattern.toml",
       "install_cmd": "./install.sh rituals/agents/fabric-pattern.toml",
-      "github_url": "https://github.com/kdairatchi/cronlord-grimoire/blob/main/rituals/agents/fabric-pattern.toml"
+      "github_url": "https://github.com/kdairatchi/CronLord-Grimoire/blob/main/rituals/agents/fabric-pattern.toml"
     },
     {
       "id": "goose-recipe",
@@ -118,7 +118,7 @@
       "warnings": [],
       "path": "rituals/agents/goose-recipe.toml",
       "install_cmd": "./install.sh rituals/agents/goose-recipe.toml",
-      "github_url": "https://github.com/kdairatchi/cronlord-grimoire/blob/main/rituals/agents/goose-recipe.toml"
+      "github_url": "https://github.com/kdairatchi/CronLord-Grimoire/blob/main/rituals/agents/goose-recipe.toml"
     },
     {
       "id": "llm-tools-call",
@@ -139,7 +139,7 @@
       "warnings": [],
       "path": "rituals/agents/llm-tools-call.toml",
       "install_cmd": "./install.sh rituals/agents/llm-tools-call.toml",
-      "github_url": "https://github.com/kdairatchi/cronlord-grimoire/blob/main/rituals/agents/llm-tools-call.toml"
+      "github_url": "https://github.com/kdairatchi/CronLord-Grimoire/blob/main/rituals/agents/llm-tools-call.toml"
     },
     {
       "id": "claude-repo-audit",
@@ -158,7 +158,7 @@
       "warnings": [],
       "path": "rituals/ai/claude-repo-audit.toml",
       "install_cmd": "./install.sh rituals/ai/claude-repo-audit.toml",
-      "github_url": "https://github.com/kdairatchi/cronlord-grimoire/blob/main/rituals/ai/claude-repo-audit.toml"
+      "github_url": "https://github.com/kdairatchi/CronLord-Grimoire/blob/main/rituals/ai/claude-repo-audit.toml"
     },
     {
       "id": "claude-vault-summary",
@@ -177,7 +177,7 @@
       "warnings": [],
       "path": "rituals/ai/claude-vault-summary.toml",
       "install_cmd": "./install.sh rituals/ai/claude-vault-summary.toml",
-      "github_url": "https://github.com/kdairatchi/cronlord-grimoire/blob/main/rituals/ai/claude-vault-summary.toml"
+      "github_url": "https://github.com/kdairatchi/CronLord-Grimoire/blob/main/rituals/ai/claude-vault-summary.toml"
     },
     {
       "id": "gemini-news-digest",
@@ -201,7 +201,7 @@
       "warnings": [],
       "path": "rituals/ai/gemini-news-digest.toml",
       "install_cmd": "./install.sh rituals/ai/gemini-news-digest.toml",
-      "github_url": "https://github.com/kdairatchi/cronlord-grimoire/blob/main/rituals/ai/gemini-news-digest.toml"
+      "github_url": "https://github.com/kdairatchi/CronLord-Grimoire/blob/main/rituals/ai/gemini-news-digest.toml"
     },
     {
       "id": "groq-fast-classify",
@@ -225,7 +225,7 @@
       "warnings": [],
       "path": "rituals/ai/groq-fast-classify.toml",
       "install_cmd": "./install.sh rituals/ai/groq-fast-classify.toml",
-      "github_url": "https://github.com/kdairatchi/cronlord-grimoire/blob/main/rituals/ai/groq-fast-classify.toml"
+      "github_url": "https://github.com/kdairatchi/CronLord-Grimoire/blob/main/rituals/ai/groq-fast-classify.toml"
     },
     {
       "id": "llm-cli-any",
@@ -246,7 +246,7 @@
       "warnings": [],
       "path": "rituals/ai/llm-cli-any.toml",
       "install_cmd": "./install.sh rituals/ai/llm-cli-any.toml",
-      "github_url": "https://github.com/kdairatchi/cronlord-grimoire/blob/main/rituals/ai/llm-cli-any.toml"
+      "github_url": "https://github.com/kdairatchi/CronLord-Grimoire/blob/main/rituals/ai/llm-cli-any.toml"
     },
     {
       "id": "ollama-local-summary",
@@ -268,7 +268,7 @@
       "warnings": [],
       "path": "rituals/ai/ollama-local-summary.toml",
       "install_cmd": "./install.sh rituals/ai/ollama-local-summary.toml",
-      "github_url": "https://github.com/kdairatchi/cronlord-grimoire/blob/main/rituals/ai/ollama-local-summary.toml"
+      "github_url": "https://github.com/kdairatchi/CronLord-Grimoire/blob/main/rituals/ai/ollama-local-summary.toml"
     },
     {
       "id": "openai-pr-triage",
@@ -291,7 +291,7 @@
       "warnings": [],
       "path": "rituals/ai/openai-pr-triage.toml",
       "install_cmd": "./install.sh rituals/ai/openai-pr-triage.toml",
-      "github_url": "https://github.com/kdairatchi/cronlord-grimoire/blob/main/rituals/ai/openai-pr-triage.toml"
+      "github_url": "https://github.com/kdairatchi/CronLord-Grimoire/blob/main/rituals/ai/openai-pr-triage.toml"
     },
     {
       "id": "openrouter-route",
@@ -318,7 +318,7 @@
       "warnings": [],
       "path": "rituals/ai/openrouter-route.toml",
       "install_cmd": "./install.sh rituals/ai/openrouter-route.toml",
-      "github_url": "https://github.com/kdairatchi/cronlord-grimoire/blob/main/rituals/ai/openrouter-route.toml"
+      "github_url": "https://github.com/kdairatchi/CronLord-Grimoire/blob/main/rituals/ai/openrouter-route.toml"
     },
     {
       "id": "postgres-dump-to-s3",
@@ -339,7 +339,7 @@
       "warnings": [],
       "path": "rituals/backup/postgres-dump-to-s3.toml",
       "install_cmd": "./install.sh rituals/backup/postgres-dump-to-s3.toml",
-      "github_url": "https://github.com/kdairatchi/cronlord-grimoire/blob/main/rituals/backup/postgres-dump-to-s3.toml"
+      "github_url": "https://github.com/kdairatchi/CronLord-Grimoire/blob/main/rituals/backup/postgres-dump-to-s3.toml"
     },
     {
       "id": "restic-home-snapshot",
@@ -360,7 +360,7 @@
       "warnings": [],
       "path": "rituals/backup/restic-home-snapshot.toml",
       "install_cmd": "./install.sh rituals/backup/restic-home-snapshot.toml",
-      "github_url": "https://github.com/kdairatchi/cronlord-grimoire/blob/main/rituals/backup/restic-home-snapshot.toml"
+      "github_url": "https://github.com/kdairatchi/CronLord-Grimoire/blob/main/rituals/backup/restic-home-snapshot.toml"
     },
     {
       "id": "apprise-fanout",
@@ -379,7 +379,7 @@
       "warnings": [],
       "path": "rituals/communication/apprise-fanout.toml",
       "install_cmd": "./install.sh rituals/communication/apprise-fanout.toml",
-      "github_url": "https://github.com/kdairatchi/cronlord-grimoire/blob/main/rituals/communication/apprise-fanout.toml"
+      "github_url": "https://github.com/kdairatchi/CronLord-Grimoire/blob/main/rituals/communication/apprise-fanout.toml"
     },
     {
       "id": "discord-webhook-post",
@@ -400,7 +400,7 @@
       "warnings": [],
       "path": "rituals/communication/discord-webhook-post.toml",
       "install_cmd": "./install.sh rituals/communication/discord-webhook-post.toml",
-      "github_url": "https://github.com/kdairatchi/cronlord-grimoire/blob/main/rituals/communication/discord-webhook-post.toml"
+      "github_url": "https://github.com/kdairatchi/CronLord-Grimoire/blob/main/rituals/communication/discord-webhook-post.toml"
     },
     {
       "id": "email-smtp-send",
@@ -425,7 +425,7 @@
       "warnings": [],
       "path": "rituals/communication/email-smtp-send.toml",
       "install_cmd": "./install.sh rituals/communication/email-smtp-send.toml",
-      "github_url": "https://github.com/kdairatchi/cronlord-grimoire/blob/main/rituals/communication/email-smtp-send.toml"
+      "github_url": "https://github.com/kdairatchi/CronLord-Grimoire/blob/main/rituals/communication/email-smtp-send.toml"
     },
     {
       "id": "mastodon-post",
@@ -451,7 +451,7 @@
       "warnings": [],
       "path": "rituals/communication/mastodon-post.toml",
       "install_cmd": "./install.sh rituals/communication/mastodon-post.toml",
-      "github_url": "https://github.com/kdairatchi/cronlord-grimoire/blob/main/rituals/communication/mastodon-post.toml"
+      "github_url": "https://github.com/kdairatchi/CronLord-Grimoire/blob/main/rituals/communication/mastodon-post.toml"
     },
     {
       "id": "telegram-bot-send",
@@ -476,7 +476,7 @@
       "warnings": [],
       "path": "rituals/communication/telegram-bot-send.toml",
       "install_cmd": "./install.sh rituals/communication/telegram-bot-send.toml",
-      "github_url": "https://github.com/kdairatchi/cronlord-grimoire/blob/main/rituals/communication/telegram-bot-send.toml"
+      "github_url": "https://github.com/kdairatchi/CronLord-Grimoire/blob/main/rituals/communication/telegram-bot-send.toml"
     },
     {
       "id": "arxiv-paper-alert",
@@ -498,7 +498,7 @@
       "warnings": [],
       "path": "rituals/content/arxiv-paper-alert.toml",
       "install_cmd": "./install.sh rituals/content/arxiv-paper-alert.toml",
-      "github_url": "https://github.com/kdairatchi/cronlord-grimoire/blob/main/rituals/content/arxiv-paper-alert.toml"
+      "github_url": "https://github.com/kdairatchi/CronLord-Grimoire/blob/main/rituals/content/arxiv-paper-alert.toml"
     },
     {
       "id": "markdown-cross-post",
@@ -522,7 +522,7 @@
       "warnings": [],
       "path": "rituals/content/markdown-cross-post.toml",
       "install_cmd": "./install.sh rituals/content/markdown-cross-post.toml",
-      "github_url": "https://github.com/kdairatchi/cronlord-grimoire/blob/main/rituals/content/markdown-cross-post.toml"
+      "github_url": "https://github.com/kdairatchi/CronLord-Grimoire/blob/main/rituals/content/markdown-cross-post.toml"
     },
     {
       "id": "rss-to-mastodon",
@@ -549,7 +549,7 @@
       "warnings": [],
       "path": "rituals/content/rss-to-mastodon.toml",
       "install_cmd": "./install.sh rituals/content/rss-to-mastodon.toml",
-      "github_url": "https://github.com/kdairatchi/cronlord-grimoire/blob/main/rituals/content/rss-to-mastodon.toml"
+      "github_url": "https://github.com/kdairatchi/CronLord-Grimoire/blob/main/rituals/content/rss-to-mastodon.toml"
     },
     {
       "id": "rss-to-jsonl",
@@ -571,7 +571,7 @@
       "warnings": [],
       "path": "rituals/data/rss-to-jsonl.toml",
       "install_cmd": "./install.sh rituals/data/rss-to-jsonl.toml",
-      "github_url": "https://github.com/kdairatchi/cronlord-grimoire/blob/main/rituals/data/rss-to-jsonl.toml"
+      "github_url": "https://github.com/kdairatchi/CronLord-Grimoire/blob/main/rituals/data/rss-to-jsonl.toml"
     },
     {
       "id": "mysql-dump",
@@ -598,7 +598,7 @@
       "warnings": [],
       "path": "rituals/database/mysql-dump.toml",
       "install_cmd": "./install.sh rituals/database/mysql-dump.toml",
-      "github_url": "https://github.com/kdairatchi/cronlord-grimoire/blob/main/rituals/database/mysql-dump.toml"
+      "github_url": "https://github.com/kdairatchi/CronLord-Grimoire/blob/main/rituals/database/mysql-dump.toml"
     },
     {
       "id": "postgres-vacuum-analyze",
@@ -622,7 +622,7 @@
       "warnings": [],
       "path": "rituals/database/postgres-vacuum-analyze.toml",
       "install_cmd": "./install.sh rituals/database/postgres-vacuum-analyze.toml",
-      "github_url": "https://github.com/kdairatchi/cronlord-grimoire/blob/main/rituals/database/postgres-vacuum-analyze.toml"
+      "github_url": "https://github.com/kdairatchi/CronLord-Grimoire/blob/main/rituals/database/postgres-vacuum-analyze.toml"
     },
     {
       "id": "sqlite-vacuum",
@@ -646,7 +646,7 @@
       "warnings": [],
       "path": "rituals/database/sqlite-vacuum.toml",
       "install_cmd": "./install.sh rituals/database/sqlite-vacuum.toml",
-      "github_url": "https://github.com/kdairatchi/cronlord-grimoire/blob/main/rituals/database/sqlite-vacuum.toml"
+      "github_url": "https://github.com/kdairatchi/CronLord-Grimoire/blob/main/rituals/database/sqlite-vacuum.toml"
     },
     {
       "id": "github-release-watch",
@@ -669,7 +669,7 @@
       "warnings": [],
       "path": "rituals/devops/github-release-watch.toml",
       "install_cmd": "./install.sh rituals/devops/github-release-watch.toml",
-      "github_url": "https://github.com/kdairatchi/cronlord-grimoire/blob/main/rituals/devops/github-release-watch.toml"
+      "github_url": "https://github.com/kdairatchi/CronLord-Grimoire/blob/main/rituals/devops/github-release-watch.toml"
     },
     {
       "id": "k8s-rollout-restart",
@@ -691,7 +691,7 @@
       "warnings": [],
       "path": "rituals/devops/k8s-rollout-restart.toml",
       "install_cmd": "./install.sh rituals/devops/k8s-rollout-restart.toml",
-      "github_url": "https://github.com/kdairatchi/cronlord-grimoire/blob/main/rituals/devops/k8s-rollout-restart.toml"
+      "github_url": "https://github.com/kdairatchi/CronLord-Grimoire/blob/main/rituals/devops/k8s-rollout-restart.toml"
     },
     {
       "id": "crypto-price-alert",
@@ -713,7 +713,7 @@
       "warnings": [],
       "path": "rituals/finance/crypto-price-alert.toml",
       "install_cmd": "./install.sh rituals/finance/crypto-price-alert.toml",
-      "github_url": "https://github.com/kdairatchi/cronlord-grimoire/blob/main/rituals/finance/crypto-price-alert.toml"
+      "github_url": "https://github.com/kdairatchi/CronLord-Grimoire/blob/main/rituals/finance/crypto-price-alert.toml"
     },
     {
       "id": "exchange-rate-log",
@@ -735,7 +735,7 @@
       "warnings": [],
       "path": "rituals/finance/exchange-rate-log.toml",
       "install_cmd": "./install.sh rituals/finance/exchange-rate-log.toml",
-      "github_url": "https://github.com/kdairatchi/cronlord-grimoire/blob/main/rituals/finance/exchange-rate-log.toml"
+      "github_url": "https://github.com/kdairatchi/CronLord-Grimoire/blob/main/rituals/finance/exchange-rate-log.toml"
     },
     {
       "id": "ha-script-trigger",
@@ -760,7 +760,7 @@
       "warnings": [],
       "path": "rituals/home/ha-script-trigger.toml",
       "install_cmd": "./install.sh rituals/home/ha-script-trigger.toml",
-      "github_url": "https://github.com/kdairatchi/cronlord-grimoire/blob/main/rituals/home/ha-script-trigger.toml"
+      "github_url": "https://github.com/kdairatchi/CronLord-Grimoire/blob/main/rituals/home/ha-script-trigger.toml"
     },
     {
       "id": "mqtt-publish",
@@ -784,7 +784,7 @@
       "warnings": [],
       "path": "rituals/home/mqtt-publish.toml",
       "install_cmd": "./install.sh rituals/home/mqtt-publish.toml",
-      "github_url": "https://github.com/kdairatchi/cronlord-grimoire/blob/main/rituals/home/mqtt-publish.toml"
+      "github_url": "https://github.com/kdairatchi/CronLord-Grimoire/blob/main/rituals/home/mqtt-publish.toml"
     },
     {
       "id": "brew-outdated-report",
@@ -805,7 +805,7 @@
       "warnings": [],
       "path": "rituals/maintenance/brew-outdated-report.toml",
       "install_cmd": "./install.sh rituals/maintenance/brew-outdated-report.toml",
-      "github_url": "https://github.com/kdairatchi/cronlord-grimoire/blob/main/rituals/maintenance/brew-outdated-report.toml"
+      "github_url": "https://github.com/kdairatchi/CronLord-Grimoire/blob/main/rituals/maintenance/brew-outdated-report.toml"
     },
     {
       "id": "certbot-renewal-check",
@@ -824,7 +824,7 @@
       "warnings": [],
       "path": "rituals/maintenance/certbot-renewal-check.toml",
       "install_cmd": "./install.sh rituals/maintenance/certbot-renewal-check.toml",
-      "github_url": "https://github.com/kdairatchi/cronlord-grimoire/blob/main/rituals/maintenance/certbot-renewal-check.toml"
+      "github_url": "https://github.com/kdairatchi/CronLord-Grimoire/blob/main/rituals/maintenance/certbot-renewal-check.toml"
     },
     {
       "id": "docker-prune",
@@ -845,7 +845,7 @@
       "warnings": [],
       "path": "rituals/maintenance/docker-prune.toml",
       "install_cmd": "./install.sh rituals/maintenance/docker-prune.toml",
-      "github_url": "https://github.com/kdairatchi/cronlord-grimoire/blob/main/rituals/maintenance/docker-prune.toml"
+      "github_url": "https://github.com/kdairatchi/CronLord-Grimoire/blob/main/rituals/maintenance/docker-prune.toml"
     },
     {
       "id": "ffmpeg-transcode-queue",
@@ -870,7 +870,7 @@
       "warnings": [],
       "path": "rituals/media/ffmpeg-transcode-queue.toml",
       "install_cmd": "./install.sh rituals/media/ffmpeg-transcode-queue.toml",
-      "github_url": "https://github.com/kdairatchi/cronlord-grimoire/blob/main/rituals/media/ffmpeg-transcode-queue.toml"
+      "github_url": "https://github.com/kdairatchi/CronLord-Grimoire/blob/main/rituals/media/ffmpeg-transcode-queue.toml"
     },
     {
       "id": "image-bulk-resize",
@@ -894,7 +894,7 @@
       "warnings": [],
       "path": "rituals/media/image-bulk-resize.toml",
       "install_cmd": "./install.sh rituals/media/image-bulk-resize.toml",
-      "github_url": "https://github.com/kdairatchi/cronlord-grimoire/blob/main/rituals/media/image-bulk-resize.toml"
+      "github_url": "https://github.com/kdairatchi/CronLord-Grimoire/blob/main/rituals/media/image-bulk-resize.toml"
     },
     {
       "id": "deadman-heartbeat",
@@ -915,7 +915,7 @@
       "warnings": [],
       "path": "rituals/monitoring/deadman-heartbeat.toml",
       "install_cmd": "./install.sh rituals/monitoring/deadman-heartbeat.toml",
-      "github_url": "https://github.com/kdairatchi/cronlord-grimoire/blob/main/rituals/monitoring/deadman-heartbeat.toml"
+      "github_url": "https://github.com/kdairatchi/CronLord-Grimoire/blob/main/rituals/monitoring/deadman-heartbeat.toml"
     },
     {
       "id": "disk-space-alert",
@@ -934,7 +934,7 @@
       "warnings": [],
       "path": "rituals/monitoring/disk-space-alert.toml",
       "install_cmd": "./install.sh rituals/monitoring/disk-space-alert.toml",
-      "github_url": "https://github.com/kdairatchi/cronlord-grimoire/blob/main/rituals/monitoring/disk-space-alert.toml"
+      "github_url": "https://github.com/kdairatchi/CronLord-Grimoire/blob/main/rituals/monitoring/disk-space-alert.toml"
     },
     {
       "id": "http-uptime-check",
@@ -955,7 +955,7 @@
       "warnings": [],
       "path": "rituals/monitoring/http-uptime-check.toml",
       "install_cmd": "./install.sh rituals/monitoring/http-uptime-check.toml",
-      "github_url": "https://github.com/kdairatchi/cronlord-grimoire/blob/main/rituals/monitoring/http-uptime-check.toml"
+      "github_url": "https://github.com/kdairatchi/CronLord-Grimoire/blob/main/rituals/monitoring/http-uptime-check.toml"
     },
     {
       "id": "port-baseline-diff",
@@ -976,7 +976,7 @@
       "warnings": [],
       "path": "rituals/monitoring/port-baseline-diff.toml",
       "install_cmd": "./install.sh rituals/monitoring/port-baseline-diff.toml",
-      "github_url": "https://github.com/kdairatchi/cronlord-grimoire/blob/main/rituals/monitoring/port-baseline-diff.toml"
+      "github_url": "https://github.com/kdairatchi/CronLord-Grimoire/blob/main/rituals/monitoring/port-baseline-diff.toml"
     },
     {
       "id": "ssl-expiry-watch",
@@ -997,7 +997,7 @@
       "warnings": [],
       "path": "rituals/monitoring/ssl-expiry-watch.toml",
       "install_cmd": "./install.sh rituals/monitoring/ssl-expiry-watch.toml",
-      "github_url": "https://github.com/kdairatchi/cronlord-grimoire/blob/main/rituals/monitoring/ssl-expiry-watch.toml"
+      "github_url": "https://github.com/kdairatchi/CronLord-Grimoire/blob/main/rituals/monitoring/ssl-expiry-watch.toml"
     },
     {
       "id": "ntfy-habit-reminder",
@@ -1018,7 +1018,7 @@
       "warnings": [],
       "path": "rituals/personal/ntfy-habit-reminder.toml",
       "install_cmd": "./install.sh rituals/personal/ntfy-habit-reminder.toml",
-      "github_url": "https://github.com/kdairatchi/cronlord-grimoire/blob/main/rituals/personal/ntfy-habit-reminder.toml"
+      "github_url": "https://github.com/kdairatchi/CronLord-Grimoire/blob/main/rituals/personal/ntfy-habit-reminder.toml"
     },
     {
       "id": "daily-activity-digest",
@@ -1040,7 +1040,7 @@
       "warnings": [],
       "path": "rituals/reporting/daily-activity-digest.toml",
       "install_cmd": "./install.sh rituals/reporting/daily-activity-digest.toml",
-      "github_url": "https://github.com/kdairatchi/cronlord-grimoire/blob/main/rituals/reporting/daily-activity-digest.toml"
+      "github_url": "https://github.com/kdairatchi/CronLord-Grimoire/blob/main/rituals/reporting/daily-activity-digest.toml"
     },
     {
       "id": "weekly-run-stats",
@@ -1062,7 +1062,7 @@
       "warnings": [],
       "path": "rituals/reporting/weekly-run-stats.toml",
       "install_cmd": "./install.sh rituals/reporting/weekly-run-stats.toml",
-      "github_url": "https://github.com/kdairatchi/cronlord-grimoire/blob/main/rituals/reporting/weekly-run-stats.toml"
+      "github_url": "https://github.com/kdairatchi/CronLord-Grimoire/blob/main/rituals/reporting/weekly-run-stats.toml"
     },
     {
       "id": "caido-project-export",
@@ -1087,7 +1087,7 @@
       "warnings": [],
       "path": "rituals/security/caido-project-export.toml",
       "install_cmd": "./install.sh rituals/security/caido-project-export.toml",
-      "github_url": "https://github.com/kdairatchi/cronlord-grimoire/blob/main/rituals/security/caido-project-export.toml"
+      "github_url": "https://github.com/kdairatchi/CronLord-Grimoire/blob/main/rituals/security/caido-project-export.toml"
     },
     {
       "id": "gitleaks-scan",
@@ -1108,7 +1108,7 @@
       "warnings": [],
       "path": "rituals/security/gitleaks-scan.toml",
       "install_cmd": "./install.sh rituals/security/gitleaks-scan.toml",
-      "github_url": "https://github.com/kdairatchi/cronlord-grimoire/blob/main/rituals/security/gitleaks-scan.toml"
+      "github_url": "https://github.com/kdairatchi/CronLord-Grimoire/blob/main/rituals/security/gitleaks-scan.toml"
     },
     {
       "id": "h1-disclosed-sweep",
@@ -1129,7 +1129,7 @@
       "warnings": [],
       "path": "rituals/security/h1-disclosed-sweep.toml",
       "install_cmd": "./install.sh rituals/security/h1-disclosed-sweep.toml",
-      "github_url": "https://github.com/kdairatchi/cronlord-grimoire/blob/main/rituals/security/h1-disclosed-sweep.toml"
+      "github_url": "https://github.com/kdairatchi/CronLord-Grimoire/blob/main/rituals/security/h1-disclosed-sweep.toml"
     },
     {
       "id": "nuclei-template-update",
@@ -1148,7 +1148,7 @@
       "warnings": [],
       "path": "rituals/security/nuclei-template-update.toml",
       "install_cmd": "./install.sh rituals/security/nuclei-template-update.toml",
-      "github_url": "https://github.com/kdairatchi/cronlord-grimoire/blob/main/rituals/security/nuclei-template-update.toml"
+      "github_url": "https://github.com/kdairatchi/CronLord-Grimoire/blob/main/rituals/security/nuclei-template-update.toml"
     },
     {
       "id": "subdomain-monitor",
@@ -1169,7 +1169,7 @@
       "warnings": [],
       "path": "rituals/security/subdomain-monitor.toml",
       "install_cmd": "./install.sh rituals/security/subdomain-monitor.toml",
-      "github_url": "https://github.com/kdairatchi/cronlord-grimoire/blob/main/rituals/security/subdomain-monitor.toml"
+      "github_url": "https://github.com/kdairatchi/CronLord-Grimoire/blob/main/rituals/security/subdomain-monitor.toml"
     },
     {
       "id": "git-repo-sync",
@@ -1190,7 +1190,7 @@
       "warnings": [],
       "path": "rituals/sync/git-repo-sync.toml",
       "install_cmd": "./install.sh rituals/sync/git-repo-sync.toml",
-      "github_url": "https://github.com/kdairatchi/cronlord-grimoire/blob/main/rituals/sync/git-repo-sync.toml"
+      "github_url": "https://github.com/kdairatchi/CronLord-Grimoire/blob/main/rituals/sync/git-repo-sync.toml"
     },
     {
       "id": "rclone-cloud-mirror",
@@ -1209,7 +1209,7 @@
       "warnings": [],
       "path": "rituals/sync/rclone-cloud-mirror.toml",
       "install_cmd": "./install.sh rituals/sync/rclone-cloud-mirror.toml",
-      "github_url": "https://github.com/kdairatchi/cronlord-grimoire/blob/main/rituals/sync/rclone-cloud-mirror.toml"
+      "github_url": "https://github.com/kdairatchi/CronLord-Grimoire/blob/main/rituals/sync/rclone-cloud-mirror.toml"
     }
   ]
 }
