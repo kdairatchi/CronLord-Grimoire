@@ -22,6 +22,47 @@
     localStorage.setItem("grimoire-theme", state.theme);
   });
 
+  wireHeroArt();
+
+  function wireHeroArt() {
+    const art = document.querySelector(".hero-art");
+    if (!art) return;
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
+    if (reduce.matches) return;
+
+    const MAX = 6;
+    let raf = 0;
+    let pending = null;
+
+    const apply = () => {
+      raf = 0;
+      if (!pending) return;
+      const { px, py, rx, ry } = pending;
+      art.style.setProperty("--mx", px + "%");
+      art.style.setProperty("--my", py + "%");
+      art.style.setProperty("--rx", rx.toFixed(2) + "deg");
+      art.style.setProperty("--ry", ry.toFixed(2) + "deg");
+    };
+
+    art.addEventListener("mousemove", (e) => {
+      const rect = art.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width;
+      const y = (e.clientY - rect.top) / rect.height;
+      pending = {
+        px: x * 100,
+        py: y * 100,
+        rx: (x - 0.5) * 2 * MAX,
+        ry: -(y - 0.5) * 2 * MAX,
+      };
+      if (!raf) raf = requestAnimationFrame(apply);
+    });
+
+    art.addEventListener("mouseleave", () => {
+      pending = { px: 50, py: 50, rx: 0, ry: 0 };
+      if (!raf) raf = requestAnimationFrame(apply);
+    });
+  }
+
   Promise.all([
     fetch("rituals.json", { cache: "no-cache" }).then((r) => r.json()),
     fetch("scan.json", { cache: "no-cache" }).then((r) => (r.ok ? r.json() : null)).catch(() => null),

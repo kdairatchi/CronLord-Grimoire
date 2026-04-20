@@ -119,18 +119,50 @@ body[data-theme="light"] .theme-icon-dark { display: none; }
   border: 1px solid var(--border);
   box-shadow: var(--shadow), 0 0 0 1px color-mix(in oklab, var(--amber) 15%, transparent);
   aspect-ratio: 3 / 2;
+  transform: perspective(1200px) rotateX(var(--ry, 0deg)) rotateY(var(--rx, 0deg));
+  transform-style: preserve-3d;
+  transition: transform .25s ease, box-shadow .25s ease;
+  will-change: transform;
+  cursor: crosshair;
+}
+.hero-art:hover {
+  box-shadow: var(--shadow), 0 0 0 1px color-mix(in oklab, var(--accent) 45%, transparent), 0 20px 60px color-mix(in oklab, var(--crimson) 35%, transparent);
 }
 .hero-art img {
   width: 100%;
   height: 100%;
   display: block;
   object-fit: cover;
+  transform: translateZ(0);
 }
+.hero-art::before {
+  content: "";
+  position: absolute; inset: 0;
+  pointer-events: none;
+  z-index: 2;
+  background: radial-gradient(
+    circle 260px at var(--mx, 50%) var(--my, 50%),
+    color-mix(in oklab, var(--ember) 55%, transparent),
+    transparent 65%
+  );
+  mix-blend-mode: screen;
+  opacity: 0;
+  transition: opacity .25s ease;
+}
+.hero-art:hover::before { opacity: 1; }
 .hero-art::after {
   content: "";
   position: absolute; inset: 0;
   pointer-events: none;
   background: linear-gradient(180deg, transparent 60%, color-mix(in oklab, var(--bg) 55%, transparent));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-art {
+    transform: none;
+    transition: none;
+  }
+  .hero-art::before { display: none; }
 }
 .hero h1 {
   font-size: clamp(28px, 4.6vw, 44px);
