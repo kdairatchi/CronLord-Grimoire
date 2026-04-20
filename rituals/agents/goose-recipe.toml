@@ -13,7 +13,6 @@ schedule    = "0 */12 * * *"
 timezone    = "UTC"
 enabled     = false
 timeout_sec = 3600
-working_dir = "/home/anon"
 
 command = '''
 RECIPE="${RECIPE_PATH:-$HOME/.config/goose/recipes/daily-report.yaml}"

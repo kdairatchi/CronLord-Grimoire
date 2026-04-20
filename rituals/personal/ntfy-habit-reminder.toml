@@ -1,26 +1,28 @@
 # ntfy-habit-reminder — push a reminder to a ntfy.sh topic at a set local time.
-# Set NTFY_TOPIC (e.g. "my-private-topic-xxxxx") and MESSAGE.
+# Works with ntfy.sh (free, public) or a self-hosted ntfy instance.
+# Required env: NTFY_TOPIC (your private topic name), MESSAGE (reminder text)
+# Optional: NTFY_HOST (default ntfy.sh), NTFY_TITLE, NTFY_PRIORITY (default default)
 
 [[jobs]]
 id          = "ntfy-habit-reminder"
 name        = "ntfy — habit reminder"
 description = "Push a plain-text reminder to a self-hosted or ntfy.sh topic."
 category    = "personal"
-kind        = "http"
+kind        = "shell"
 schedule    = "0 18 * * *"
 timezone    = "America/New_York"
 enabled     = false
 timeout_sec = 10
 
 command = '''
-{
-  "method": "POST",
-  "url": "https://ntfy.sh/REPLACE-TOPIC",
-  "headers": {
-    "title": "Daily reminder",
-    "tags": "bell",
-    "priority": "default"
-  },
-  "body": "Write two sentences about today. Post a commit. Go for a walk."
-}
+: "${NTFY_TOPIC:?required, your private ntfy topic name}"
+HOST="${NTFY_HOST:-ntfy.sh}"
+TITLE="${NTFY_TITLE:-Daily reminder}"
+PRIORITY="${NTFY_PRIORITY:-default}"
+BODY="${MESSAGE:?required, the reminder text}"
+curl -sS -f "https://$HOST/$NTFY_TOPIC" \
+  -H "Title: $TITLE" \
+  -H "Tags: bell" \
+  -H "Priority: $PRIORITY" \
+  -d "$BODY"
 '''

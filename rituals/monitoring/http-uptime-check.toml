@@ -1,5 +1,6 @@
 # http-uptime-check — verify a URL returns 2xx within TIMEOUT seconds.
 # Fail the run if not; wire slack_webhook_url to get paged.
+# Required env: URL (the endpoint to check)
 
 [[jobs]]
 id          = "http-uptime-check"
@@ -13,7 +14,7 @@ enabled     = false
 timeout_sec = 15
 
 command = '''
-URL="${URL:-https://example.com}"
+: "${URL:?required, e.g. https://yoursite.com/healthz}"
 DEADLINE="${DEADLINE:-8}"
 CODE=$(curl -sS -o /dev/null -w '%{http_code}' --max-time "$DEADLINE" "$URL" || echo "000")
 echo "$URL → $CODE"

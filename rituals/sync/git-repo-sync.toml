@@ -1,5 +1,6 @@
-# git-repo-sync — keep a repo up to date with origin (no merge, fetch only).
+# git-repo-sync — keep a local repo up to date with origin (fetch only, no merge).
 # Safe default: fetches + prunes, never rewrites local work.
+# Required env: REPO_DIR (path to the local git repo to sync)
 
 [[jobs]]
 id          = "git-repo-sync"
@@ -11,6 +12,11 @@ schedule    = "0 */2 * * *"
 timezone    = "UTC"
 enabled     = false
 timeout_sec = 60
-working_dir = "/home/anon/MyMac"
 
-command = "git fetch --all --prune --tags --quiet && git log --oneline -1 @{u} 2>/dev/null"
+command = '''
+: "${REPO_DIR:?required, path to the local git repository}"
+cd "$REPO_DIR"
+git fetch --all --prune --tags --quiet
+git log --oneline -1 @{u} 2>/dev/null || true
+echo "fetched: $REPO_DIR"
+'''

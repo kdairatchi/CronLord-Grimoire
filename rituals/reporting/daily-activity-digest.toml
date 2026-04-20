@@ -1,6 +1,6 @@
 # daily-activity-digest — post yesterday's CronLord run summary to Slack.
 # Reads CronLord's own API; no extra creds needed (runs locally).
-# Set SLACK_WEBHOOK before enabling.
+# Optional: CRONLORD_URL (default http://127.0.0.1:7070), SLACK_WEBHOOK, CRONLORD_ADMIN_TOKEN
 
 [[jobs]]
 id          = "daily-activity-digest"
@@ -15,8 +15,10 @@ timeout_sec = 60
 
 command = '''
 SLACK="${SLACK_WEBHOOK:-}"
+CL="${CRONLORD_URL:-http://127.0.0.1:7070}"
 SINCE=$(date -u -d 'yesterday' +%Y-%m-%d)
-JSON=$(curl -sS "http://127.0.0.1:7070/api/runs?since=${SINCE}" || echo "[]")
+JSON=$(curl -sS ${CRONLORD_ADMIN_TOKEN:+-H "Authorization: Bearer $CRONLORD_ADMIN_TOKEN"} \
+  "$CL/api/runs?since=${SINCE}" || echo "[]")
 OK=$(echo "$JSON" | jq '[.[] | select(.status=="success")] | length')
 FAIL=$(echo "$JSON" | jq '[.[] | select(.status=="fail" or .status=="timeout")] | length')
 SUMMARY="cronlord ${SINCE}: ${OK} ok, ${FAIL} failed"

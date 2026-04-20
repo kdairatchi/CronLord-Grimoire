@@ -14,9 +14,10 @@ enabled     = false
 timeout_sec = 3600
 
 command = '''
-[ -n "${DATABASE_URL:-}" ] || { echo "DATABASE_URL unset"; exit 2; }
-BUCKET="${S3_BUCKET:-my-backups}"
-NAME="${DB_NAME:-appdb}-$(date -u +%F-%H%M).dump"
+: "${DATABASE_URL:?required, full postgres:// connection URL}"
+: "${S3_BUCKET:?required, destination bucket name}"
+BUCKET="$S3_BUCKET"
+NAME="${DB_NAME:-db}-$(date -u +%F-%H%M).dump"
 pg_dump -Fc "$DATABASE_URL" \
   | aws s3 cp --storage-class STANDARD_IA - "s3://$BUCKET/postgres/$NAME"
 echo "uploaded $NAME"

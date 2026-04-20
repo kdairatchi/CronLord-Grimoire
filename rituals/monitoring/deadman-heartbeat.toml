@@ -1,16 +1,21 @@
-# deadman-heartbeat — call a healthchecks.io-style URL every 5 minutes.
-# If this job stops running (scheduler down), the healthcheck provider alerts.
-# Set HC_URL to your check URL before enabling.
+# deadman-heartbeat — ping a healthcheck URL every 5 minutes.
+# If this job stops running (scheduler down), the healthcheck provider alerts you.
+# Works with healthchecks.io, Cronitor, Better Uptime, or any GET-ping endpoint.
+# Required env: HC_URL (your check ping URL)
 
 [[jobs]]
 id          = "deadman-heartbeat"
 name        = "Deadman heartbeat"
-description = "Ping healthcheck provider to prove scheduler is alive."
+description = "Ping a healthcheck provider to prove the scheduler is alive."
 category    = "monitoring"
-kind        = "http"
+kind        = "shell"
 schedule    = "*/5 * * * *"
 timezone    = "UTC"
 enabled     = false
 timeout_sec = 10
 
-command = "https://hc-ping.com/REPLACE-WITH-YOUR-CHECK-UUID"
+command = '''
+: "${HC_URL:?required, e.g. https://hc-ping.com/<your-uuid>}"
+curl -sS -m 8 "$HC_URL" >/dev/null
+echo "pinged $HC_URL"
+'''

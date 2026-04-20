@@ -13,7 +13,6 @@ schedule    = "0 */4 * * *"
 timezone    = "UTC"
 enabled     = false
 timeout_sec = 900
-working_dir = "/home/anon"
 
 command = '''
 MODEL="${LLM_MODEL:-gpt-4o-mini}"

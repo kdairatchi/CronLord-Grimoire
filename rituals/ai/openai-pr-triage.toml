@@ -1,5 +1,6 @@
 # openai-pr-triage — run an OpenAI-model pass over your open GitHub PRs.
-# Uses the `openai` CLI (pip install openai) or curl. Set OPENAI_API_KEY in env.
+# Uses curl + gh CLI. Set OPENAI_API_KEY in env.
+# Required env: OPENAI_API_KEY, GITHUB_REPO (owner/repo format)
 # Output: markdown summary to stdout (logged by CronLord).
 
 [[jobs]]
@@ -14,8 +15,9 @@ enabled     = false
 timeout_sec = 300
 
 command = '''
-[ -n "${OPENAI_API_KEY:-}" ] || { echo "OPENAI_API_KEY unset"; exit 2; }
-REPO="${GITHUB_REPO:-owner/repo}"
+: "${OPENAI_API_KEY:?required}"
+: "${GITHUB_REPO:?required, e.g. myorg/myrepo}"
+REPO="$GITHUB_REPO"
 PRS=$(gh pr list --repo "$REPO" --state open --json number,title,author,updatedAt --limit 20)
 PROMPT=$(printf 'Triage these GitHub PRs. For each: one-sentence summary, priority (P0/P1/P2), first reviewer suggestion. JSON input:\n%s' "$PRS")
 curl -sS https://api.openai.com/v1/chat/completions \

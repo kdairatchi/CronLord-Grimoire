@@ -1,27 +1,28 @@
-# daily-vault-summary — summarize the last 7 Obsidian daily notes into a weekly digest.
+# claude-vault-summary — summarize the last 7 Obsidian daily notes into a weekly digest.
 # Uses local Claude Code CLI; model pinned to haiku for speed/cost.
-# Adjust VAULT path for your setup.
+# Required env: VAULT_PATH (root of your Obsidian vault), DAILY_DIR (relative to VAULT_PATH,
+#   e.g. "01 - Inbox/Daily"), DASHBOARD_DIR (relative to VAULT_PATH, e.g. "00 - Dashboard")
 
 [[jobs]]
 id          = "claude-vault-summary"
 name        = "Weekly vault summary"
 description = "Claude reads 7 latest daily notes and writes a weekly digest."
 category    = "ai"
-kind        = "claude"
+kind        = "shell"
 schedule    = "0 13 * * 1"
 timezone    = "UTC"
 enabled     = false
 timeout_sec = 900
-working_dir = "/home/anon"
 
 command = '''
-Read the 7 most recent files in /mnt/c/Users/Dr34d/OneDrive/Documents/Obsidian\\ Vault/01\\ -\\ Inbox/Daily/.
-Write a one-page digest to /mnt/c/Users/Dr34d/OneDrive/Documents/Obsidian\\ Vault/00\\ -\\ Dashboard/weekly-$(date -u +%G-W%V).md
-covering: decisions made, open questions, recurring themes, next actions.
-Plain prose. No bullet filler. No emoji. End with a `## Next` section.
+: "${VAULT_PATH:?required — root of your Obsidian vault}"
+DAILY="${DAILY_DIR:-01 - Inbox/Daily}"
+DASH="${DASHBOARD_DIR:-00 - Dashboard}"
+WEEK=$(date -u +%G-W%V)
+OUT="$VAULT_PATH/$DASH/weekly-${WEEK}.md"
+mkdir -p "$VAULT_PATH/$DASH"
+PROMPT="Read the 7 most recent files in $VAULT_PATH/$DAILY/.
+Write a one-page digest to $OUT covering: decisions made, open questions, recurring themes, next actions.
+Plain prose. No bullet filler. No emoji. End with a ## Next section."
+claude --model claude-haiku-4-5-20251001 --dangerously-skip-permissions -p "$PROMPT"
 '''
-
-[jobs.args]
-model          = "claude-haiku-4-5-20251001"
-permission_mode = "bypassPermissions"
-extra_args     = ["--dangerously-skip-permissions"]

@@ -1,6 +1,6 @@
 # exchange-rate-log — log fiat exchange rates to a CSV for later charting.
 # Uses frankfurter.app (free, no key, European Central Bank reference rates).
-# Set BASE (e.g. USD), QUOTES (comma list e.g. EUR,GBP,JPY), OUT_FILE.
+# Required env: OUT_FILE (output CSV path). Optional: BASE (default USD), QUOTES (default EUR,GBP,JPY)
 
 [[jobs]]
 id          = "exchange-rate-log"
@@ -16,7 +16,7 @@ timeout_sec = 60
 command = '''
 BASE="${BASE:-USD}"
 QUOTES="${QUOTES:-EUR,GBP,JPY}"
-OUT="${OUT_FILE:-/home/anon/MyMac/Finance/fx-log.csv}"
+OUT="${OUT_FILE:-/var/lib/cronlord/fx-log.csv}"
 mkdir -p "$(dirname "$OUT")"
 if [ ! -s "$OUT" ]; then
   printf 'date,base,%s\n' "$(printf '%s' "$QUOTES" | tr ',' ',')" > "$OUT"

@@ -1,6 +1,7 @@
 # subdomain-monitor — diff subdomain enumeration against yesterday.
 # New subdomains often = new attack surface inside a bug bounty scope.
-# Requires: subfinder. Set TARGET to a root domain (in-scope only).
+# Requires: subfinder.
+# Required env: TARGET (root domain in your bug bounty scope — in-scope only)
 
 [[jobs]]
 id          = "subdomain-monitor"
@@ -16,7 +17,7 @@ working_dir = "/var/lib/cronlord/grimoire/subdomain-monitor"
 
 command = '''
 mkdir -p "$PWD"
-TARGET="${TARGET:-example.com}"
+: "${TARGET:?required, root domain in your bug bounty scope}"
 OUT="$TARGET.new.txt"
 BASE="$TARGET.baseline.txt"
 subfinder -d "$TARGET" -silent -all | sort -u > "$OUT"

@@ -12,7 +12,6 @@ schedule    = "0 */6 * * *"
 timezone    = "UTC"
 enabled     = false
 timeout_sec = 600
-working_dir = "/home/anon"
 
 command = '''
 PATTERN="${FABRIC_PATTERN:-summarize}"

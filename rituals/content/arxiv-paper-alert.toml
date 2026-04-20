@@ -1,6 +1,6 @@
 # arxiv-paper-alert — query arXiv API and append new papers (by arXiv ID) to a
 # local markdown inbox. Dedup via state file of seen IDs. No auth required.
-# Set ARXIV_QUERY (e.g. "cat:cs.CR AND all:bug+bounty"), OUT_FILE.
+# Required env: ARXIV_QUERY (e.g. "cat:cs.CR+AND+all:LLM"), OUT_FILE (output markdown path)
 
 [[jobs]]
 id          = "arxiv-paper-alert"
@@ -15,7 +15,7 @@ timeout_sec = 180
 
 command = '''
 : "${ARXIV_QUERY:?required, e.g. cat:cs.CR+AND+all:LLM}"
-OUT="${OUT_FILE:-/home/anon/MyMac/Notes/arxiv-inbox.md}"
+OUT="${OUT_FILE:?required, e.g. /home/user/notes/arxiv-inbox.md}"
 STATE="${STATE_FILE:-/var/lib/cronlord/arxiv.seen}"
 MAX="${MAX_RESULTS:-20}"
 mkdir -p "$(dirname "$OUT")" "$(dirname "$STATE")"; touch "$STATE" "$OUT"
