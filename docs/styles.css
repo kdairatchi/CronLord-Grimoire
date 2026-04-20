@@ -10,10 +10,11 @@
   --accent: #ff5d2a;
   --accent-dim: #c74017;
   --ember: #ffa24b;
-  --cyan: #62d5e6;
-  --sage: #b8d8a8;
+  --cyan: #ffcf6b;
+  --sage: #ff9166;
   --amber: #e8c274;
-  --rose: #ff8080;
+  --rose: #ff4757;
+  --crimson: #d8311a;
   --shadow: 0 1px 0 rgba(255,140,60,0.04), 0 8px 24px rgba(0,0,0,0.55);
   --radius: 10px;
   --mono: ui-monospace, "JetBrains Mono", "Fira Code", SFMono-Regular, Menlo, monospace;
@@ -32,10 +33,11 @@ body[data-theme="light"] {
   --accent: #c2400d;
   --accent-dim: #a63208;
   --ember: #d96b2a;
-  --cyan: #1297ae;
-  --sage: #3a8a56;
+  --cyan: #a77a1b;
+  --sage: #b8501c;
   --amber: #a77a1b;
-  --rose: #b23a50;
+  --rose: #a82938;
+  --crimson: #8e1d0d;
   --shadow: 0 1px 0 rgba(0,0,0,0.02), 0 8px 24px rgba(26,15,10,0.10);
 }
 
