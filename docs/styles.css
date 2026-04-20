@@ -1,40 +1,42 @@
 :root {
-  --bg: #0c1412;
-  --bg-elev: #121c1a;
-  --bg-sunk: #0a1110;
-  --border: #1f2e2b;
-  --border-strong: #2a3c38;
-  --fg: #e7f0ee;
-  --fg-dim: #9fb3ae;
-  --fg-mute: #6c827d;
-  --accent: #6fe3c3;
-  --accent-dim: #3fa789;
+  --bg: #120a07;
+  --bg-elev: #1a0f0a;
+  --bg-sunk: #0d0604;
+  --border: #2e1a12;
+  --border-strong: #3f241a;
+  --fg: #f3ede6;
+  --fg-dim: #c2ad9f;
+  --fg-mute: #86705f;
+  --accent: #ff5d2a;
+  --accent-dim: #c74017;
+  --ember: #ffa24b;
   --cyan: #62d5e6;
-  --sage: #a8d8b9;
+  --sage: #b8d8a8;
   --amber: #e8c274;
-  --rose: #e67d8f;
-  --shadow: 0 1px 0 rgba(255,255,255,0.02), 0 8px 24px rgba(0,0,0,0.35);
+  --rose: #ff8080;
+  --shadow: 0 1px 0 rgba(255,140,60,0.04), 0 8px 24px rgba(0,0,0,0.55);
   --radius: 10px;
   --mono: ui-monospace, "JetBrains Mono", "Fira Code", SFMono-Regular, Menlo, monospace;
   --sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Inter, Roboto, sans-serif;
 }
 
 body[data-theme="light"] {
-  --bg: #f5f8f6;
+  --bg: #fbf6f1;
   --bg-elev: #ffffff;
-  --bg-sunk: #eef2ef;
-  --border: #dbe3df;
-  --border-strong: #c3ccc7;
-  --fg: #0f1a17;
-  --fg-dim: #4a5953;
-  --fg-mute: #7a8882;
-  --accent: #1f8f71;
-  --accent-dim: #2ea58a;
+  --bg-sunk: #f3ebe3;
+  --border: #e3d6c8;
+  --border-strong: #c9b6a3;
+  --fg: #1a0f0a;
+  --fg-dim: #5a4538;
+  --fg-mute: #8e7b6c;
+  --accent: #c2400d;
+  --accent-dim: #a63208;
+  --ember: #d96b2a;
   --cyan: #1297ae;
   --sage: #3a8a56;
   --amber: #a77a1b;
   --rose: #b23a50;
-  --shadow: 0 1px 0 rgba(0,0,0,0.02), 0 8px 24px rgba(15,26,23,0.08);
+  --shadow: 0 1px 0 rgba(0,0,0,0.02), 0 8px 24px rgba(26,15,10,0.10);
 }
 
 * { box-sizing: border-box; }
@@ -87,8 +89,8 @@ body[data-theme="light"] .theme-icon-dark { display: none; }
   padding: 56px 0 40px;
   border-bottom: 1px solid var(--border);
   background:
-    radial-gradient(ellipse 800px 400px at 20% -10%, color-mix(in oklab, var(--accent) 14%, transparent), transparent 60%),
-    radial-gradient(ellipse 600px 300px at 80% -20%, color-mix(in oklab, var(--amber) 18%, transparent), transparent 60%);
+    radial-gradient(ellipse 800px 400px at 20% -10%, color-mix(in oklab, var(--accent) 22%, transparent), transparent 60%),
+    radial-gradient(ellipse 600px 300px at 80% -20%, color-mix(in oklab, var(--ember) 26%, transparent), transparent 60%);
 }
 .hero-grid {
   display: grid;
