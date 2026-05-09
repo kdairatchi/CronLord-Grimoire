@@ -1,6 +1,6 @@
 {
   "generated_at": null,
-  "total": 55,
+  "total": 58,
   "categories": [
     "agents",
     "ai",
@@ -45,13 +45,15 @@
       "name": "Claude skill \u2014 scheduled invoke",
       "description": "Run `claude -p /<SKILL_NAME> <ARGS>` on schedule. Works for any installed skill.",
       "category": "agents",
-      "kind": "claude",
+      "kind": "shell",
       "schedule": "0 13 * * *",
       "timezone": "UTC",
       "timeout_sec": 1800,
       "author": "kdairatchi",
       "trust": "core",
-      "permissions": [],
+      "permissions": [
+        "llm"
+      ],
       "required_env": [],
       "scan_status": "PASS",
       "warnings": [],
@@ -62,16 +64,17 @@
     {
       "id": "claude-subagent-fanout",
       "name": "Claude subagent fanout",
-      "description": "Read targets file, spawn one recon-agent subagent per target in parallel, aggregate.",
+      "description": "Read targets file, spawn one recon-agent per target in parallel, aggregate.",
       "category": "agents",
-      "kind": "claude",
+      "kind": "shell",
       "schedule": "0 5 * * *",
       "timezone": "UTC",
       "timeout_sec": 7200,
       "author": "kdairatchi",
       "trust": "core",
       "permissions": [
-        "filesystem"
+        "filesystem",
+        "llm"
       ],
       "required_env": [],
       "scan_status": "PASS",
@@ -144,15 +147,18 @@
     {
       "id": "claude-repo-audit",
       "name": "Weekly repo audit",
-      "description": "Claude reviews a repo and writes an audit note.",
+      "description": "Claude reviews a repo and writes an audit note to <REPO_DIR>/audits/.",
       "category": "ai",
-      "kind": "claude",
+      "kind": "shell",
       "schedule": "0 14 * * 0",
       "timezone": "UTC",
       "timeout_sec": 1800,
       "author": "kdairatchi",
       "trust": "core",
-      "permissions": [],
+      "permissions": [
+        "filesystem",
+        "llm"
+      ],
       "required_env": [],
       "scan_status": "PASS",
       "warnings": [],
@@ -165,13 +171,16 @@
       "name": "Weekly vault summary",
       "description": "Claude reads 7 latest daily notes and writes a weekly digest.",
       "category": "ai",
-      "kind": "claude",
+      "kind": "shell",
       "schedule": "0 13 * * 1",
       "timezone": "UTC",
       "timeout_sec": 900,
       "author": "kdairatchi",
       "trust": "core",
-      "permissions": [],
+      "permissions": [
+        "filesystem",
+        "llm"
+      ],
       "required_env": [],
       "scan_status": "PASS",
       "warnings": [],
@@ -286,7 +295,9 @@
         "secrets",
         "llm"
       ],
-      "required_env": [],
+      "required_env": [
+        "OPENAI_API_KEY"
+      ],
       "scan_status": "PASS",
       "warnings": [],
       "path": "rituals/ai/openai-pr-triage.toml",
@@ -925,16 +936,17 @@
     {
       "id": "deadman-heartbeat",
       "name": "Deadman heartbeat",
-      "description": "Ping healthcheck provider to prove scheduler is alive.",
+      "description": "Ping a healthcheck provider to prove the scheduler is alive.",
       "category": "monitoring",
-      "kind": "http",
+      "kind": "shell",
       "schedule": "*/5 * * * *",
       "timezone": "UTC",
       "timeout_sec": 10,
       "author": "kdairatchi",
       "trust": "core",
       "permissions": [
-        "network"
+        "network",
+        "filesystem"
       ],
       "required_env": [],
       "scan_status": "PASS",
@@ -1030,7 +1042,7 @@
       "name": "ntfy \u2014 habit reminder",
       "description": "Push a plain-text reminder to a self-hosted or ntfy.sh topic.",
       "category": "personal",
-      "kind": "http",
+      "kind": "shell",
       "schedule": "0 18 * * *",
       "timezone": "America/New_York",
       "timeout_sec": 10,
@@ -1059,7 +1071,8 @@
       "trust": "core",
       "permissions": [
         "network",
-        "filesystem"
+        "filesystem",
+        "secrets"
       ],
       "required_env": [],
       "scan_status": "PASS",
@@ -1089,6 +1102,75 @@
       "path": "rituals/reporting/weekly-run-stats.toml",
       "install_cmd": "./install.sh rituals/reporting/weekly-run-stats.toml",
       "github_url": "https://github.com/kdairatchi/CronLord-Grimoire/blob/main/rituals/reporting/weekly-run-stats.toml"
+    },
+    {
+      "id": "airbnb-js-endpoint-diff",
+      "name": "Airbnb JS Bundle Endpoint Diff",
+      "description": "Daily Next.js bundle hash diff on airbnb.com \u2014 extracts new API paths on change, alerts via ntfy.",
+      "category": "security",
+      "kind": "shell",
+      "schedule": "30 7 * * *",
+      "timezone": "UTC",
+      "timeout_sec": 600,
+      "author": "kdairatchi",
+      "trust": "core",
+      "permissions": [
+        "network",
+        "filesystem"
+      ],
+      "required_env": [
+        "NTFY_TOPIC"
+      ],
+      "scan_status": "PASS",
+      "warnings": [],
+      "path": "rituals/security/airbnb-js-endpoint-diff.toml",
+      "install_cmd": "./install.sh rituals/security/airbnb-js-endpoint-diff.toml",
+      "github_url": "https://github.com/kdairatchi/CronLord-Grimoire/blob/main/rituals/security/airbnb-js-endpoint-diff.toml"
+    },
+    {
+      "id": "airbnb-payment-gau-harvest",
+      "name": "Airbnb Payment Domain GAU Harvest",
+      "description": "Weekly gau run against airbnbpayments.com \u2014 filters payment/wallet/apple/checkout paths to JSONL.",
+      "category": "security",
+      "kind": "shell",
+      "schedule": "0 7 * * 1",
+      "timezone": "UTC",
+      "timeout_sec": 1800,
+      "author": "kdairatchi",
+      "trust": "core",
+      "permissions": [
+        "filesystem"
+      ],
+      "required_env": [],
+      "scan_status": "PASS",
+      "warnings": [],
+      "path": "rituals/security/airbnb-payment-gau-harvest.toml",
+      "install_cmd": "./install.sh rituals/security/airbnb-payment-gau-harvest.toml",
+      "github_url": "https://github.com/kdairatchi/CronLord-Grimoire/blob/main/rituals/security/airbnb-payment-gau-harvest.toml"
+    },
+    {
+      "id": "airbnb-wildcard-sub-delta",
+      "name": "Airbnb Wildcard Subdomain Delta",
+      "description": "Daily subfinder+httpx delta across airbnbpayments.com, musta.ch, airbnb.org \u2014 alerts on new live hosts.",
+      "category": "security",
+      "kind": "shell",
+      "schedule": "0 6 * * *",
+      "timezone": "UTC",
+      "timeout_sec": 1800,
+      "author": "kdairatchi",
+      "trust": "core",
+      "permissions": [
+        "network",
+        "filesystem"
+      ],
+      "required_env": [
+        "NTFY_TOPIC"
+      ],
+      "scan_status": "PASS",
+      "warnings": [],
+      "path": "rituals/security/airbnb-wildcard-sub-delta.toml",
+      "install_cmd": "./install.sh rituals/security/airbnb-wildcard-sub-delta.toml",
+      "github_url": "https://github.com/kdairatchi/CronLord-Grimoire/blob/main/rituals/security/airbnb-wildcard-sub-delta.toml"
     },
     {
       "id": "caido-project-export",

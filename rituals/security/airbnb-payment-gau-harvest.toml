@@ -1,0 +1,39 @@
+# airbnb-payment-gau-harvest
+# Weekly GAU harvest of airbnbpayments.com from Wayback + CommonCrawl.
+# Surfaces historical payment API endpoints before active recon — no auth needed.
+# Requires: gau, grep, sort
+# Env: none (public data sources only)
+# Docs: https://github.com/lc/gau
+
+[[jobs]]
+id          = "airbnb-payment-gau-harvest"
+name        = "Airbnb Payment Domain GAU Harvest"
+description = "Weekly gau run against airbnbpayments.com — filters payment/wallet/apple/checkout paths to JSONL."
+category    = "security"
+kind        = "shell"
+schedule    = "0 7 * * 1"
+timezone    = "UTC"
+enabled     = false
+timeout_sec = 1800
+
+command = '''
+set -eu
+WORK=/var/lib/cronlord/grimoire/airbnb-payment-gau-harvest
+mkdir -p "$WORK"
+DATE=$(date +%Y-%m-%d)
+
+for DOMAIN in airbnbpayments.com musta.ch; do
+  OUT="$WORK/${DOMAIN}-${DATE}-raw.txt"
+  FILTERED="$WORK/${DOMAIN}-${DATE}-payment.txt"
+
+  gau --providers wayback,commoncrawl "$DOMAIN" \
+    | sort -u > "$OUT" 2>/dev/null || true
+
+  grep -iE '(apple.?pay|wallet|checkout|merchant|payment|validate|session|payout|refund|stripe|plaid)' \
+    "$OUT" > "$FILTERED" 2>/dev/null || true
+
+  RAW=$(wc -l < "$OUT")
+  HIT=$(wc -l < "$FILTERED")
+  printf '%s: %d raw / %d payment paths → %s\n' "$DOMAIN" "$RAW" "$HIT" "$FILTERED"
+done
+'''

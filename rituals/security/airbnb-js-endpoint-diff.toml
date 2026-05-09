@@ -1,0 +1,74 @@
+# airbnb-js-endpoint-diff
+# Daily hash-diff of Next.js bundle list on www.airbnb.com.
+# New bundle = new code shipped = hunt window before anyone else sees new endpoints.
+# Requires: curl, sha256sum, grep
+# Env: NTFY_TOPIC
+# Docs: https://nextjs.org/docs/app/building-your-application/deploying#static-exports
+
+[[jobs]]
+id          = "airbnb-js-endpoint-diff"
+name        = "Airbnb JS Bundle Endpoint Diff"
+description = "Daily Next.js bundle hash diff on airbnb.com — extracts new API paths on change, alerts via ntfy."
+category    = "security"
+kind        = "shell"
+schedule    = "30 7 * * *"
+timezone    = "UTC"
+enabled     = false
+timeout_sec = 600
+
+command = '''
+set -eu
+: "${NTFY_TOPIC:?required}"
+WORK=/var/lib/cronlord/grimoire/airbnb-js-endpoint-diff
+mkdir -p "$WORK"
+
+PAGE=$(curl -s --max-time 30 -A "Mozilla/5.0" https://www.airbnb.com 2>/dev/null || true)
+if [ -z "$PAGE" ]; then
+  printf 'fetch failed\n' >&2; exit 1
+fi
+
+BUNDLES=$(printf '%s\n' "$PAGE" \
+  | grep -oE '"/_next/static/chunks/[^"]*\.js"' \
+  | tr -d '"' | sort -u)
+
+if [ -z "$BUNDLES" ]; then
+  printf 'no bundles found — page structure may have changed\n'; exit 0
+fi
+
+NEW_HASH=$(printf '%s\n' "$BUNDLES" | sha256sum | cut -d' ' -f1)
+HASH_FILE="$WORK/bundle_list.sha256"
+API_FILE="$WORK/api_paths.txt"
+
+if [ ! -f "$HASH_FILE" ]; then
+  printf '%s\n' "$BUNDLES" > "$WORK/bundles_baseline.txt"
+  printf '%s' "$NEW_HASH" > "$HASH_FILE"
+  printf 'baseline: %d bundles\n' "$(printf '%s\n' "$BUNDLES" | wc -l)"
+  exit 0
+fi
+
+OLD_HASH=$(cat "$HASH_FILE")
+if [ "$NEW_HASH" = "$OLD_HASH" ]; then
+  printf 'no change\n'; exit 0
+fi
+
+printf 'bundle list changed — extracting API paths\n'
+: > "$API_FILE"
+printf '%s\n' "$BUNDLES" | head -5 | while IFS= read -r BUNDLE; do
+  curl -s --max-time 20 "https://www.airbnb.com${BUNDLE}" 2>/dev/null \
+    | grep -oE '"/api/v[0-9]+/[^"]{4,80}"' \
+    | tr -d '"' >> "$API_FILE" 2>/dev/null || true
+done
+sort -u "$API_FILE" -o "$API_FILE"
+
+COUNT=$(wc -l < "$API_FILE")
+printf '%s' "$NEW_HASH" > "$HASH_FILE"
+
+MSG="[airbnb-zero] JS bundles changed — ${COUNT} API paths extracted. Check ${API_FILE}"
+curl -s -m 10 \
+  -H "Title: Airbnb JS delta" \
+  -H "Priority: high" \
+  -d "$MSG" \
+  "https://ntfy.sh/${NTFY_TOPIC:?required}" > /dev/null || true
+printf '%s\n' "$MSG"
+printf '%s\n' "$(head -20 "$API_FILE")"
+'''

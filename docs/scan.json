@@ -1,6 +1,6 @@
 {
-  "total": 55,
-  "pass": 55,
+  "total": 58,
+  "pass": 58,
   "warn": 0,
   "fail": 0,
   "results": [
@@ -23,7 +23,9 @@
       "trust": "core",
       "author": "kdairatchi",
       "required_env": [],
-      "permissions": [],
+      "permissions": [
+        "llm"
+      ],
       "errors": [],
       "warnings": [],
       "status": "PASS"
@@ -36,7 +38,8 @@
       "author": "kdairatchi",
       "required_env": [],
       "permissions": [
-        "filesystem"
+        "filesystem",
+        "llm"
       ],
       "errors": [],
       "warnings": [],
@@ -89,7 +92,10 @@
       "trust": "core",
       "author": "kdairatchi",
       "required_env": [],
-      "permissions": [],
+      "permissions": [
+        "filesystem",
+        "llm"
+      ],
       "errors": [],
       "warnings": [],
       "status": "PASS"
@@ -101,7 +107,10 @@
       "trust": "core",
       "author": "kdairatchi",
       "required_env": [],
-      "permissions": [],
+      "permissions": [
+        "filesystem",
+        "llm"
+      ],
       "errors": [],
       "warnings": [],
       "status": "PASS"
@@ -175,7 +184,9 @@
       "category": "ai",
       "trust": "core",
       "author": "kdairatchi",
-      "required_env": [],
+      "required_env": [
+        "OPENAI_API_KEY"
+      ],
       "permissions": [
         "network",
         "secrets",
@@ -633,7 +644,8 @@
       "author": "kdairatchi",
       "required_env": [],
       "permissions": [
-        "network"
+        "network",
+        "filesystem"
       ],
       "errors": [],
       "warnings": [],
@@ -716,7 +728,8 @@
       "required_env": [],
       "permissions": [
         "network",
-        "filesystem"
+        "filesystem",
+        "secrets"
       ],
       "errors": [],
       "warnings": [],
@@ -729,6 +742,54 @@
       "trust": "core",
       "author": "kdairatchi",
       "required_env": [],
+      "permissions": [
+        "network",
+        "filesystem"
+      ],
+      "errors": [],
+      "warnings": [],
+      "status": "PASS"
+    },
+    {
+      "path": "rituals/security/airbnb-js-endpoint-diff.toml",
+      "id": "airbnb-js-endpoint-diff",
+      "category": "security",
+      "trust": "core",
+      "author": "kdairatchi",
+      "required_env": [
+        "NTFY_TOPIC"
+      ],
+      "permissions": [
+        "network",
+        "filesystem"
+      ],
+      "errors": [],
+      "warnings": [],
+      "status": "PASS"
+    },
+    {
+      "path": "rituals/security/airbnb-payment-gau-harvest.toml",
+      "id": "airbnb-payment-gau-harvest",
+      "category": "security",
+      "trust": "core",
+      "author": "kdairatchi",
+      "required_env": [],
+      "permissions": [
+        "filesystem"
+      ],
+      "errors": [],
+      "warnings": [],
+      "status": "PASS"
+    },
+    {
+      "path": "rituals/security/airbnb-wildcard-sub-delta.toml",
+      "id": "airbnb-wildcard-sub-delta",
+      "category": "security",
+      "trust": "core",
+      "author": "kdairatchi",
+      "required_env": [
+        "NTFY_TOPIC"
+      ],
       "permissions": [
         "network",
         "filesystem"

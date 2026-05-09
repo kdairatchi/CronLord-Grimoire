@@ -1,0 +1,53 @@
+# airbnb-wildcard-sub-delta
+# Daily subfinder delta across 3 unlabeled Airbnb wildcards (0 resolved reports each).
+# New subdomain on these = fresh attack surface nobody has touched yet.
+# Requires: subfinder, dnsx, httpx, curl
+# Env: NTFY_TOPIC
+# Docs: https://docs.projectdiscovery.io/tools/subfinder/overview
+
+[[jobs]]
+id          = "airbnb-wildcard-sub-delta"
+name        = "Airbnb Wildcard Subdomain Delta"
+description = "Daily subfinder+httpx delta across airbnbpayments.com, musta.ch, airbnb.org — alerts on new live hosts."
+category    = "security"
+kind        = "shell"
+schedule    = "0 6 * * *"
+timezone    = "UTC"
+enabled     = false
+timeout_sec = 1800
+
+command = '''
+set -eu
+: "${NTFY_TOPIC:?required}"
+WORK=/var/lib/cronlord/grimoire/airbnb-wildcard-sub-delta
+mkdir -p "$WORK"
+
+for DOMAIN in airbnbpayments.com musta.ch airbnb.org; do
+  OUT="$WORK/$DOMAIN.new.txt"
+  BASE="$WORK/$DOMAIN.baseline.txt"
+
+  subfinder -d "$DOMAIN" -silent -all | sort -u > "$OUT"
+
+  if [ ! -s "$BASE" ]; then
+    cp "$OUT" "$BASE"
+    printf "baseline: %s (%d subs)\n" "$DOMAIN" "$(wc -l < "$BASE")"
+    continue
+  fi
+
+  NEW=$(comm -13 "$BASE" "$OUT")
+  if [ -n "$NEW" ]; then
+    COUNT=$(printf '%s\n' "$NEW" | wc -l)
+    LIVE=$(printf '%s\n' "$NEW" | dnsx -silent | httpx -silent -status-code -title 2>/dev/null || true)
+    MSG="[airbnb-zero] +${COUNT} new subs on ${DOMAIN}: ${LIVE}"
+    curl -s -m 10 \
+      -H "Title: Airbnb new scope" \
+      -H "Priority: high" \
+      -d "$MSG" \
+      "https://ntfy.sh/${NTFY_TOPIC:?required}" > /dev/null || true
+    printf '%s\n' "$MSG"
+    cp "$OUT" "$BASE"
+  else
+    printf 'no change: %s\n' "$DOMAIN"
+  fi
+done
+'''
